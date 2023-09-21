@@ -17,6 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public GameObject playerModel;
     public Animator animator;
 
+    #region UNITY_EVENTS
     // Start is called before the first frame update
     void Start()
     {
@@ -55,4 +56,5 @@ public class PlayerMovement : MonoBehaviour
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
         animator.SetBool("Grounded", charController.isGrounded);
     }
+    #endregion
 }
