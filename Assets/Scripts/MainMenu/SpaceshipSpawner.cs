@@ -5,10 +5,7 @@ using UnityEngine;
 public class SpaceshipSpawner : MonoBehaviour
 {
 
-    public GameObject spaceship1;
-    public GameObject spaceship2;
-    public GameObject spaceship3;
-    public GameObject spaceship4;
+    public GameObject[] spaceships;
     public float minDelay = 0f;
     public float maxDelay = 10f;
     public float speed = 50f;
@@ -29,24 +26,7 @@ public class SpaceshipSpawner : MonoBehaviour
         if (Time.time > nextTimeToSpawn)
         {
             nextTimeToSpawn = Time.time + Random.Range(minDelay, maxDelay);
-            GameObject spaceship = null;
-            switch(Random.Range(0, 4)) {
-                case 0:
-                    spaceship = spaceship1;
-                    break;
-                case 1:
-                    spaceship = spaceship2;
-                    break;
-                case 2:
-                    spaceship = spaceship3;
-                    break;
-                case 3:
-                    spaceship = spaceship4;
-                    break;
-                default:
-                    break;
-            }
-            GameObject newSpaceship = Instantiate(spaceship, transform.position, Quaternion.identity);
+            GameObject newSpaceship = Instantiate(spaceships[Random.Range(0, spaceships.Length)], transform.position, Quaternion.identity);
             Transform spaceshipTransform = newSpaceship.GetComponent<Transform>();
             spaceshipTransform.Rotate(rotateX, rotateY, rotateZ);
             newSpaceship.AddComponent<Move>();
