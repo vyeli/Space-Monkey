@@ -73,5 +73,7 @@ crashlytics-build.properties
 
 # Vscode files
 .vscode/
-
 .vsconfig
+
+# Build folder
+Build/*
