@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117963212452630766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.011371338, y: -0.057571117, z: 0.00065580197, w: 0.9982764}
+  m_LocalRotation: {x: 0.011371338, y: -0.057571042, z: 0.00065578375, w: 0.9982764}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -132,6 +132,7 @@ GameObject:
   - component: {fileID: 4350081123208897034}
   - component: {fileID: 1617434844448097492}
   - component: {fileID: 3350877087380450525}
+  - component: {fileID: 6722596511651712594}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -147,7 +148,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755771914141252425}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15246168, y: -0.0000000124343655, z: 0.000000001918189, w: 0.9883094}
+  m_LocalRotation: {x: 0.15246168, y: -5.694456e-15, z: 8.7845607e-16, w: 0.9883094}
   m_LocalPosition: {x: 0, y: 3.1299999, z: -4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -248,6 +249,19 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6722596511651712594
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 755771914141252425}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 034b1e2cdbf13304a9458abc02c7fe19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cinemachineBrain: {fileID: 3350877087380450525}
 --- !u!1 &827409230524359760
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,6 +450,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8669758000096087514}
   - component: {fileID: 5742255888764689519}
+  - component: {fileID: 9102023423867513534}
   m_Layer: 0
   m_Name: Systems Manager
   m_TagString: Untagged
@@ -470,6 +485,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d3456f6818150940b7ba60e0450a82d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnPosition: {x: 0, y: 0, z: 0}
+  deathEffect: {fileID: 361193330533286165, guid: 0e6eac6d754cf2d409f598e9d3a66555, type: 3}
+--- !u!114 &9102023423867513534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217356909534783687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25b06db666f63d94d91ef2d926fe1d92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentHealth: 5
+  maxHealth: 5
+  invincibleLength: 2
 --- !u!1 &2389499104294823450
 GameObject:
   m_ObjectHideFlags: 0
@@ -622,7 +654,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2452026186711125637}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.039958354, y: -0.05752872, z: 0.0023044285, w: 0.99754125}
+  m_LocalRotation: {x: 0.039958354, y: -0.05752868, z: 0.0023044175, w: 0.99754125}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1014,10 +1046,16 @@ MonoBehaviour:
   jumpForce: 10
   gravityScale: 2
   rotateSpeed: 5
+  isKocking: 0
+  knockBackLength: 0.5
+  knockBackPower: {x: 5, y: 8}
   charController: {fileID: 3523116168724451067}
   playerCamera: {fileID: 4350081123208897034}
   playerModel: {fileID: 1353826868536030208}
   animator: {fileID: 2115251748534748962}
+  playerPieces:
+  - {fileID: 5698441950025934106}
+  - {fileID: 6847782706402317721}
 --- !u!1 &8787738959334803335
 GameObject:
   m_ObjectHideFlags: 3
@@ -1043,7 +1081,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8787738959334803335}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06870237, y: -0.057438347, z: 0.0039621075, w: 0.9959744}
+  m_LocalRotation: {x: 0.06870237, y: -0.05743832, z: 0.0039620996, w: 0.9959744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1201,5 +1239,15 @@ Animator:
 --- !u!4 &1838052427048709818 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 83160c11334642943a0e2638b4b033b7, type: 3}
+  m_PrefabInstance: {fileID: 2164168242333288785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5698441950025934106 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5844622625683270731, guid: 83160c11334642943a0e2638b4b033b7, type: 3}
+  m_PrefabInstance: {fileID: 2164168242333288785}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6847782706402317721 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4683916905610304712, guid: 83160c11334642943a0e2638b4b033b7, type: 3}
   m_PrefabInstance: {fileID: 2164168242333288785}
   m_PrefabAsset: {fileID: 0}
