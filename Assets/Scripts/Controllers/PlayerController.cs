@@ -32,6 +32,8 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     
     public GameObject[] playerPieces;
+    public GameObject bulletPrefab;
+    public GameObject bulletExit;
 
     #region UNITY_EVENTS
     
@@ -98,6 +100,10 @@ public class PlayerController : MonoBehaviour
                 isKocking = false;
             }
         }
+        if (Input.GetMouseButtonDown(0))
+        {
+            Shoot();
+        }
 
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
@@ -112,4 +118,6 @@ public class PlayerController : MonoBehaviour
 
         moveDirection.y = knockBackPower.y;
     }
+
+    private void Shoot() => Instantiate(bulletPrefab, bulletExit.transform.position, bulletExit.transform.rotation);
 }
