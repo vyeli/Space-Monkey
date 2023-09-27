@@ -1968,17 +1968,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8731dbce1c714944ca1096d2abe2d212, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 1426463870}
   songNameDisplayed: {fileID: 1300834620}
-  audioClips:
+  volumeSlider: {fileID: 1459178421}
+  skipButton: {fileID: 1771290778}
+  _soundtrackClips:
   - {fileID: 8300000, guid: d51f9a70ec0392a4d968c9e0030530ca, type: 3}
   - {fileID: 8300000, guid: 01cd7f2471aa61342ba5402db19df05d, type: 3}
   - {fileID: 8300000, guid: 26eab2232f9663d45a9b05b3d6249732, type: 3}
   - {fileID: 8300000, guid: bdb11444a2e4c8f4a87d79577ec5d4bf, type: 3}
   - {fileID: 8300000, guid: 83f396fd283dea243ac6c42fd073cbed, type: 3}
   - {fileID: 8300000, guid: 9a61602222784944f84682af4f402a7f, type: 3}
-  volumeSlider: {fileID: 1459178421}
-  skipButton: {fileID: 1771290778}
 --- !u!1 &1459178420
 GameObject:
   m_ObjectHideFlags: 0
