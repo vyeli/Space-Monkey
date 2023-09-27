@@ -8,7 +8,6 @@ public class MainMenu : MonoBehaviour
     public Animator playerModelAnimator;
     public float animationInterval = 4f;
     private float _timeElapsed = 0f;
-    private bool _isPlayingAnimation = false;
     private int _previousAnimation = 3;     // Last animation played
     private string _gameScene = "SampleScene";
 
@@ -24,19 +23,20 @@ public class MainMenu : MonoBehaviour
         {
             SceneManager.LoadScene(_gameScene);
         }
-        _timeElapsed += Time.deltaTime;
-        if (_timeElapsed > 1f && _isPlayingAnimation) {
-            playerModelAnimator.SetInteger("currentAnimation", 0);
-            _isPlayingAnimation = false;
-            _timeElapsed = 0f;
-        }
-        if (_timeElapsed > animationInterval && !_isPlayingAnimation)
+        if (isOnIdleAnimation())
         {
-            int nextAnimation = getNextAnimation(_previousAnimation);
-            playerModelAnimator.SetInteger("currentAnimation", nextAnimation);
-            _previousAnimation = nextAnimation;
-            _isPlayingAnimation = true;
+            _timeElapsed += Time.deltaTime;
+            if (_timeElapsed > animationInterval)
+            {
+                int nextAnimation = getNextAnimation(_previousAnimation);
+                playerModelAnimator.SetInteger("currentAnimation", nextAnimation);
+                _previousAnimation = nextAnimation;
+                _timeElapsed = 0f;
+            }
+        } else if (currentAnimationOngoing())
+        {
             _timeElapsed = 0f;
+            playerModelAnimator.SetInteger("currentAnimation", 0);
         }
     }
 
@@ -44,5 +44,13 @@ public class MainMenu : MonoBehaviour
         if (_previousAnimation < 3)
             return _previousAnimation + 1;
         return 1;
+    }
+
+    private bool isOnIdleAnimation() {
+        return playerModelAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+    }
+
+    private bool currentAnimationOngoing() {
+        return playerModelAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
 }

@@ -34,6 +34,8 @@ public class PlayerController : MonoBehaviour
     public GameObject[] playerPieces;
     public GameObject bulletPrefab;
     public GameObject bulletExit;
+    [SerializeField] private Transform _bulletContainer;
+    [SerializeField] private Gun _gun;
 
     #region UNITY_EVENTS
     
@@ -102,9 +104,13 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetMouseButtonDown(0))
         {
-            Shoot();
+            animator.SetBool("Shoot", true);
         }
-
+        else if (animator.GetBool("Shoot") == true)
+        {
+            _gun.Shoot();
+            animator.SetBool("Shoot", false);
+        }
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
         animator.SetBool("Grounded", charController.isGrounded);
@@ -118,6 +124,4 @@ public class PlayerController : MonoBehaviour
 
         moveDirection.y = knockBackPower.y;
     }
-
-    private void Shoot() => Instantiate(bulletPrefab, bulletExit.transform.position, bulletExit.transform.rotation);
 }
