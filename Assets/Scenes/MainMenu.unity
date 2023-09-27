@@ -1975,7 +1975,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 01cd7f2471aa61342ba5402db19df05d, type: 3}
   - {fileID: 8300000, guid: 26eab2232f9663d45a9b05b3d6249732, type: 3}
   - {fileID: 8300000, guid: bdb11444a2e4c8f4a87d79577ec5d4bf, type: 3}
-  - {fileID: 8300000, guid: 0d2ad129bde4e8c4991c2df6f0e6ad5a, type: 3}
+  - {fileID: 8300000, guid: 83f396fd283dea243ac6c42fd073cbed, type: 3}
   - {fileID: 8300000, guid: 9a61602222784944f84682af4f402a7f, type: 3}
   volumeSlider: {fileID: 1459178421}
   skipButton: {fileID: 1771290778}

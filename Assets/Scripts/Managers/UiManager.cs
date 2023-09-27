@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class UiManager : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class UiManager : MonoBehaviour
     public Image blackScreen;
     public float fadeSpeed = 1f;
     public bool fadeToBlack, fadeFromBlack;
+    public TextMeshProUGUI healthText, bulletCount;
 
     // Start is called before the first frame update
     void Start()
