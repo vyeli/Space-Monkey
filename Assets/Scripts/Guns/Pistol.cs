@@ -10,7 +10,8 @@ public class Pistol : Gun
         {
             _currentBulletCount--;
             UiManager.instance.bulletCount.text = _currentBulletCount.ToString();
-            Instantiate(BulletPrefab, transform.position, Rotation, _bulletContainer);
+            GameObject bullet = Instantiate(BulletPrefab, transform.position, Rotation, _bulletContainer);
+            bullet.GetComponent<Bullet>().SetOwner(this);
         }
     }
 }

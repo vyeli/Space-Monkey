@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Actor
 {
     public static PlayerController instance;
 
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
-        
+        charController = GetComponent<CharacterController>();
     }
 
     

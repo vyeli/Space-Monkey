@@ -4,6 +4,7 @@ using UnityEngine;
 
 public interface IGun  {
     GameObject BulletPrefab { get; }
+    int Damage { get; }
     int CurrentBulletCount { get; }
     void Shoot();
 }

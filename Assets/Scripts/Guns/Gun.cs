@@ -9,6 +9,7 @@ public abstract class Gun : MonoBehaviour, IGun
     public Transform BulletContainer => throw new System.NotImplementedException();
     public Quaternion Rotation => _bulletRotation.rotation;
     public int CurrentBulletCount => _currentBulletCount;
+    public int Damage => _damage;
     #endregion
 
     #region PRIVATE_PROPERTIES
@@ -16,6 +17,7 @@ public abstract class Gun : MonoBehaviour, IGun
     [SerializeField] protected Transform _bulletRotation;
     [SerializeField] protected Transform _bulletContainer;
     [SerializeField] protected int _currentBulletCount = 10;
+    [SerializeField] protected int _damage = 1;
     #endregion
 
     #region UNITY_EVENTS

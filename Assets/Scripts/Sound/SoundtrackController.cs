@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+[RequireComponent(typeof(AudioSource))]
 public class SoundtrackController : MonoBehaviour, IListenable
 {
     #region ILISTENABLE_PROPERTIES
