@@ -8,7 +8,7 @@ public class Bullet : MonoBehaviour, IBullet
     #region I_BULLET_PROPERTIES
     public float Speed => _speed;
     public float LifeTime => _lifeTime;
-    public Collider collider => _collider;
+    new public Collider collider => _collider;
     public Rigidbody rb => _rigidbody;
     public IGun Owner => _owner;
     #endregion
@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour, IBullet
         _lifeTime -= Time.deltaTime;
         if (_lifeTime <= 0)
         {
-            Destroy(this.gameObject);
+            Die();
         }
     }
 
@@ -52,7 +52,10 @@ public class Bullet : MonoBehaviour, IBullet
         if (_layerMasks.Contains(other.gameObject.layer))
         {
             IDamageable damageable = other.gameObject.GetComponent<IDamageable>();
-            if (damageable != null) other.GetComponent<Actor>()?.TakeDamage(_owner.Damage);
+            if (damageable != null)
+            {
+                EventQueueManager.instance.AddCommand(new CmdTakeDamage(damageable, _owner.Damage));
+            }
 
             Die();
         }

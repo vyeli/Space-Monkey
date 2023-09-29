@@ -16,11 +16,11 @@ public abstract class Actor : MonoBehaviour, IDamageable
     #endregion
 
     #region UNITY_EVENTS
-    public void Start()
+    protected void Start()
     {
         _life = _maxLife;
     }
-    public void Update()
+    protected void Update()
     {
         
     }
@@ -30,6 +30,7 @@ public abstract class Actor : MonoBehaviour, IDamageable
     public void TakeDamage(int damage)
     {
         _life -= damage;
+        Debug.Log($"{name} has taken {damage} damage");
         if (_life <= 0)
         {
             Die();
@@ -37,7 +38,9 @@ public abstract class Actor : MonoBehaviour, IDamageable
     }
     public void Die()
     {
-        Destroy(gameObject);
+        Debug.Log($"{name} has died");
+        if (name.Equals("Player")) EventsManager.instance.EventGameOver(false);
+        else Destroy(gameObject);
     }
     #endregion
 

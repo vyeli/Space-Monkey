@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : Actor
+public class Player : Actor
 {
-    public static PlayerController instance;
+    public static Player instance;
 
     private void Awake()
     {
@@ -19,14 +19,13 @@ public class PlayerController : Actor
     public float rotateSpeed = 5f;
 
     // knockback
-    public bool isKocking;
+    public bool isKnocking;
     public float knockBackLength = .5f;
     private float knockBackCounter;
     public Vector2 knockBackPower;
 
     // public objects
     private Vector3 moveDirection;
-    public CharacterController charController;
     public Camera playerCamera;
     public GameObject playerModel;
     public Animator animator;
@@ -36,19 +35,65 @@ public class PlayerController : Actor
     public GameObject bulletExit;
     [SerializeField] private Transform _bulletContainer;
     [SerializeField] private Gun _gun;
+    private MovementController _movementController;
+
+    #region IMOVEABLE_PROPERTIES
+    public float Speed => moveSpeed;
+    #endregion
+
+    #region ACTION_KEYS
+    [SerializeField] private KeyCode _moveForwardKey = KeyCode.W;
+    [SerializeField] private KeyCode _moveBackwardKey = KeyCode.S;
+    [SerializeField] private KeyCode _moveRightKey = KeyCode.D;
+    [SerializeField] private KeyCode _moveLeftKey = KeyCode.A;
+    [SerializeField] private KeyCode _shootKey = KeyCode.Mouse0;
+    #endregion
+
+    #region MOVEMENT_COMMAND
+    private CmdMovement _cmdMoveForward;
+    private CmdMovement _cmdMoveBackward;
+    private CmdMovement _cmdMoveRight;
+    private CmdMovement _cmdMoveLeft;
+    private CmdShoot _cmdShoot;
+
+    private void InitMovementCommands()
+    {
+        _cmdMoveForward = new CmdMovement(_movementController, Vector3.forward);
+        _cmdMoveBackward = new CmdMovement(_movementController, Vector3.back);
+        _cmdMoveRight = new CmdMovement(_movementController, Vector3.right);
+        _cmdMoveLeft = new CmdMovement(_movementController, Vector3.left);
+    }
+    #endregion
 
     #region UNITY_EVENTS
     
-    void Start()
+    new void Start()
     {
-        charController = GetComponent<CharacterController>();
+        base.Start();
+        _movementController = GetComponent<MovementController>();
+        InitMovementCommands();
+
+        _cmdShoot = new CmdShoot(_gun);
     }
 
     
-    void Update()
+    new void Update()
     {
-        if (!isKocking)
+        base.Update();
+        if(Input.GetKeyDown(KeyCode.Return)) EventsManager.instance.EventGameOver(true);
+        if (Input.GetKeyDown(KeyCode.Backspace)) TakeDamage(1);
+        if (!isKnocking)
         {
+            if (Input.GetKey(_moveForwardKey)) EventQueueManager.instance.AddCommand(_cmdMoveForward);
+            if (Input.GetKey(_moveBackwardKey)) EventQueueManager.instance.AddCommand(_cmdMoveBackward);
+            if (Input.GetKey(_moveRightKey)) EventQueueManager.instance.AddCommand(_cmdMoveRight);
+            if (Input.GetKey(_moveLeftKey)) EventQueueManager.instance.AddCommand(_cmdMoveLeft);
+
+            float horizontalMovement = Input.GetAxisRaw("Horizontal");
+            float verticalMovement = Input.GetAxisRaw("Vertical");
+            moveDirection = new Vector3(horizontalMovement, 0f, verticalMovement);
+            // Movement without strategy pattern
+            /*
             float yStore = moveDirection.y;
 
             // move
@@ -71,6 +116,7 @@ public class PlayerController : Actor
             
 
             charController.Move(moveDirection * Time.deltaTime);
+            */
 
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) // if we are moving
             {
@@ -95,31 +141,36 @@ public class PlayerController : Actor
 
             moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
 
-            charController.Move(moveDirection * Time.deltaTime);
+            // charController.Move(moveDirection * Time.deltaTime);
 
             if (knockBackCounter <= 0)
             {
-                isKocking = false;
+                isKnocking = false;
             }
         }
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetKey(_shootKey))
         {
             animator.SetBool("Shoot", true);
         }
         else if (animator.GetBool("Shoot") == true)
         {
-            _gun.Shoot();
+            EventQueueManager.instance.AddCommand(_cmdShoot);
             animator.SetBool("Shoot", false);
         }
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
-        animator.SetBool("Grounded", charController.isGrounded);
+        animator.SetBool("Grounded", true);
+        // animator.SetBool("Grounded", charController.isGrounded);
     }
+    #endregion
+
+    #region IMOVEABLE_METHODS
+
     #endregion
 
     public void KnockBack()
     {
-        isKocking = true;
+        isKnocking = true;
         knockBackCounter = knockBackLength;
 
         moveDirection.y = knockBackPower.y;

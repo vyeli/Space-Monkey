@@ -33,19 +33,19 @@ public class HealthManager : MonoBehaviour
             invincibleCounter -= Time.deltaTime;
 
 
-            for(int i = 0; i < PlayerController.instance.playerPieces.Length; i++)
+            for(int i = 0; i < Player.instance.playerPieces.Length; i++)
             {
                 if (Mathf.Floor(invincibleCounter * 5f) % 2 == 0)
                 {
-                    PlayerController.instance.playerPieces[i].SetActive(true);
+                    Player.instance.playerPieces[i].SetActive(true);
                 } else
                 {
-                    PlayerController.instance.playerPieces[i].SetActive(false);
+                    Player.instance.playerPieces[i].SetActive(false);
                 }
 
                 if (invincibleCounter <= 0)
                 {
-                    PlayerController.instance.playerPieces[i].SetActive(true);
+                    Player.instance.playerPieces[i].SetActive(true);
                 }
             }
 
@@ -65,7 +65,7 @@ public class HealthManager : MonoBehaviour
                 GameManager.instance.RespawnPlayer();
             } else
             {
-                PlayerController.instance.KnockBack();
+                Player.instance.KnockBack();
                 invincibleCounter = invincibleLength;
             }
         }
