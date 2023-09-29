@@ -6,12 +6,6 @@ public class Player : Actor
 {
     public static Player instance;
 
-    private void Awake()
-    {
-       instance = this;
-    }
-
-
     // public variables
     public float moveSpeed;
     public float jumpForce;
@@ -31,14 +25,12 @@ public class Player : Actor
     public Animator animator;
     
     public GameObject[] playerPieces;
-    public GameObject bulletPrefab;
-    public GameObject bulletExit;
-    [SerializeField] private Transform _bulletContainer;
     [SerializeField] private Gun _gun;
+    [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
 
     #region IMOVEABLE_PROPERTIES
-    public float Speed => moveSpeed;
+    public float Speed => _playerStats.MovementSpeed;
     #endregion
 
     #region ACTION_KEYS
@@ -58,18 +50,24 @@ public class Player : Actor
 
     private void InitMovementCommands()
     {
-        _cmdMoveForward = new CmdMovement(_movementController, Vector3.forward);
-        _cmdMoveBackward = new CmdMovement(_movementController, Vector3.back);
-        _cmdMoveRight = new CmdMovement(_movementController, Vector3.right);
-        _cmdMoveLeft = new CmdMovement(_movementController, Vector3.left);
+        _cmdMoveForward = new CmdMovement(_movementController, Vector3.forward, _playerStats.MovementSpeed);
+        _cmdMoveBackward = new CmdMovement(_movementController, Vector3.back, _playerStats.MovementSpeed);
+        _cmdMoveRight = new CmdMovement(_movementController, Vector3.right, _playerStats.MovementSpeed);
+        _cmdMoveLeft = new CmdMovement(_movementController, Vector3.left, _playerStats.MovementSpeed);
     }
     #endregion
 
     #region UNITY_EVENTS
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
     
     new void Start()
     {
-        base.Start();
+        _life = _playerStats.MaxLife;       // TODO: Try move this to parent
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
 

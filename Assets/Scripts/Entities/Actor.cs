@@ -6,19 +6,20 @@ public abstract class Actor : MonoBehaviour, IDamageable
 {
 
     #region IDAMAGEABLE_PROPERTIES
-    public int MaxLife => _maxLife;
+    public int MaxLife => _entityStats.MaxLife;
     public int Life => _life;
     #endregion
 
     #region PRIVATE_PROPERTIES
-    [SerializeField] private int _maxLife = 5;
-    [SerializeField] private int _life;
+    public EntityStats EntityStats => _entityStats;
+    private EntityStats _entityStats;
+    [SerializeField] protected int _life;
     #endregion
 
     #region UNITY_EVENTS
     protected void Start()
     {
-        _life = _maxLife;
+        _life = MaxLife;
     }
     protected void Update()
     {

@@ -8,11 +8,11 @@ public class CmdMovement : ICommand
     private Vector3 _direction;
     private float _speed;
 
-    public CmdMovement(IMoveable moveable, Vector3 direction)
+    public CmdMovement(IMoveable moveable, Vector3 direction, float speed)
     {
         _moveable = moveable;
         _direction = direction;
-        _speed = moveable.Speed;
+        _speed = speed;
     }
 
     public void Execute()
