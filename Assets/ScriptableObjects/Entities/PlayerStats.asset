@@ -16,3 +16,4 @@ MonoBehaviour:
     MaxLife: 5
   _playerStats:
     MovementSpeed: 10
+    JumpForce: 10

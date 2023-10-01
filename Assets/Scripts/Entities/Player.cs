@@ -2,15 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementController), typeof(Rigidbody))]
 public class Player : Actor
 {
     public static Player instance;
-
-    // public variables
-    public float moveSpeed;
-    public float jumpForce;
-    public float gravityScale = 5f;
-    public float rotateSpeed = 5f;
 
     // knockback
     public bool isKnocking;
@@ -20,24 +15,23 @@ public class Player : Actor
 
     // public objects
     private Vector3 moveDirection;
-    public Camera playerCamera;
-    public GameObject playerModel;
     public Animator animator;
     
     public GameObject[] playerPieces;
     [SerializeField] private Gun _gun;
+    public PlayerStats PlayerStats => _playerStats;
     [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
-
-    #region IMOVEABLE_PROPERTIES
-    public float Speed => _playerStats.MovementSpeed;
-    #endregion
+    private Transform _groundCheck;
+    public Rigidbody Rigidbody => _rigidbody;
+    private Rigidbody _rigidbody;
 
     #region ACTION_KEYS
     [SerializeField] private KeyCode _moveForwardKey = KeyCode.W;
     [SerializeField] private KeyCode _moveBackwardKey = KeyCode.S;
     [SerializeField] private KeyCode _moveRightKey = KeyCode.D;
     [SerializeField] private KeyCode _moveLeftKey = KeyCode.A;
+    [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _shootKey = KeyCode.Mouse0;
     #endregion
 
@@ -46,14 +40,16 @@ public class Player : Actor
     private CmdMovement _cmdMoveBackward;
     private CmdMovement _cmdMoveRight;
     private CmdMovement _cmdMoveLeft;
+    private CmdMovement _cmdJump;
     private CmdShoot _cmdShoot;
 
     private void InitMovementCommands()
     {
-        _cmdMoveForward = new CmdMovement(_movementController, Vector3.forward, _playerStats.MovementSpeed);
-        _cmdMoveBackward = new CmdMovement(_movementController, Vector3.back, _playerStats.MovementSpeed);
-        _cmdMoveRight = new CmdMovement(_movementController, Vector3.right, _playerStats.MovementSpeed);
-        _cmdMoveLeft = new CmdMovement(_movementController, Vector3.left, _playerStats.MovementSpeed);
+        _cmdMoveForward = new CmdMovement(_movementController, Vector3.forward);
+        _cmdMoveBackward = new CmdMovement(_movementController, Vector3.back);
+        _cmdMoveRight = new CmdMovement(_movementController, Vector3.right);
+        _cmdMoveLeft = new CmdMovement(_movementController, Vector3.left);
+        _cmdJump = new CmdMovement(_movementController, Vector3.up);
     }
     #endregion
 
@@ -67,7 +63,8 @@ public class Player : Actor
     
     new void Start()
     {
-        _life = _playerStats.MaxLife;       // TODO: Try move this to parent
+        _life = _playerStats.MaxLife;
+        _rigidbody = GetComponent<Rigidbody>();
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
 
@@ -78,7 +75,7 @@ public class Player : Actor
     new void Update()
     {
         base.Update();
-        if(Input.GetKeyDown(KeyCode.Return)) EventsManager.instance.EventGameOver(true);
+        if (Input.GetKeyDown(KeyCode.Return)) EventsManager.instance.EventGameOver(true);
         if (Input.GetKeyDown(KeyCode.Backspace)) TakeDamage(1);
         if (!isKnocking)
         {
@@ -89,7 +86,7 @@ public class Player : Actor
 
             float horizontalMovement = Input.GetAxisRaw("Horizontal");
             float verticalMovement = Input.GetAxisRaw("Vertical");
-            moveDirection = new Vector3(horizontalMovement, 0f, verticalMovement);
+            moveDirection = new Vector3(horizontalMovement, 0f, verticalMovement).normalized;
             // Movement without strategy pattern
             /*
             float yStore = moveDirection.y;
@@ -112,9 +109,7 @@ public class Player : Actor
           
             moveDirection.y += Physics.gravity.y * Time.deltaTime * gravityScale;
             
-
             charController.Move(moveDirection * Time.deltaTime);
-            */
 
             if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0) // if we are moving
             {
@@ -128,7 +123,9 @@ public class Player : Actor
 
                 playerModel.transform.rotation = Quaternion.Slerp(playerModel.transform.rotation, newRotation, rotateSpeed * Time.deltaTime);
             }
+            */
         }
+        /*
         else
         {
             knockBackCounter -= Time.deltaTime;
@@ -146,6 +143,7 @@ public class Player : Actor
                 isKnocking = false;
             }
         }
+        */
         if (Input.GetKey(_shootKey))
         {
             animator.SetBool("Shoot", true);
@@ -157,13 +155,13 @@ public class Player : Actor
         }
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
-        animator.SetBool("Grounded", true);
-        // animator.SetBool("Grounded", charController.isGrounded);
+        animator.SetBool("Grounded", _movementController.IsGrounded());
     }
-    #endregion
 
-    #region IMOVEABLE_METHODS
-
+    public void FixedUpdate()
+    {
+        if (Input.GetKey(_jumpKey) && _movementController.IsGrounded()) _movementController.Jump();
+    }
     #endregion
 
     public void KnockBack()
