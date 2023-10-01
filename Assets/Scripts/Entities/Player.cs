@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementController), typeof(Rigidbody))]
+[RequireComponent(typeof(MovementController))]
 public class Player : Actor
 {
     public static Player instance;
@@ -22,6 +22,8 @@ public class Player : Actor
     public PlayerStats PlayerStats => _playerStats;
     [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
+    public CharacterController CharacterController => _characterController;
+    [SerializeField] private CharacterController _characterController;
     private Transform _groundCheck;
     public Rigidbody Rigidbody => _rigidbody;
     private Rigidbody _rigidbody;
@@ -64,7 +66,9 @@ public class Player : Actor
     new void Start()
     {
         _life = _playerStats.MaxLife;
-        _rigidbody = GetComponent<Rigidbody>();
+        UiManager.instance.healthText.text = _life.ToString();
+        // _rigidbody = GetComponent<Rigidbody>();
+        _characterController = GetComponent<CharacterController>();
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
 
@@ -83,6 +87,9 @@ public class Player : Actor
             if (Input.GetKey(_moveBackwardKey)) EventQueueManager.instance.AddCommand(_cmdMoveBackward);
             if (Input.GetKey(_moveRightKey)) EventQueueManager.instance.AddCommand(_cmdMoveRight);
             if (Input.GetKey(_moveLeftKey)) EventQueueManager.instance.AddCommand(_cmdMoveLeft);
+
+            if (Input.GetKey(_jumpKey) && _movementController.IsGrounded()) _movementController.Jump();
+            else _movementController.UpdateYSpeed();
 
             float horizontalMovement = Input.GetAxisRaw("Horizontal");
             float verticalMovement = Input.GetAxisRaw("Vertical");
@@ -156,11 +163,6 @@ public class Player : Actor
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
         animator.SetBool("Grounded", _movementController.IsGrounded());
-    }
-
-    public void FixedUpdate()
-    {
-        if (Input.GetKey(_jumpKey) && _movementController.IsGrounded()) _movementController.Jump();
     }
     #endregion
 

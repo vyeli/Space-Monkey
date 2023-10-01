@@ -24,10 +24,12 @@ public class HealthManager : MonoBehaviour
 
     void Update()
     {
+        /*
         if (UiManager.instance.healthText.text != currentHealth.ToString())
         {
             UiManager.instance.healthText.text = HealthManager.instance.currentHealth.ToString();
         }
+        */
         if (invincibleCounter > 0)
         {
             invincibleCounter -= Time.deltaTime;
