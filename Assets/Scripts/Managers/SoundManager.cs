@@ -20,9 +20,10 @@ public class SoundManager : MonoBehaviour
     #region EVENTS
     private void OnGameOver(bool isVictory)
     {
+        /*
         if (isVictory) _audioSource.PlayOneShot(_victory);
         else _audioSource.PlayOneShot(_defeat);
-        // Cambio de escena goes here
+        */
     }
     #endregion
 }

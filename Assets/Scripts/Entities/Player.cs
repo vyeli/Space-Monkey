@@ -22,11 +22,6 @@ public class Player : Actor
     public PlayerStats PlayerStats => _playerStats;
     [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
-    public CharacterController CharacterController => _characterController;
-    [SerializeField] private CharacterController _characterController;
-    private Transform _groundCheck;
-    public Rigidbody Rigidbody => _rigidbody;
-    private Rigidbody _rigidbody;
 
     #region ACTION_KEYS
     [SerializeField] private KeyCode _moveForwardKey = KeyCode.W;
@@ -67,8 +62,6 @@ public class Player : Actor
     {
         _life = _playerStats.MaxLife;
         UiManager.instance.healthText.text = _life.ToString();
-        // _rigidbody = GetComponent<Rigidbody>();
-        _characterController = GetComponent<CharacterController>();
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
 

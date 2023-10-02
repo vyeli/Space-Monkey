@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -78,8 +79,21 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = true;
         _isVictory = isVictory;
+        LoadCreditsScreen();
+        /*
         _gameOverMessage.text = _isVictory ? "You Win!" : "You Lose!";
         _gameOverMessage.color = _isVictory ? Color.green : Color.red;
+        */
+    }
+
+    public bool PlayerWon()
+    {
+        return _isVictory;
+    }
+
+    private void LoadCreditsScreen()
+    {
+        SceneManager.LoadScene("EndGame");
     }
     #endregion
 
