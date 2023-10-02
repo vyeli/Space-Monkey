@@ -16,6 +16,7 @@ public class SoundtrackController : MonoBehaviour, IListenable
     public TextMeshProUGUI songNameDisplayed;
     public Slider volumeSlider;
     public Button skipButton;
+    public Button pauseButton;
     private List<AudioClip> _clipsToPlay = new List<AudioClip>();
     [SerializeField] private AudioClip[] _soundtrackClips;
     #endregion
@@ -29,11 +30,13 @@ public class SoundtrackController : MonoBehaviour, IListenable
         Play();
     }
 
-    public void PlayOnShot() => throw new System.NotImplementedException();
+    public void PlayOneShot() => throw new System.NotImplementedException();
 
     public void Play() => AudioSource.Play();
 
     public bool IsPlaying() => AudioSource.isPlaying;
+    
+    public bool IsPaused() => !IsPlaying() && AudioSource.time > 0;
 
     public void Stop() => AudioSource.Stop();
     #endregion
@@ -45,19 +48,25 @@ public class SoundtrackController : MonoBehaviour, IListenable
         songNameDisplayed.text = AudioSource.clip.name;
         volumeSlider.value = AudioSource.volume;
         volumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = volumeSlider.value; });
-        skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); });
+        skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); Debug.Log("SKIPPPPP"); });
+        pauseButton.onClick.AddListener(delegate { TogglePauseState(); });
     }
 
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.M))
         {
+            
             AudioSource.mute = !AudioSource.mute;
         }
-        if (!IsPlaying() || Input.GetKeyDown(KeyCode.N))
+        if ((!IsPlaying() && !IsPaused()) || Input.GetKeyDown(KeyCode.N))
         {
             ShuffleNextSong();
             Play();
+        }
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            TogglePauseState();
         }
     }
     #endregion
@@ -89,6 +98,18 @@ public class SoundtrackController : MonoBehaviour, IListenable
         }
 
         return shuffledClips;
+    }
+
+    private void TogglePauseState()
+    {
+        if (!IsPaused())
+        {
+            AudioSource.Pause();
+        }
+        else
+        {
+            AudioSource.UnPause();
+        }
     }
     #endregion
 }

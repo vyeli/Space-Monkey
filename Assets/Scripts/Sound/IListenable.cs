@@ -7,7 +7,7 @@ public interface IListenable
     AudioSource AudioSource { get; }
 
     void InitAudioSource();
-    void PlayOnShot();
+    void PlayOneShot();
     void Play();
     void Stop();
 }
