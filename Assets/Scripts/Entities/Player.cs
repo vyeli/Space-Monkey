@@ -61,9 +61,9 @@ public class Player : Actor
     new void Start()
     {
         _life = _playerStats.MaxLife;
-        UiManager.instance.healthText.text = _life.ToString();
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
+        EventsManager.instance.CharacterLifeChange(_life);
 
         _cmdShoot = new CmdShoot(_gun);
     }

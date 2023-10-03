@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
+using static Enums;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,13 +18,8 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) 
-        {
-            instance = this; 
-        } else if (instance != this) 
-        {
-            Destroy(gameObject); 
-        }
+        if (instance != null) Destroy(this);
+        instance = this;
     }
 
     void Start()
@@ -51,13 +47,13 @@ public class GameManager : MonoBehaviour
 
         CameraController.instance.cinemachineBrain.enabled = false;
 
-        UiManager.instance.fadeToBlack = true;
+        // UiManager.instance.fadeToBlack = true;
 
         Instantiate(deathEffect, Player.instance.transform.position + new Vector3(0f, 1f, 0f), Player.instance.transform.rotation);
 
         yield return new WaitForSeconds(2f);
 
-        UiManager.instance.fadeFromBlack = true;
+        // UiManager.instance.fadeFromBlack = true;
 
         
         Player.instance.transform.position = respawnPosition;
@@ -87,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     private void LoadCreditsScreen()
     {
-        SceneManager.LoadScene("EndGame");
+        SceneManager.LoadScene((int)Levels.EndGame);
     }
     #endregion
 

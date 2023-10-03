@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static Enums;
 
 public class MainMenu : MonoBehaviour
 {
@@ -9,7 +10,6 @@ public class MainMenu : MonoBehaviour
     public float animationInterval = 4f;
     private float _timeElapsed = 0f;
     private int _previousAnimation = 3;     // Last animation played
-    private string _gameScene = "SampleScene";
 
     void Start()
     {
@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene(_gameScene);
+            SceneManager.LoadScene((int)Levels.Game);
         }
         if (isOnIdleAnimation())
         {

@@ -10,19 +10,15 @@ public class UiManager : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null) Destroy(this);
         instance = this;
+        EventsManager.instance.OnCharacterLifeChange += OnCharacterLifeChange;
+        EventsManager.instance.OnBulletCountChange += OnBulletCountChange;
     }
 
     public Image blackScreen;
     public float fadeSpeed = 1f;
     public bool fadeToBlack, fadeFromBlack;
-    public TextMeshProUGUI healthText, bulletCount;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -49,4 +45,22 @@ public class UiManager : MonoBehaviour
             }
         }
     }
+
+    #region HEALTH_UI_LOGIC
+    [SerializeField] private TextMeshProUGUI _characterLifeText;
+    private void OnCharacterLifeChange(int life)
+    {
+        _characterLifeText.text = life.ToString();
+    }
+    #endregion
+
+    #region BULLETS_UI_LOGIC
+    [SerializeField] private TextMeshProUGUI _bulletCountText;
+
+    private void OnBulletCountChange(int bulletCount)
+    {
+        _bulletCountText.text = bulletCount.ToString();
+        // Acá agrego el sonido, sfx de disparar (si hay)
+    }
+    #endregion
 }

@@ -18,18 +18,24 @@ public abstract class Gun : MonoBehaviour, IGun
     [SerializeField] protected GameObject _bulletPrefab;
     [SerializeField] protected Transform _bulletRotation;
     [SerializeField] protected Transform _bulletContainer;
-    [SerializeField] protected int _currentBulletCount = 10;
+    [SerializeField] protected int _currentBulletCount;
     #endregion
 
     #region UNITY_EVENTS
     private void Start()
     {
-        UiManager.instance.bulletCount.text = _currentBulletCount.ToString();
+        EventsManager.instance.BulletCountChange(_currentBulletCount);
     }
     #endregion
 
     #region IGUN_METHODS
     public virtual void Shoot() { }
     #endregion
+
+    protected void UpdateBulletCount()
+    {
+        _currentBulletCount--;
+        EventsManager.instance.BulletCountChange(_currentBulletCount);
+    }
 
 }

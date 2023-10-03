@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
 using UnityEngine.SceneManagement;
+using TMPro;
+using static Enums;
 
 [RequireComponent(typeof(AudioSource))]
 public class EndGameManager : MonoBehaviour
@@ -58,6 +59,6 @@ public class EndGameManager : MonoBehaviour
         }
     }
 
-    private void RestartGame() => SceneManager.LoadScene("SampleScene");
-    private void GoToMainMenu() => SceneManager.LoadScene("MainMenu");
+    private void RestartGame() => SceneManager.LoadScene((int)Levels.Game);
+    private void GoToMainMenu() => SceneManager.LoadScene((int)Levels.MainMenu);
 }

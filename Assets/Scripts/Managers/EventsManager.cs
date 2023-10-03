@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EventsManager : MonoBehaviour
 {
@@ -10,7 +11,8 @@ public class EventsManager : MonoBehaviour
     #region UNITY_EVENTS
     private void Awake()
     {
-        if (instance == null) instance = this;
+        if (instance != null) Destroy(this);
+        instance = this;
     }
     #endregion
 
@@ -21,5 +23,19 @@ public class EventsManager : MonoBehaviour
         if (OnGameOver != null) OnGameOver(isVictory);
     }
     #endregion
+
+    public event Action<int> OnCharacterLifeChange;
+
+    public void CharacterLifeChange(int life)
+    {
+        if (OnCharacterLifeChange != null) OnCharacterLifeChange(life);
+    }
+
+    public event Action<int> OnBulletCountChange;
+
+    public void BulletCountChange(int bulletCount)
+    {
+        if (OnBulletCountChange != null) OnBulletCountChange(bulletCount);
+    }
 
 }

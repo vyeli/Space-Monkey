@@ -32,7 +32,7 @@ public abstract class Actor : MonoBehaviour, IDamageable
     {
         _life -= damage;
         Debug.Log($"{name} has taken {damage} damage");
-        if (name.Equals("Player")) UiManager.instance.healthText.text = _life.ToString();
+        if (name.Equals("Player")) EventsManager.instance.CharacterLifeChange(_life);
         if (_life <= 0)
         {
             Die();

@@ -5,6 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
 {
+    public static SoundManager instance;
+
+    private void Awake()
+    {
+        if (instance != null) Destroy(this);
+        instance = this;
+    }
+
     [SerializeField] private AudioClip _victory;
     [SerializeField] private AudioClip _defeat;
     private AudioSource _audioSource;
