@@ -10,7 +10,6 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] private bool _isGameOver = false;
     [SerializeField] private bool _isVictory = false;
-    [SerializeField] private TextMeshProUGUI _gameOverMessage;
 
     public Vector3 respawnPosition;
 
@@ -30,7 +29,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         EventsManager.instance.OnGameOver += OnGameOver;
-        _gameOverMessage.text = string.Empty;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -80,10 +78,6 @@ public class GameManager : MonoBehaviour
         _isGameOver = true;
         _isVictory = isVictory;
         LoadCreditsScreen();
-        /*
-        _gameOverMessage.text = _isVictory ? "You Win!" : "You Lose!";
-        _gameOverMessage.color = _isVictory ? Color.green : Color.red;
-        */
     }
 
     public bool PlayerWon()
