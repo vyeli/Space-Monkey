@@ -16,6 +16,8 @@ public class EndGameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _gameOverMessage;
     [SerializeField] private Button _restartButton;
     [SerializeField] private Button _mainMenuButton;
+    [SerializeField] private GameObject[] _backgroundPlanets;
+    [SerializeField] private float _rotationSpeed;
 
     void Awake()
     {
@@ -46,6 +48,14 @@ public class EndGameManager : MonoBehaviour
         }
         _restartButton.onClick.AddListener(RestartGame);
         _mainMenuButton.onClick.AddListener(GoToMainMenu);
+    }
+
+    void Update()
+    {
+        foreach (GameObject planet in _backgroundPlanets)
+        {
+            planet.transform.Rotate(new Vector3(0, 0, 1), _rotationSpeed);
+        }
     }
 
     private void RestartGame() => SceneManager.LoadScene("SampleScene");

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.015345042, g: 0.014089553, b: 0.013037986, a: 1}
+  m_IndirectSpecularColor: {r: 0.014794309, g: 0.014161219, b: 0.013996177, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -372,6 +372,10 @@ MonoBehaviour:
   _gameOverMessage: {fileID: 768505015}
   _restartButton: {fileID: 652631841}
   _mainMenuButton: {fileID: 849372859}
+  _backgroundPlanets:
+  - {fileID: 1562045915}
+  - {fileID: 430332267}
+  _rotationSpeed: 0.1
 --- !u!4 &265144022
 Transform:
   m_ObjectHideFlags: 0
@@ -387,6 +391,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &430332267 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f235cb0b3fb77c340897ddb91e7f3fe9, type: 3}
+  m_PrefabInstance: {fileID: 150978799}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &445155280
 GameObject:
   m_ObjectHideFlags: 0
@@ -1361,6 +1370,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1562045915 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 4b933f77e2fd6a74797093219504d316, type: 3}
+  m_PrefabInstance: {fileID: 2020036940}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1563635749
 GameObject:
   m_ObjectHideFlags: 0

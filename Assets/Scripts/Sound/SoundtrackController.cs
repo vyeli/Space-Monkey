@@ -19,6 +19,9 @@ public class SoundtrackController : MonoBehaviour, IListenable
     public Button pauseButton;
     private List<AudioClip> _clipsToPlay = new List<AudioClip>();
     [SerializeField] private AudioClip[] _soundtrackClips;
+    [SerializeField] private Image _pauseImage;
+    [SerializeField] private Sprite _pauseSprite;
+    [SerializeField] private Sprite _playSprite;
     #endregion
 
     #region ILISTENABLE_METHODS
@@ -48,7 +51,7 @@ public class SoundtrackController : MonoBehaviour, IListenable
         songNameDisplayed.text = AudioSource.clip.name;
         volumeSlider.value = AudioSource.volume;
         volumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = volumeSlider.value; });
-        skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); Debug.Log("SKIPPPPP"); });
+        skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); });
         pauseButton.onClick.AddListener(delegate { TogglePauseState(); });
     }
 
@@ -56,7 +59,6 @@ public class SoundtrackController : MonoBehaviour, IListenable
     {
         if(Input.GetKeyDown(KeyCode.M))
         {
-            
             AudioSource.mute = !AudioSource.mute;
         }
         if ((!IsPlaying() && !IsPaused()) || Input.GetKeyDown(KeyCode.N))
@@ -105,10 +107,12 @@ public class SoundtrackController : MonoBehaviour, IListenable
         if (!IsPaused())
         {
             AudioSource.Pause();
+            _pauseImage.sprite = _playSprite;
         }
         else
         {
             AudioSource.UnPause();
+            _pauseImage.sprite = _pauseSprite;
         }
     }
     #endregion
