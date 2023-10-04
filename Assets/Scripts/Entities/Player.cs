@@ -7,7 +7,7 @@ public class Player : Actor
 {
     public static Player instance;
 
-    public float distanceToGround = 0.4f;
+    public float distanceToGround = 0.2f;
 
     // knockback
     public bool isKnocking;
