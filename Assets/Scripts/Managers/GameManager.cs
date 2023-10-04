@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private bool _isGameOver = false;
     [SerializeField] private bool _isVictory = false;
     [SerializeField] private bool _isPaused = false;
+    private CmdUnShoot _cmdUnShoot;
 
     public bool IsPaused => _isPaused;
 
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        _cmdUnShoot = new CmdUnShoot();
         ChangeCursorState(false);
         EventsManager.instance.OnGameOver += OnGameOver;
         EventsManager.instance.OnGameTogglePauseState += PauseGame;
@@ -104,6 +106,7 @@ public class GameManager : MonoBehaviour
 
     private void ChangePauseState(bool pause)
     {
+        if (!pause) EventQueueManager.instance.AddCommand(_cmdUnShoot);
         _isPaused = pause;
         Time.timeScale = pause ? 0f : 1f;
     }
@@ -118,7 +121,6 @@ public class GameManager : MonoBehaviour
     {
         ChangePauseState(pause);
         ChangeCursorState(pause);
-        if (!pause) EventQueueManager.instance.AddCommand(new CmdUnShoot());
     }
     #endregion
 

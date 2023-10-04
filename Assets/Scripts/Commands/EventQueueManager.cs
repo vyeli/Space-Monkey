@@ -37,6 +37,10 @@ public class EventQueueManager : MonoBehaviour
                     {
                         _eventQueue.Dequeue();
                     }
+                    else
+                    {
+                        Debug.Log("Next command is " + nextCommand.GetType().Name);
+                    }
                 }
                 command.Execute();
             }

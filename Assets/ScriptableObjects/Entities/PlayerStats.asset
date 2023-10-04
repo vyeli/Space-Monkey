@@ -17,3 +17,4 @@ MonoBehaviour:
   _playerStats:
     MovementSpeed: 10
     JumpForce: 10
+    RotationSpeed: 3

@@ -189,17 +189,11 @@ PrefabInstance:
       addedObject: {fileID: 3248506132451783077}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ec92b53ae84ba84b82564ded68decec, type: 3}
---- !u!114 &1738765201655340664 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 495330945889633067, guid: 6ec92b53ae84ba84b82564ded68decec, type: 3}
+--- !u!1 &1816893772047546301 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 560828039894395630, guid: 6ec92b53ae84ba84b82564ded68decec, type: 3}
   m_PrefabInstance: {fileID: 2233382323443244371}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4533e8c081ee1fc4589d7a7ef6011430, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &5209728811695700829 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6247123405976757774, guid: 6ec92b53ae84ba84b82564ded68decec, type: 3}
@@ -376,6 +370,10 @@ PrefabInstance:
       value: MusicVolume
       objectReference: {fileID: 0}
     - target: {fileID: 6644315167527998603, guid: 910c88a5f035c4448a74d8aec147518f, type: 3}
+      propertyPath: m_Value
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644315167527998603, guid: 910c88a5f035c4448a74d8aec147518f, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -386,14 +384,14 @@ PrefabInstance:
     - target: {fileID: 6644315167527998603, guid: 910c88a5f035c4448a74d8aec147518f, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1738765201655340664}
+      objectReference: {fileID: 1816893772047546301}
     - target: {fileID: 6644315167527998603, guid: 910c88a5f035c4448a74d8aec147518f, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6644315167527998603, guid: 910c88a5f035c4448a74d8aec147518f, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ChangeSoundVolume
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6644315167527998603, guid: 910c88a5f035c4448a74d8aec147518f, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

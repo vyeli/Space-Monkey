@@ -33,7 +33,7 @@ public class SoundManager : MonoBehaviour
     #endregion
 
     #region EVENTS
-    public void SoundVolumeChange(float volume) => _audioSource.volume = volume;
+    public void SoundVolumeChange() => _audioSource.volume = _soundVolumeSlider.value;
     private void OnGameOver(bool isVictory)
     {
         _audioSource.Stop();
