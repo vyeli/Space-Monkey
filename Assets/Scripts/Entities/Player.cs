@@ -28,10 +28,6 @@ public class Player : Actor
     private MovementController _movementController;
 
     #region ACTION_KEYS
-    [SerializeField] private KeyCode _moveForwardKey = KeyCode.W;
-    [SerializeField] private KeyCode _moveBackwardKey = KeyCode.S;
-    [SerializeField] private KeyCode _moveRightKey = KeyCode.D;
-    [SerializeField] private KeyCode _moveLeftKey = KeyCode.A;
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _shootKey = KeyCode.Mouse0;
     private bool _isPaused = false;

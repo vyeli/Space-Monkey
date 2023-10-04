@@ -38,9 +38,17 @@ public abstract class Actor : MonoBehaviour, IDamageable
     public void Die()
     {
         Debug.Log($"{name} has died");
-        if (name.Equals("Player")) EventsManager.instance.EventGameOver(false);
-        else Destroy(gameObject);
+        if (name.Equals("Player"))
+        {
+            EventsManager.instance.EventGameOver(false);
+        }
+        else
+        {
+            DieEffect();
+            Destroy(gameObject);
+        }
     }
+    public void DieEffect() { }
     #endregion
 
 }
