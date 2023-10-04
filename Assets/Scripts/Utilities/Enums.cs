@@ -7,7 +7,7 @@ public class Enums : MonoBehaviour
     public enum Levels
     {
         MainMenu,
-        Game,
+        Level1,
         EndGame,
     }
 }

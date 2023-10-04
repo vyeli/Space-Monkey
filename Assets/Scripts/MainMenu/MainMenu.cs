@@ -21,7 +21,7 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            SceneManager.LoadScene((int)Levels.Game);
+            GameLevelsManager.instance.LoadCurrentLevel();
         }
         if (isOnIdleAnimation())
         {

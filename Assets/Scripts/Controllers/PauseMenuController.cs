@@ -1,0 +1,14 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using static Enums;
+using UnityEngine.SceneManagement;
+
+public class PauseMenuController : MonoBehaviour
+{
+    public void ResumeGame() => EventsManager.instance.GameTogglePauseState(false);
+    public void OpenOptionsMenu() => UiManager.instance.OpenOptionsMenu();
+    public void ChangeSoundVolume(float volume) => SoundManager.instance.SoundVolumeChange(volume);
+    public void CloseOptionsMenu() => UiManager.instance.CloseOptionsMenu();
+    public void ReturnToMainMenu() => EventsManager.instance.EventBackToMainMenuFromGame();
+}

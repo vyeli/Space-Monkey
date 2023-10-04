@@ -30,6 +30,7 @@ public class Player : Actor
     [SerializeField] private KeyCode _moveLeftKey = KeyCode.A;
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _shootKey = KeyCode.Mouse0;
+    private bool _isPaused = false;
     #endregion
 
     #region MOVEMENT_COMMAND
@@ -63,6 +64,7 @@ public class Player : Actor
         _life = _playerStats.MaxLife;
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
+        UiManager.instance.UpdateCharacterLife(_life);
         EventsManager.instance.CharacterLifeChange(_life);
 
         _cmdShoot = new CmdShoot(_gun);

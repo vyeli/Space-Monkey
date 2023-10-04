@@ -12,8 +12,13 @@ public class UiManager : MonoBehaviour
     {
         if (instance != null) Destroy(this);
         instance = this;
+    }
+
+    private void Start()
+    {
         EventsManager.instance.OnCharacterLifeChange += OnCharacterLifeChange;
         EventsManager.instance.OnBulletCountChange += OnBulletCountChange;
+        EventsManager.instance.OnGameTogglePauseState += OnTogglePauseState;
     }
 
     public Image blackScreen;
@@ -50,6 +55,10 @@ public class UiManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _characterLifeText;
     private void OnCharacterLifeChange(int life)
     {
+        UpdateCharacterLife(life);
+    }
+    public void UpdateCharacterLife(int life)
+    {
         _characterLifeText.text = life.ToString();
     }
     #endregion
@@ -59,8 +68,29 @@ public class UiManager : MonoBehaviour
 
     private void OnBulletCountChange(int bulletCount)
     {
-        _bulletCountText.text = bulletCount.ToString();
-        // Acá agrego el sonido, sfx de disparar (si hay)
+        UpdateBulletCount(bulletCount);
     }
+
+    public void UpdateBulletCount(int bulletCount)
+    {
+        _bulletCountText.text = bulletCount.ToString();
+    }
+    #endregion
+
+    #region PAUSE_UI_LOGIC
+    [SerializeField] private GameObject _pauseMenu;
+    private void OnTogglePauseState(bool pause)
+    {
+        _pauseMenu.SetActive(pause);
+        if (_optionsMenu.activeSelf) _optionsMenu.SetActive(false);
+    }
+    [SerializeField] private GameObject _optionsMenu;
+    private void ToggleOptionsMenu(bool options)
+    {
+        _pauseMenu.SetActive(!options);
+        _optionsMenu.SetActive(options);
+    }
+    public void OpenOptionsMenu() => ToggleOptionsMenu(true);
+    public void CloseOptionsMenu() => ToggleOptionsMenu(false);
     #endregion
 }

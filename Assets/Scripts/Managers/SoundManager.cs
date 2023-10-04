@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioSource))]
 public class SoundManager : MonoBehaviour
@@ -13,8 +14,10 @@ public class SoundManager : MonoBehaviour
         instance = this;
     }
 
+    [SerializeField] private AudioClip _backgroundMusic;
     [SerializeField] private AudioClip _victory;
     [SerializeField] private AudioClip _defeat;
+    [SerializeField] private Slider _soundVolumeSlider;
     private AudioSource _audioSource;
 
     #region UNITY_EVENTS
@@ -22,13 +25,19 @@ public class SoundManager : MonoBehaviour
     {
         _audioSource = GetComponent<AudioSource>();
         EventsManager.instance.OnGameOver += OnGameOver;
+        _audioSource.clip = _backgroundMusic;
+        _audioSource.loop = true;
+        _soundVolumeSlider.value = _audioSource.volume;
+        _audioSource.Play();
     }
     #endregion
 
     #region EVENTS
+    public void SoundVolumeChange(float volume) => _audioSource.volume = volume;
     private void OnGameOver(bool isVictory)
     {
-        // Play win audio (if needed)
+        _audioSource.Stop();
+        _audioSource.loop = false;
     }
     #endregion
 }

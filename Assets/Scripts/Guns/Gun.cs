@@ -24,7 +24,8 @@ public abstract class Gun : MonoBehaviour, IGun
     #region UNITY_EVENTS
     private void Start()
     {
-        EventsManager.instance.BulletCountChange(_currentBulletCount);
+        // EventsManager.instance.BulletCountChange(_currentBulletCount);
+        UiManager.instance.UpdateBulletCount(_currentBulletCount);
     }
     #endregion
 

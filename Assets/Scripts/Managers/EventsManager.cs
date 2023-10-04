@@ -22,7 +22,12 @@ public class EventsManager : MonoBehaviour
     {
         if (OnGameOver != null) OnGameOver(isVictory);
     }
-    #endregion
+
+    public event Action OnBackToMainMenuFromGame;
+    public void EventBackToMainMenuFromGame()
+    {
+        if (OnBackToMainMenuFromGame != null) OnBackToMainMenuFromGame();
+    }
 
     public event Action<int> OnCharacterLifeChange;
 
@@ -37,5 +42,13 @@ public class EventsManager : MonoBehaviour
     {
         if (OnBulletCountChange != null) OnBulletCountChange(bulletCount);
     }
+
+    public event Action<bool> OnGameTogglePauseState;
+
+    public void GameTogglePauseState(bool pause)
+    {
+        if (OnGameTogglePauseState != null) OnGameTogglePauseState(pause);
+    }
+    #endregion
 
 }

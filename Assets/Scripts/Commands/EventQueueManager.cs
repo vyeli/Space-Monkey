@@ -28,10 +28,21 @@ public class EventQueueManager : MonoBehaviour
         if (_eventQueue.Count > 0)
         {
             ICommand command = _eventQueue.Dequeue();
+            if (!GameManager.instance.IsPaused)
+            {
+                if (command is CmdUnShoot && _eventQueue.Count > 0)
+                {
+                    ICommand nextCommand = _eventQueue.Peek();
+                    if (nextCommand is CmdShoot)
+                    {
+                        _eventQueue.Dequeue();
+                    }
+                }
+                command.Execute();
+            }
             // Acá va la lógica de los comandos
             // Ej: si el tipo está stuneado ignorar los inputs de movimiento
             // if (command is CmdMovement && isStunned) continue;
-            command.Execute();
         }
     }
 

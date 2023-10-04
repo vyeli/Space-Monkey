@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.012965872, g: 0.012475303, b: 0.012192529, a: 1}
+  m_IndirectSpecularColor: {r: 0.014830113, g: 0.0136871645, b: 0.012691492, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,6 +251,7 @@ GameObject:
   m_Component:
   - component: {fileID: 265144022}
   - component: {fileID: 265144021}
+  - component: {fileID: 265144023}
   - component: {fileID: 265144020}
   m_Layer: 0
   m_Name: Systems Manager
@@ -391,6 +392,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &265144023
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 265144019}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f46351607f50a4da7658df2423f77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &430332267 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f235cb0b3fb77c340897ddb91e7f3fe9, type: 3}
@@ -733,11 +746,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4110139297503539860, guid: 0c95d527061deaf46b3e65db6e8e19a2, type: 3}
       propertyPath: m_Color.g
-      value: 0.75245714
+      value: 0.98137075
       objectReference: {fileID: 0}
     - target: {fileID: 4110139297503539860, guid: 0c95d527061deaf46b3e65db6e8e19a2, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.504717
       objectReference: {fileID: 0}
     - target: {fileID: 4110139297503539860, guid: 0c95d527061deaf46b3e65db6e8e19a2, type: 3}
       propertyPath: m_Material
@@ -1076,11 +1089,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4110139297503539860, guid: 0c95d527061deaf46b3e65db6e8e19a2, type: 3}
       propertyPath: m_Color.g
-      value: 0.78801894
+      value: 0.9011098
       objectReference: {fileID: 0}
     - target: {fileID: 4110139297503539860, guid: 0c95d527061deaf46b3e65db6e8e19a2, type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 0.5330188
       objectReference: {fileID: 0}
     - target: {fileID: 8966011145326141394, guid: 0c95d527061deaf46b3e65db6e8e19a2, type: 3}
       propertyPath: m_Transition
@@ -1427,7 +1440,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0.59077597, b: 1, a: 1}
+  m_Color: {r: 0, g: 0.91283536, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

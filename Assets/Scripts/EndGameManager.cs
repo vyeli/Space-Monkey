@@ -34,8 +34,6 @@ public class EndGameManager : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
         if (GameManager.instance.PlayerWon())
         {
             _audioSource.PlayOneShot(_victory);
@@ -59,6 +57,6 @@ public class EndGameManager : MonoBehaviour
         }
     }
 
-    private void RestartGame() => SceneManager.LoadScene((int)Levels.Game);
-    private void GoToMainMenu() => SceneManager.LoadScene((int)Levels.MainMenu);
+    private void RestartGame() => GameLevelsManager.instance.LoadCurrentLevel();
+    private void GoToMainMenu() => GameLevelsManager.instance.LoadMainMenu();
 }

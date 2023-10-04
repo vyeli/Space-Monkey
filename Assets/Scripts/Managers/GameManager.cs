@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     [SerializeField] private bool _isGameOver = false;
     [SerializeField] private bool _isVictory = false;
+    [SerializeField] private bool _isPaused = false;
+
+    public bool IsPaused => _isPaused;
 
     public Vector3 respawnPosition;
 
@@ -24,16 +27,21 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+        ChangeCursorState(false);
         EventsManager.instance.OnGameOver += OnGameOver;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        EventsManager.instance.OnGameTogglePauseState += PauseGame;
+        EventsManager.instance.OnBackToMainMenuFromGame += OnBackToMainMenuFromGame;
 
         respawnPosition = Player.instance.transform.position;
     }
 
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            _isPaused = !_isPaused;
+            EventsManager.instance.GameTogglePauseState(_isPaused);
+        }
     }
 
     public void RespawnPlayer()
@@ -73,7 +81,15 @@ public class GameManager : MonoBehaviour
     {
         _isGameOver = true;
         _isVictory = isVictory;
+        ChangeCursorState(true);
         LoadCreditsScreen();
+    }
+
+    private void OnBackToMainMenuFromGame()
+    {
+        ChangeCursorState(true);
+        ChangePauseState(false);
+        GameLevelsManager.instance.LoadMainMenu();
     }
 
     public bool PlayerWon()
@@ -83,7 +99,26 @@ public class GameManager : MonoBehaviour
 
     private void LoadCreditsScreen()
     {
-        SceneManager.LoadScene((int)Levels.EndGame);
+        GameLevelsManager.instance.LoadEndGame();
+    }
+
+    private void ChangePauseState(bool pause)
+    {
+        _isPaused = pause;
+        Time.timeScale = pause ? 0f : 1f;
+    }
+
+    private void ChangeCursorState(bool visible)
+    {
+        Cursor.visible = visible;
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+    }
+
+    private void PauseGame(bool pause)
+    {
+        ChangePauseState(pause);
+        ChangeCursorState(pause);
+        if (!pause) EventQueueManager.instance.AddCommand(new CmdUnShoot());
     }
     #endregion
 
