@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [RequireComponent(typeof(Player), typeof(CharacterController))]
@@ -7,6 +8,7 @@ public class MovementController : MonoBehaviour, IMoveable, IJumpable
 {
     #region I_PROPERTIES
     public float Speed => GetComponent<Player>().PlayerStats.MovementSpeed;
+    public float RotationSpeed => GetComponent<Player>().PlayerStats.RotationSpeed;
     public float JumpForce => GetComponent<Player>().PlayerStats.JumpForce;
     #endregion
 
@@ -18,12 +20,19 @@ public class MovementController : MonoBehaviour, IMoveable, IJumpable
     
     public void Move(Vector3 direction)
     {
-        Vector3 cameraDirection = _playerCamera.transform.TransformDirection(direction);
-        cameraDirection.Normalize();
-        cameraDirection.y = 0;
-        _characterController.Move(cameraDirection * Time.deltaTime * Speed);
+        
+        direction *= Speed;
+
+        _characterController.Move(direction * Time.deltaTime);
+
         transform.rotation = Quaternion.Euler(0f, _playerCamera.transform.rotation.eulerAngles.y, 0f);
-        _playerModel.transform.rotation = Quaternion.Slerp(_playerModel.transform.rotation, Quaternion.LookRotation(cameraDirection), Speed * Time.deltaTime);
+        Vector3 lookRotation = new Vector3(direction.x, 0f, direction.z);
+        Quaternion newRotation = new Quaternion(lookRotation.x, lookRotation.y, lookRotation.z, 0f);
+        if (lookRotation != Vector3.zero)
+        {
+            newRotation = Quaternion.LookRotation(lookRotation);
+        }
+        _playerModel.transform.rotation = Quaternion.Slerp(_playerModel.transform.rotation, newRotation, RotationSpeed * Time.deltaTime);
     }
 
     public void Jump()

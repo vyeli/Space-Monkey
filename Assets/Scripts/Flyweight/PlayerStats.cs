@@ -9,6 +9,8 @@ public class PlayerStats : EntityStats
 
     public float MovementSpeed => _playerStats.MovementSpeed;
     public float JumpForce => _playerStats.JumpForce;
+
+    public float RotationSpeed => _playerStats.RotationSpeed;
 }
 
 [System.Serializable]
@@ -16,4 +18,5 @@ public struct PlayerStatsValues
 {
     public float MovementSpeed;
     public float JumpForce;
+    public float RotationSpeed;
 }

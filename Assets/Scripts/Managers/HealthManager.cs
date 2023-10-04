@@ -67,7 +67,8 @@ public class HealthManager : MonoBehaviour
                 GameManager.instance.RespawnPlayer();
             } else
             {
-                Player.instance.KnockBack();
+                // TODO: Knockback
+                // Player.instance.KnockBack();
                 invincibleCounter = invincibleLength;
             }
         }
