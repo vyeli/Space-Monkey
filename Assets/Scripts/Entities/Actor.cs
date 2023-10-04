@@ -7,7 +7,7 @@ public abstract class Actor : MonoBehaviour, IDamageable
 
     #region IDAMAGEABLE_PROPERTIES
     public int MaxLife => _entityStats.MaxLife;
-    public int Life => _life;
+    public int Life { get => _life; set => _life = value; }
     #endregion
 
     #region PRIVATE_PROPERTIES

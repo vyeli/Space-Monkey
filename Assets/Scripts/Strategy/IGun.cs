@@ -5,6 +5,6 @@ using UnityEngine;
 public interface IGun  {
     GameObject BulletPrefab { get; }
     int Damage { get; }
-    int CurrentBulletCount { get; }
+    int CurrentBulletCount { get; set; }
     void Shoot();
 }

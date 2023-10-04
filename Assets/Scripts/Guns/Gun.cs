@@ -10,7 +10,7 @@ public abstract class Gun : MonoBehaviour, IGun
     public GameObject BulletPrefab => _bulletPrefab;
     public Transform BulletContainer => _bulletContainer;
     public Quaternion Rotation => _bulletRotation.rotation;
-    public int CurrentBulletCount => _currentBulletCount;
+    public int CurrentBulletCount { get => _currentBulletCount; set => _currentBulletCount = value; }
     public int Damage => _gunStats.Damage;
     #endregion
 

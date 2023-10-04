@@ -491,7 +491,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _isGameOver: 0
   _isVictory: 0
-  _gameOverMessage: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   deathEffect: {fileID: 361193330533286165, guid: 0e6eac6d754cf2d409f598e9d3a66555, type: 3}
 --- !u!114 &9102023423867513534
@@ -1109,7 +1108,6 @@ GameObject:
   - component: {fileID: 9035991473452885049}
   - component: {fileID: 9028646348811165395}
   - component: {fileID: 3523116168724451067}
-  - component: {fileID: 9176418463315114711}
   - component: {fileID: 6664057264705164124}
   m_Layer: 6
   m_Name: Player
@@ -1147,23 +1145,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9bc997d8dbb354fb7bd074c750311b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxLife: 5
   _life: 0
-  moveSpeed: 10
-  jumpForce: 10
-  gravityScale: 1.2
-  rotateSpeed: 5
   isKnocking: 0
   knockBackLength: 0.5
   knockBackPower: {x: 0, y: 0}
-  playerCamera: {fileID: 4350081123208897034}
-  playerModel: {fileID: 1353826868536030208}
   animator: {fileID: 2115251748534748962}
   playerPieces: []
-  bulletPrefab: {fileID: 0}
-  bulletExit: {fileID: 2524583184616086700}
-  _bulletContainer: {fileID: 7342616169252065107}
   _gun: {fileID: 6490889496868761666}
+  _playerStats: {fileID: 0}
+  _moveForwardKey: 119
+  _moveBackwardKey: 115
+  _moveRightKey: 100
+  _moveLeftKey: 97
+  _jumpKey: 32
+  _shootKey: 323
 --- !u!143 &3523116168724451067
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1190,33 +1185,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 1.35, z: 0}
---- !u!54 &9176418463315114711
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7656501361838104867}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &6664057264705164124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1229,8 +1197,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d700904397da7b64682bb02abeb8afee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speed: 10
-  characterController: {fileID: 3523116168724451067}
+  _playerCamera: {fileID: 4350081123208897034}
+  _playerModel: {fileID: 1353826868536030208}
+  _gravityScale: 1
 --- !u!1 &8787738959334803335
 GameObject:
   m_ObjectHideFlags: 3
@@ -1715,8 +1684,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ecfe8066715ee14a8e5b50a08b811c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gunStats: {fileID: 0}
   _bulletPrefab: {fileID: 0}
   _bulletRotation: {fileID: 1838052427048709818}
   _bulletContainer: {fileID: 7342616169252065107}
   _currentBulletCount: 10
-  _damage: 1
