@@ -19,6 +19,7 @@ public class MovementController : MonoBehaviour, IMoveable, IJumpable
     public void Move(Vector3 direction)
     {
         Vector3 cameraDirection = _playerCamera.transform.TransformDirection(direction);
+        cameraDirection.Normalize();
         cameraDirection.y = 0;
         _characterController.Move(cameraDirection * Time.deltaTime * Speed);
         transform.rotation = Quaternion.Euler(0f, _playerCamera.transform.rotation.eulerAngles.y, 0f);

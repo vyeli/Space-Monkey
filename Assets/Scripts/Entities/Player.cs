@@ -20,6 +20,8 @@ public class Player : Actor
     public GameObject[] playerPieces;
     [SerializeField] private Gun _gun;
     public PlayerStats PlayerStats => _playerStats;
+    public override EntityStats EntityStats => PlayerStats;
+
     [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
 
@@ -58,9 +60,10 @@ public class Player : Actor
         else Destroy(gameObject);
     }
     
-    new void Start()
+    protected override void Start()
     {
-        _life = _playerStats.MaxLife;
+        base.Start();
+
         _movementController = GetComponent<MovementController>();
         InitMovementCommands();
         EventsManager.instance.CharacterLifeChange(_life);
@@ -69,11 +72,8 @@ public class Player : Actor
     }
 
     
-    new void Update()
+    void Update()
     {
-        base.Update();
-        if (Input.GetKeyDown(KeyCode.Return)) EventsManager.instance.EventGameOver(true);
-        if (Input.GetKeyDown(KeyCode.Backspace)) TakeDamage(1);
         if (!isKnocking)
         {
             if (Input.GetKey(_moveForwardKey)) EventQueueManager.instance.AddCommand(_cmdMoveForward);
