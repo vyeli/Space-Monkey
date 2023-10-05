@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-[RequireComponent(typeof(Player), typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController))]
 public class MovementController : MonoBehaviour, IMoveable, IJumpable
 {
     #region I_PROPERTIES
-    public float Speed => GetComponent<Player>().PlayerStats.MovementSpeed;
-    public float RotationSpeed => GetComponent<Player>().PlayerStats.RotationSpeed;
-    public float JumpForce => GetComponent<Player>().PlayerStats.JumpForce;
+    public float Speed => Player.instance.PlayerStats.MovementSpeed;
+    public float RotationSpeed => Player.instance.PlayerStats.RotationSpeed;
+    public float JumpForce => Player.instance.PlayerStats.JumpForce;
     #endregion
 
     [SerializeField] private Camera _playerCamera;
@@ -20,7 +20,6 @@ public class MovementController : MonoBehaviour, IMoveable, IJumpable
     
     public void Move(Vector3 direction)
     {
-        
         direction *= Speed;
 
         _characterController.Move(direction * Time.deltaTime);
