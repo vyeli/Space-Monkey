@@ -106,4 +106,11 @@ public class Player : Actor
     {
         return Physics.Raycast(transform.position, Vector3.down, distanceToGround);
     }
+
+    public override void TakeDamage(int damage)
+    {
+        base.TakeDamage(damage);
+        EventsManager.instance.CharacterLifeChange(_life);
+    }
+
 }

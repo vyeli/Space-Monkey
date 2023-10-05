@@ -25,11 +25,10 @@ public abstract class Actor : MonoBehaviour, IDamageable
     #endregion
 
     #region IDAMAGEABLE_METHODS
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
         _life -= damage;
         Debug.Log($"{name} has taken {damage} damage");
-        if (name.Equals("Player")) EventsManager.instance.CharacterLifeChange(_life);
         if (_life <= 0)
         {
             Die();
@@ -45,10 +44,12 @@ public abstract class Actor : MonoBehaviour, IDamageable
         else
         {
             DieEffect();
-            Destroy(gameObject);
         }
     }
-    public void DieEffect() { }
+    public virtual void DieEffect()
+    {
+        Destroy(gameObject);
+    }
     #endregion
 
 }

@@ -10,4 +10,13 @@ public class Enums : MonoBehaviour
         Level1,
         EndGame,
     }
+
+    public enum AIState
+    {
+        Idle,
+        Patrol,
+        Chase,
+        Attack,
+        Dead,
+    }
 }

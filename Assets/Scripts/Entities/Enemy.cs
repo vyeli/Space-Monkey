@@ -2,90 +2,187 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static Enums;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Enemy : Actor
 {
-    public override EntityStats EntityStats => _entityStats;
-    [SerializeField] private EntityStats _entityStats;
+    public override EntityStats EntityStats => _enemyStats;
+
     [SerializeField] private Transform[] _patrolPoints;
-    private int _currentPatrolPoint;
+    [SerializeField] private EnemyStats _enemyStats;
+    [SerializeField] private Animator _animator;
+
+    private NavMeshAgent _agent;
     private AIState _currentState;
     private float _currentActionTime;
-
-    #region ENEMY_STATS
-    [SerializeField] private float _speed;
-    [SerializeField] private float _idleWaitTime;
-    [SerializeField] private Animator _animator;
-    private NavMeshAgent _agent;
-    #endregion
-
-    private enum AIState
-    {
-        Idle,
-        Patrol,
-        Chase,
-        Attack,
-    }
+    private float _distanceToPlayer;
+    private int _currentPatrolPoint;
     
+
     #region UNITY_EVENTS
+
     protected override void Start()
     {
         base.Start();
-        _agent = GetComponent<NavMeshAgent>();
-        _currentState = AIState.Patrol;
+        InitializeAgent();
+        _currentState = AIState.Idle;
         _currentPatrolPoint = 0;
+    }
+
+    private void InitializeAgent()
+    {
+        _agent = GetComponent<NavMeshAgent>();
+        _agent.speed = _enemyStats.Speed;
+        _agent.stoppingDistance = _enemyStats.PatrolPointStoppingDistance;
     }
 
     void Update()
     {
-        switch(_currentState)
+        if (_currentState != AIState.Dead)
+        {
+            _distanceToPlayer = Vector3.Distance(transform.position, Player.instance.transform.position);
+
+            if (_distanceToPlayer > _enemyStats.AttackRange && _distanceToPlayer < _enemyStats.ChaseRange)
+            {
+                StartChasing();
+            }
+        }
+
+        switch (_currentState)
         {
             case AIState.Idle:
-                Idle();
+                UpdateIdle();
                 break;
             case AIState.Patrol:
-                Patrol();
+                UpdatePatrol();
                 break;
             case AIState.Chase:
-                Chase();
+                UpdateChase();
                 break;
             case AIState.Attack:
-                Attack();
+                UpdateAttack();
                 break;
-            default:
+            case AIState.Dead:
+                WaitForDespawn();
                 break;
         }
     }
+
     #endregion
 
-    public void Idle()
+    private void StartChasing()
+    {
+        _animator.SetBool("IsMoving", true);
+        _currentState = AIState.Chase;
+        _agent.isStopped = false;
+    }
+
+    private void UpdateIdle()
     {
         _currentActionTime += Time.deltaTime;
-        if (_currentActionTime > _idleWaitTime)
+        if (_currentActionTime > _enemyStats.IdleWaitTime)
         {
-            _currentActionTime = 0;
-            _currentState = AIState.Patrol;
+            StartPatrolling();
         }
     }
 
-    public void Patrol()
+    private void StartPatrolling()
+    {
+        _animator.SetBool("IsMoving", true);
+        _currentState = AIState.Patrol;
+        _currentActionTime = 0;
+    }
+
+    private void UpdatePatrol()
     {
         _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
-        if (_agent.remainingDistance <= .2f)
+
+        if (_agent.remainingDistance != 0 && _agent.remainingDistance < _agent.stoppingDistance)
         {
+            _animator.SetBool("IsMoving", false);
+            StartIdle();
             _currentPatrolPoint = (_currentPatrolPoint + 1) % _patrolPoints.Length;
-            _currentState = AIState.Idle;
         }
     }
 
-    public void Chase()
+    private void StartIdle()
     {
-
+        _currentState = AIState.Idle;
+        _agent.isStopped = false;
+        _agent.SetDestination(transform.position);
     }
 
-    public void Attack()
+    private void UpdateChase()
     {
+        _agent.SetDestination(Player.instance.transform.position);
 
+        if (_distanceToPlayer < _enemyStats.AttackRange)
+        {
+            _animator.SetBool("IsMoving", false);
+            StartAttacking();
+            _agent.isStopped = true;
+            _currentActionTime = _enemyStats.AttackCooldownTime;
+        }
+
+        if (_distanceToPlayer > _enemyStats.ChaseRange)
+        {
+            _animator.SetBool("IsMoving", false);
+            StartIdle();
+        }
+    }
+
+    private void StartAttacking()
+    {
+        transform.LookAt(Player.instance.transform, Vector3.up);
+        transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+        _currentState = AIState.Attack;
+    }
+
+    private void UpdateAttack()
+    {
+        _currentActionTime += Time.deltaTime;
+
+        if (_currentActionTime > _enemyStats.AttackCooldownTime)
+        {
+            if (_distanceToPlayer < _enemyStats.AttackRange)
+            {
+                _animator.SetTrigger("Attack");
+                Player.instance.TakeDamage(_enemyStats.Damage);
+            }
+            else
+            {
+                StartIdle();
+            }
+
+            _currentActionTime = 0;
+        }
+    }
+
+    public override void DieEffect()
+    {
+        _animator.SetBool("IsDead", true);
+        _currentState = AIState.Dead;
+        _agent.isStopped = true;
+        _currentActionTime = 0;
+    }
+
+    private void WaitForDespawn()
+    {
+        _currentActionTime += Time.deltaTime;
+
+        if (_currentActionTime > _enemyStats.DespawnCooldownTime)
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    // Para visualizar rangos en el editor
+    private void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _enemyStats.AttackRange);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, _enemyStats.ChaseRange);
     }
 }
