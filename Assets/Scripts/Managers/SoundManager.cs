@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,34 +8,56 @@ public class SoundManager : MonoBehaviour
 
     private void Awake()
     {
-        if (instance != null) Destroy(this);
+        if (instance != null)
+        {
+            Destroy(this.gameObject);
+        }
         instance = this;
     }
 
     [SerializeField] private AudioClip _backgroundMusic;
     [SerializeField] private AudioClip _victory;
     [SerializeField] private AudioClip _defeat;
-    [SerializeField] private Slider _soundVolumeSlider;
-    private AudioSource _audioSource;
+
+    [SerializeField] private Slider _musicVolumeSlider;
+    [SerializeField] private Slider _sfxVolumeSlider;
+
+    private AudioSource _musicAudioSource;
+    private AudioSource _sfxAudioSource;
 
     #region UNITY_EVENTS
     private void Start()
     {
-        _audioSource = GetComponent<AudioSource>();
+        _musicAudioSource = gameObject.AddComponent<AudioSource>();
+        _sfxAudioSource = gameObject.AddComponent<AudioSource>();
+
+        _musicAudioSource.clip = _backgroundMusic;
+        _musicAudioSource.loop = true;
+        _musicAudioSource.volume = _musicVolumeSlider.value;
+
+        _sfxAudioSource.volume = _sfxVolumeSlider.value;
+
         EventsManager.instance.OnGameOver += OnGameOver;
-        _audioSource.clip = _backgroundMusic;
-        _audioSource.loop = true;
-        _soundVolumeSlider.value = _audioSource.volume;
-        _audioSource.Play();
+
+        _musicAudioSource.Play();
     }
     #endregion
 
     #region EVENTS
-    public void SoundVolumeChange() => _audioSource.volume = _soundVolumeSlider.value;
+    public void MusicVolumeChange()
+    {
+        _musicAudioSource.volume = _musicVolumeSlider.value;
+    }
+
+    public void SFXVolumeChange()
+    {
+        _sfxAudioSource.volume = _sfxVolumeSlider.value;
+    }
+
     private void OnGameOver(bool isVictory)
     {
-        _audioSource.Stop();
-        _audioSource.loop = false;
+        _musicAudioSource.Stop();
+        _musicAudioSource.loop = false;
     }
     #endregion
 }

@@ -20,7 +20,7 @@ public class Player : Actor
     public Animator animator;
 
     public GameObject[] playerPieces;
-    [SerializeField] private Gun _gun;
+    [SerializeField] public Gun _gun;
     public PlayerStats PlayerStats => _playerStats;
     public override EntityStats EntityStats => PlayerStats;
 
@@ -80,17 +80,17 @@ public class Player : Actor
                 EventQueueManager.instance.AddCommand(_cmdMove);
             }
 
-            // Debug.Log("Player is grounded: " + IsGrounded());
-
             if (Input.GetKey(_jumpKey) && IsGrounded()) _movementController.Jump();
             else if (!IsGrounded()) _movementController.UpdateYSpeed();
 
-            if (Input.GetKey(_shootKey))
+            if (Input.GetKey(_shootKey) && !animator.GetBool("Shoot"))
             {
                 animator.SetBool("Shoot", true);
+ 
             }
-            else if (animator.GetBool("Shoot") == true)
+            else if (animator.GetBool("Shoot") && Input.GetKeyUp(_shootKey))
             {
+                _cmdShoot = new CmdShoot(_gun);
                 EventQueueManager.instance.AddCommand(_cmdShoot);
                 animator.SetBool("Shoot", false);
             }
