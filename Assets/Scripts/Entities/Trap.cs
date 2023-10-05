@@ -15,7 +15,7 @@ public class Trap : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)

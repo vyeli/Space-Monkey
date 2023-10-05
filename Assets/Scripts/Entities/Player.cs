@@ -7,30 +7,26 @@ public class Player : Actor
 {
     public static Player instance;
 
-    public float distanceToGround = 0.2f;
-
     // knockback
-    public bool isKnocking;
-    public float knockBackLength = .5f;
-    private float knockBackCounter;
-    public Vector2 knockBackPower;
+    [SerializeField] private Vector2 _knockBackPower;
+    [SerializeField] private float _knockBackLength;
+    [SerializeField] private float _distanceToGround;
+    [SerializeField] private GameObject[] _playerPieces;
 
     // public objects
     private Vector3 moveDirection;
     public Animator animator;
-
-    public GameObject[] playerPieces;
     [SerializeField] public Gun _gun;
     public PlayerStats PlayerStats => _playerStats;
     public override EntityStats EntityStats => PlayerStats;
 
     [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
+    private bool _isKnocking;
 
     #region ACTION_KEYS
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
     [SerializeField] private KeyCode _shootKey = KeyCode.Mouse0;
-    private bool _isPaused = false;
     #endregion
 
     #region MOVEMENT_COMMAND
@@ -39,9 +35,10 @@ public class Player : Actor
 
     private CmdShoot _cmdShoot;
 
-    private void InitMovementCommands()
+    private void InitCommands()
     {
         _cmdJump = new CmdMovement(_movementController, Vector3.up);
+        _cmdShoot = new CmdShoot(_gun);
     }
     #endregion
 
@@ -58,59 +55,72 @@ public class Player : Actor
         base.Start();
 
         _movementController = GetComponent<MovementController>();
-        InitMovementCommands();
+        InitCommands();
         UiManager.instance.UpdateCharacterLife(_life);
         EventsManager.instance.CharacterLifeChange(_life);
-
-        _cmdShoot = new CmdShoot(_gun);
     }
 
     
     void Update()
-    { 
-        if (!isKnocking)
+    {
+        if (_isKnocking)
         {
-
-            moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
-            moveDirection.Normalize();
-
-            if (moveDirection != Vector3.zero)
-            {
-                _cmdMove = new CmdMovement(_movementController, moveDirection);
-                EventQueueManager.instance.AddCommand(_cmdMove);
-            }
-
-            if (Input.GetKey(_jumpKey) && IsGrounded()) _movementController.Jump();
-            else if (!IsGrounded()) _movementController.UpdateYSpeed();
-
-            if (Input.GetKey(_shootKey) && !animator.GetBool("Shoot"))
-            {
-                animator.SetBool("Shoot", true);
- 
-            }
-            else if (animator.GetBool("Shoot") && Input.GetKeyUp(_shootKey))
-            {
-                _cmdShoot = new CmdShoot(_gun);
-                EventQueueManager.instance.AddCommand(_cmdShoot);
-                animator.SetBool("Shoot", false);
-            }
-
-            animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
-            animator.SetBool("Grounded", IsGrounded());
+            _movementController.Move(moveDirection);
+            return;
         }
+
+        moveDirection = (transform.forward * Input.GetAxisRaw("Vertical")) + (transform.right * Input.GetAxisRaw("Horizontal"));
+        moveDirection.Normalize();
+
+        if (moveDirection != Vector3.zero)
+        {
+            _cmdMove = new CmdMovement(_movementController, moveDirection);
+            EventQueueManager.instance.AddCommand(_cmdMove);
+        }
+
+        if (Input.GetKey(_jumpKey) && IsGrounded()) _movementController.Jump();
+        else if (!IsGrounded()) _movementController.UpdateYSpeed();
+
+        if (Input.GetKey(_shootKey) && !animator.GetBool("Shoot"))
+        {
+            animator.SetBool("Shoot", true);
+        }
+        else if (animator.GetBool("Shoot") && Input.GetKeyUp(_shootKey))
+        {
+            EventQueueManager.instance.AddCommand(_cmdShoot);
+            animator.SetBool("Shoot", false);
+        }
+
+        animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
+        animator.SetBool("Grounded", IsGrounded());
     }
     #endregion
 
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, distanceToGround);
+        return Physics.Raycast(transform.position, Vector3.down, _distanceToGround);
     }
 
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
+        EnterKnockBack();
         EventsManager.instance.CharacterLifeChange(_life);
+    }
+
+    private void EnterKnockBack()
+    {
+        _isKnocking = true;
+        animator.SetTrigger("Knocking");
+        moveDirection = -transform.forward * _knockBackPower.x + Vector3.up * _knockBackPower.y;
+        StartCoroutine(ExitKnockBack());
+    }
+
+    IEnumerator ExitKnockBack()
+    {
+        yield return new WaitForSeconds(_knockBackLength);
+        _isKnocking = false;
     }
 
 }

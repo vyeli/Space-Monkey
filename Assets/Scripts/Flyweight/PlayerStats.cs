@@ -9,7 +9,6 @@ public class PlayerStats : EntityStats
 
     public float MovementSpeed => _playerStats.MovementSpeed;
     public float JumpForce => _playerStats.JumpForce;
-
     public float RotationSpeed => _playerStats.RotationSpeed;
 }
 

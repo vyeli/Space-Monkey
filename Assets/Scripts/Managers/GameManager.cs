@@ -69,8 +69,6 @@ public class GameManager : MonoBehaviour
         Player.instance.transform.position = respawnPosition;
         CameraController.instance.cinemachineBrain.enabled = true;
         Player.instance.gameObject.SetActive(true);
-
-        HealthManager.instance.ResetHealth();
     }
 
     public void SetSpawnPoint(Vector3 newSpawnPoint)
