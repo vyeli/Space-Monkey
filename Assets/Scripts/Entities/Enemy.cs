@@ -8,6 +8,8 @@ using static Enums;
 public class Enemy : Actor
 {
     public override EntityStats EntityStats => _enemyStats;
+    public AIState CurrentState => _currentState;
+    public float CurrentActionTime => _currentActionTime;
 
     [SerializeField] private Transform[] _patrolPoints;
     [SerializeField] private EnemyStats _enemyStats;
@@ -35,6 +37,14 @@ public class Enemy : Actor
         _agent = GetComponent<NavMeshAgent>();
         _agent.speed = _enemyStats.Speed;
         _agent.stoppingDistance = _enemyStats.PatrolPointStoppingDistance;
+    }
+
+    private void HurtBox_OnTriggerEnterEvent(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player"))
+        {
+            Player.instance.TakeDamage(_enemyStats.Damage);
+        }
     }
 
     void Update()
@@ -148,7 +158,6 @@ public class Enemy : Actor
             if (_distanceToPlayer < _enemyStats.AttackRange)
             {
                 _animator.SetTrigger("Attack");
-                Player.instance.TakeDamage(_enemyStats.Damage);
             }
             else
             {
@@ -157,6 +166,16 @@ public class Enemy : Actor
 
             _currentActionTime = 0;
         }
+    }
+
+    public bool CanAttack()
+    {
+        return _currentState == AIState.Attack && _currentActionTime > _enemyStats.AttackCooldownTime;
+    }
+
+    public void Attack()
+    {
+        Player.instance.TakeDamage(_enemyStats.Damage);
     }
 
     public override void DieEffect()
