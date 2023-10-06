@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !_isGameOver)
         {
             _isPaused = !_isPaused;
             EventsManager.instance.GameTogglePauseState(_isPaused);
