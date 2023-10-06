@@ -59,13 +59,13 @@ public class GameManager : MonoBehaviour
 
         CameraController.instance.cinemachineBrain.enabled = false;
 
-        // UiManager.instance.fadeToBlack = true;
+        UiManager.instance.fadeToBlack = true;
 
         Instantiate(deathEffect, Player.instance.transform.position + new Vector3(0f, 1f, 0f), Player.instance.transform.rotation);
 
         yield return new WaitForSeconds(2f);
 
-        // UiManager.instance.fadeFromBlack = true;
+        UiManager.instance.fadeFromBlack = true;
 
         
         Player.instance.transform.position = respawnPosition;

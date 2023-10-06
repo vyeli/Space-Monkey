@@ -7,6 +7,8 @@ public class Player : Actor
 {
     public static Player instance;
 
+    private Vector3 rayHit;
+
     // knockback
     [SerializeField] private Vector2 _knockBackPower;
     [SerializeField] private float _knockBackLength;
@@ -102,7 +104,17 @@ public class Player : Actor
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, _distanceToGround);
+        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * (_distanceToGround + 1), Color.red);
+        if (Physics.Raycast(transform.position + Vector3.up, Vector3.down * (_distanceToGround + 1), out var hit, _distanceToGround + 1))
+        {
+            rayHit = hit.point;
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Killzone"))
+            {
+                GameManager.instance.RespawnPlayer();
+            }
+            return true;
+        }
+        return false;
     }
 
     public override void TakeDamage(int damage)
