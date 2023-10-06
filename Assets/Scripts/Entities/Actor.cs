@@ -34,6 +34,7 @@ public abstract class Actor : MonoBehaviour, IDamageable
             Die();
         }
     }
+
     public void Die()
     {
         Debug.Log($"{name} has died");

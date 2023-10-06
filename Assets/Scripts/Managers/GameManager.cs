@@ -9,9 +9,11 @@ public class GameManager : MonoBehaviour
 {
     // Singleton
     public static GameManager instance;
+    public bool GameEnded => _isGameOver;
     [SerializeField] private bool _isGameOver = false;
     [SerializeField] private bool _isVictory = false;
     [SerializeField] private bool _isPaused = false;
+    [SerializeField] private float _waitAfterGameOver;
     private CmdUnShoot _cmdUnShoot;
 
     public bool IsPaused => _isPaused;
@@ -82,7 +84,13 @@ public class GameManager : MonoBehaviour
         _isGameOver = true;
         _isVictory = isVictory;
         ChangeCursorState(true);
-        LoadCreditsScreen();
+        StartCoroutine(LoadCreditsScreenCo());
+    }
+
+    IEnumerator LoadCreditsScreenCo()
+    {
+        yield return new WaitForSeconds(_waitAfterGameOver);
+        GameLevelsManager.instance.LoadEndGame();
     }
 
     private void OnBackToMainMenuFromGame()
@@ -95,11 +103,6 @@ public class GameManager : MonoBehaviour
     public bool PlayerWon()
     {
         return _isVictory;
-    }
-
-    private void LoadCreditsScreen()
-    {
-        GameLevelsManager.instance.LoadEndGame();
     }
 
     private void ChangePauseState(bool pause)

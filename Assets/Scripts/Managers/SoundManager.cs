@@ -22,19 +22,16 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
 
-    private AudioSource _musicAudioSource;
-    private AudioSource _sfxAudioSource;
+    [SerializeField] private AudioSource _musicAudioSource;
+    [SerializeField] private AudioSource _sfxAudioSource;
 
     #region UNITY_EVENTS
     private void Start()
     {
-        _musicAudioSource = gameObject.AddComponent<AudioSource>();
-        _sfxAudioSource = gameObject.AddComponent<AudioSource>();
-
         _musicAudioSource.clip = _backgroundMusic;
         _musicAudioSource.loop = true;
-        _musicAudioSource.volume = _musicVolumeSlider.value;
 
+        _musicAudioSource.volume = _musicVolumeSlider.value;
         _sfxAudioSource.volume = _sfxVolumeSlider.value;
 
         EventsManager.instance.OnGameOver += OnGameOver;
@@ -47,6 +44,11 @@ public class SoundManager : MonoBehaviour
     public void MusicVolumeChange()
     {
         _musicAudioSource.volume = _musicVolumeSlider.value;
+    }
+
+    public void PlaySFX(AudioClip clip)
+    {
+        _sfxAudioSource.PlayOneShot(clip);
     }
 
     public void SFXVolumeChange()

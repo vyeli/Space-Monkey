@@ -54,6 +54,8 @@ public class Player : Actor
     {
         base.Start();
 
+        EventsManager.instance.OnGameOver += OnGameOver;
+
         _movementController = GetComponent<MovementController>();
         InitCommands();
         UiManager.instance.UpdateCharacterLife(_life);
@@ -63,6 +65,7 @@ public class Player : Actor
     
     void Update()
     {
+        if (GameManager.instance.GameEnded) return;
         if (_isKnocking)
         {
             _movementController.Move(moveDirection);
@@ -104,6 +107,11 @@ public class Player : Actor
 
     public override void TakeDamage(int damage)
     {
+        if (GameManager.instance.GameEnded)
+        {
+            if (GameManager.instance.PlayerWon()) EnterKnockBack();
+            return;
+        }
         base.TakeDamage(damage);
         EnterKnockBack();
         EventsManager.instance.CharacterLifeChange(_life);
@@ -125,14 +133,21 @@ public class Player : Actor
 
     public override void DieEffect()
     {
-        animator.SetTrigger("Death");
-        StartCoroutine(DieAfterTime());
+        // animator.SetTrigger("Death");
+        EventsManager.instance.EventGameOver(false);
     }
 
-    IEnumerator DieAfterTime()
+    public void OnGameOver(bool _isVictory)
     {
-        yield return new WaitForSeconds(2f);
-        EventsManager.instance.EventGameOver(false);
+        animator.SetFloat("Speed", 0);      // Reset speed animation
+        if (_isVictory)
+        {
+            animator.SetTrigger("Victory");
+        }
+        else
+        {
+            animator.SetTrigger("Death");
+        }
     }
 
 }
