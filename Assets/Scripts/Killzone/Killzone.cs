@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class Killzone : MonoBehaviour
 {
-    private void OnTriggerEnter(Collider other)
+    public void OnTriggerEnter(Collider other)
     {
         Debug.Log("Killzone");
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.tag.Equals("Player"))
         {
             // EventsManager.instance.EventGameOver(false);
             GameManager.instance.RespawnPlayer();
