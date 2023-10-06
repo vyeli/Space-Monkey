@@ -19,6 +19,9 @@ public class EndGameManager : MonoBehaviour
     [SerializeField] private Button _mainMenuButton;
     [SerializeField] private GameObject[] _backgroundPlanets;
     [SerializeField] private float _rotationSpeed;
+    [SerializeField] private KeyCode _muteAudio = KeyCode.M;
+    [SerializeField] private KeyCode _restartGame = KeyCode.R;
+    [SerializeField] private KeyCode _goToMainMenu = KeyCode.Escape;
 
     void Awake()
     {
@@ -55,8 +58,12 @@ public class EndGameManager : MonoBehaviour
         {
             planet.transform.Rotate(new Vector3(0, 0, 1), _rotationSpeed);
         }
+        if (Input.GetKeyDown(_muteAudio)) ToggleMuteAudio();
+        if (Input.GetKeyDown(_restartGame)) RestartGame();
+        if (Input.GetKeyDown(_goToMainMenu)) GoToMainMenu();
     }
 
+    private void ToggleMuteAudio() => _audioSource.mute = !_audioSource.mute;
     private void RestartGame() => GameLevelsManager.instance.LoadCurrentLevel();
     private void GoToMainMenu() => GameLevelsManager.instance.LoadMainMenu();
 }
