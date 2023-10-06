@@ -126,6 +126,7 @@ public class Player : Actor
         }
         base.TakeDamage(damage);
         EnterKnockBack();
+        EventsManager.instance.PlayerDamaged();
         EventsManager.instance.CharacterLifeChange(_life);
     }
 

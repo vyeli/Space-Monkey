@@ -36,6 +36,13 @@ public class EventsManager : MonoBehaviour
         if (OnCharacterLifeChange != null) OnCharacterLifeChange(life);
     }
 
+    public event Action OnPlayerDamaged;
+
+    public void PlayerDamaged()
+    {
+        if (OnPlayerDamaged != null) OnPlayerDamaged();
+    }
+
     public event Action<int> OnBulletCountChange;
 
     public void BulletCountChange(int bulletCount)

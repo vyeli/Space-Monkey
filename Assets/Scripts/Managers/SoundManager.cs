@@ -18,6 +18,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioClip _backgroundMusic;
     [SerializeField] private AudioClip _victory;
     [SerializeField] private AudioClip _defeat;
+    [SerializeField] private AudioClip _playerDamage;
 
     [SerializeField] private Slider _musicVolumeSlider;
     [SerializeField] private Slider _sfxVolumeSlider;
@@ -40,6 +41,7 @@ public class SoundManager : MonoBehaviour
 
         EventsManager.instance.OnBackToMainMenuFromGame += OnBackToMainMenuFromGame;
         EventsManager.instance.OnGameOver += OnGameOver;
+        EventsManager.instance.OnPlayerDamaged += OnPlayerDamaged;
 
         _musicAudioSource.Play();
     }
@@ -62,6 +64,8 @@ public class SoundManager : MonoBehaviour
     }
 
     private void OnBackToMainMenuFromGame() => SaveVolumes();
+
+    private void OnPlayerDamaged() => _sfxAudioSource.PlayOneShot(_playerDamage);
 
     private void OnGameOver(bool isVictory)
     {

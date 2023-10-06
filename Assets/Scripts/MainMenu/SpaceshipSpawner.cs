@@ -4,16 +4,15 @@ using UnityEngine;
 
 public class SpaceshipSpawner : MonoBehaviour
 {
+    [SerializeField] private GameObject[] spaceships;
+    [SerializeField] private float minDelay;
+    [SerializeField] private float maxDelay;
+    [SerializeField] private float speed;
+    [SerializeField] private Vector3 rotate;
 
-    public GameObject[] spaceships;
-    public float minDelay = 0f;
-    public float maxDelay = 10f;
-    public float speed = 50f;
-    public float rotateX = 0f;
-    public float rotateY = 0f;
-    public float rotateZ = 0f;
-
-    private float nextTimeToSpawn = 0f;
+    private float nextTimeToSpawn;
+    private GameObject _currentSpaceship;
+    private bool _hasTimePassed;
 
     void Start()
     {
@@ -23,26 +22,28 @@ public class SpaceshipSpawner : MonoBehaviour
 
     void Update()
     {
-        if (Time.time > nextTimeToSpawn)
+        _hasTimePassed = Time.time > nextTimeToSpawn;
+        if (!_hasTimePassed && _currentSpaceship != null) _currentSpaceship.GetComponent<SpaceshipController>().Move(Vector3.down);
+        else if (_hasTimePassed)
         {
             nextTimeToSpawn = Time.time + Random.Range(minDelay, maxDelay);
-            GameObject newSpaceship = Instantiate(spaceships[Random.Range(0, spaceships.Length)], transform.position, Quaternion.identity);
-            Transform spaceshipTransform = newSpaceship.GetComponent<Transform>();
-            spaceshipTransform.Rotate(rotateX, rotateY, rotateZ);
-            newSpaceship.AddComponent<Move>();
-            newSpaceship.GetComponent<Move>().speed = speed;
+            GameObject spaceship = Instantiate(spaceships[Random.Range(0, spaceships.Length)], transform.position, Quaternion.identity);
+            spaceship.transform.Rotate(rotate);
+            spaceship.AddComponent<SpaceshipController>();
+            spaceship.GetComponent<SpaceshipController>().Speed = speed;
+            _currentSpaceship = spaceship;
         }
         
     }
 }
 
-public class Move : MonoBehaviour
+public class SpaceshipController : MonoBehaviour, IMoveable
 {
-    public float speed;
+    public float Speed { get; set; }
 
-    void Update()
+    public void Move(Vector3 direction)
     {
-        transform.Translate(Vector3.down * speed * Time.deltaTime);
+        transform.Translate(direction * Speed * Time.deltaTime);
     }
 
     void OnBecameInvisible()

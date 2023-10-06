@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: GameSoundInfo
   m_EditorClassIdentifier: 
   _soundInfo:
-    MusicVolume: 0.15
-    SFXVolume: 0.15
+    MusicVolume: 0.25114712
+    SFXVolume: 0.7327994

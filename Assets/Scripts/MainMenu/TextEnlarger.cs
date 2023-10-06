@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class TextEnlarger : MonoBehaviour
 {
-    public float scaleFactor = 1.2f; // Factor de escala
-    public float duration = 1.0f;    // Duración de la animación
+    [SerializeField] float scaleFactor; // Factor de escala
+    [SerializeField] float duration;    // Duración de la animación
 
     private float timer;
     private Vector3 initialScale;
