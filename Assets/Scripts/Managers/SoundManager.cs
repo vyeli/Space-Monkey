@@ -58,6 +58,7 @@ public class SoundManager : MonoBehaviour
     {
         _musicAudioSource.Stop();
         _musicAudioSource.loop = false;
+        _musicAudioSource.PlayOneShot(isVictory ? _victory : _defeat);
     }
     #endregion
 }

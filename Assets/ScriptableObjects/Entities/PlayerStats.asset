@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   _entityStats:
-    MaxLife: 5
+    MaxLife: 3
   _playerStats:
     MovementSpeed: 10
     JumpForce: 10

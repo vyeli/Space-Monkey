@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117963212452630766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.011371338, y: -0.057571065, z: 0.00065578875, w: 0.9982764}
+  m_LocalRotation: {x: 0.011371338, y: -0.057571087, z: 0.0006557942, w: 0.9982764}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -180,7 +180,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755771914141252425}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15246168, y: 0.000000016389714, z: -0.0000000025283615, w: 0.9883094}
+  m_LocalRotation: {x: 0.15246166, y: -5.697878e-15, z: 8.789837e-16, w: 0.9883094}
   m_LocalPosition: {x: 0, y: 3.85, z: -4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1389,7 +1389,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8787738959334803335}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06870237, y: -0.057438344, z: 0.0039621065, w: 0.9959744}
+  m_LocalRotation: {x: 0.06870237, y: -0.057438318, z: 0.0039620986, w: 0.9959744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2674,7 +2674,7 @@ MonoBehaviour:
   _bulletRotation: {fileID: 1838052427048709818}
   _bulletContainer: {fileID: 7342616169252065107}
   _currentBulletCount: 10
-  muzzle: {fileID: 0}
+  muzzle: {fileID: 6146071593863807970}
 --- !u!1 &2687676363504555151 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4952797520342147618, guid: 83160c11334642943a0e2638b4b033b7, type: 3}

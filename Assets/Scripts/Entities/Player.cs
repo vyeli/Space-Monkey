@@ -123,4 +123,16 @@ public class Player : Actor
         _isKnocking = false;
     }
 
+    public override void DieEffect()
+    {
+        animator.SetTrigger("Death");
+        StartCoroutine(DieAfterTime());
+    }
+
+    IEnumerator DieAfterTime()
+    {
+        yield return new WaitForSeconds(2f);
+        EventsManager.instance.EventGameOver(false);
+    }
+
 }
