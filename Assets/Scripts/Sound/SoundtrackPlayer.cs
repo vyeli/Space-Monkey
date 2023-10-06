@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 [RequireComponent(typeof(AudioSource))]
-public class SoundtrackController : MonoBehaviour, IListenable
+public class SoundtrackPlayer : MonoBehaviour, IListenable
 {
     #region ILISTENABLE_PROPERTIES
     public AudioSource AudioSource => _audioSource;
@@ -13,15 +13,15 @@ public class SoundtrackController : MonoBehaviour, IListenable
     #endregion
 
     #region SOUNDTRACK_PROPERTIES
-    public TextMeshProUGUI songNameDisplayed;
-    public Slider volumeSlider;
-    public Button skipButton;
-    public Button pauseButton;
-    private List<AudioClip> _clipsToPlay = new List<AudioClip>();
+    [SerializeField] private TextMeshProUGUI songNameDisplayed;
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Button skipButton;
+    [SerializeField] private Button pauseButton;
     [SerializeField] private AudioClip[] _soundtrackClips;
     [SerializeField] private Image _pauseImage;
     [SerializeField] private Sprite _pauseSprite;
     [SerializeField] private Sprite _playSprite;
+    private List<AudioClip> _clipsToPlay = new List<AudioClip>();
     #endregion
 
     #region ILISTENABLE_METHODS
@@ -74,6 +74,7 @@ public class SoundtrackController : MonoBehaviour, IListenable
     #endregion
 
     #region SOUNDTRACK_METHODS
+
     private void ShuffleNextSong() {
         _clipsToPlay.RemoveAt(0);
         if (_clipsToPlay.Count == 0)

@@ -20,4 +20,6 @@ public class GameLevelsManager : MonoBehaviour
     public void LoadMainMenu() => SceneManager.LoadScene((int)Levels.MainMenu);
 
     public void LoadEndGame() => SceneManager.LoadScene((int)Levels.EndGame);
+
+    public void ExitGame() => Application.Quit();
 }

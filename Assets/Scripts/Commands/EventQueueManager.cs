@@ -30,6 +30,7 @@ public class EventQueueManager : MonoBehaviour
             ICommand command = _eventQueue.Dequeue();
             if (!GameManager.instance.IsPaused)
             {
+                if (command is CmdUnShoot && _eventQueue.Count == 0) Debug.Log("No more commands in queue");
                 if (command is CmdUnShoot && _eventQueue.Count > 0)
                 {
                     ICommand nextCommand = _eventQueue.Peek();

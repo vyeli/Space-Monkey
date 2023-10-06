@@ -24,6 +24,7 @@ public class SoundManager : MonoBehaviour
 
     [SerializeField] private AudioSource _musicAudioSource;
     [SerializeField] private AudioSource _sfxAudioSource;
+    [SerializeField] private SoundInfo _soundInfo;
 
     #region UNITY_EVENTS
     private void Start()
@@ -31,9 +32,13 @@ public class SoundManager : MonoBehaviour
         _musicAudioSource.clip = _backgroundMusic;
         _musicAudioSource.loop = true;
 
-        _musicAudioSource.volume = _musicVolumeSlider.value;
-        _sfxAudioSource.volume = _sfxVolumeSlider.value;
+        _musicVolumeSlider.value = _soundInfo.MusicVolume;
+        _sfxVolumeSlider.value = _soundInfo.SFXVolume;
 
+        // _musicAudioSource.volume = _musicVolumeSlider.value;
+        // _sfxAudioSource.volume = _sfxVolumeSlider.value;
+
+        EventsManager.instance.OnBackToMainMenuFromGame += OnBackToMainMenuFromGame;
         EventsManager.instance.OnGameOver += OnGameOver;
 
         _musicAudioSource.Play();
@@ -56,11 +61,20 @@ public class SoundManager : MonoBehaviour
         _sfxAudioSource.volume = _sfxVolumeSlider.value;
     }
 
+    private void OnBackToMainMenuFromGame() => SaveVolumes();
+
     private void OnGameOver(bool isVictory)
     {
         _musicAudioSource.Stop();
         _musicAudioSource.loop = false;
-        _musicAudioSource.PlayOneShot(isVictory ? _victory : _defeat);
+        _sfxAudioSource.PlayOneShot(isVictory ? _victory : _defeat);
+        SaveVolumes();
+    }
+
+    private void SaveVolumes()
+    {
+        _soundInfo.MusicVolume = _musicVolumeSlider.value;
+        _soundInfo.SFXVolume = _sfxVolumeSlider.value;
     }
     #endregion
 }

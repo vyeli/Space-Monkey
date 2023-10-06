@@ -6,14 +6,25 @@ using static Enums;
 
 public class MainMenu : MonoBehaviour
 {
-    public Animator playerModelAnimator;
-    public float animationInterval = 4f;
-    private float _timeElapsed = 0f;
-    private int _previousAnimation = 3;     // Last animation played
+    [SerializeField] private Animator _playerModelAnimator;
+    [SerializeField] private float _animationInterval;
+    private float _timeElapsed;
+    private int _previousAnimation;
+    private int _animationsAmount;
+
+    private enum PlayerAnimations
+    {
+        Idle = 0,
+        Waving = 1,
+        Punching = 2,
+        SayingYes = 3
+    }
 
     void Start()
     {
-        
+        _timeElapsed = 0f;
+        _animationsAmount = System.Enum.GetValues(typeof(PlayerAnimations)).Length;
+        _previousAnimation = _animationsAmount - 1;     // So first animation goes to one
     }
 
     // Rotates between animations for the player model
@@ -23,34 +34,36 @@ public class MainMenu : MonoBehaviour
         {
             GameLevelsManager.instance.LoadCurrentLevel();
         }
+
         if (isOnIdleAnimation())
         {
             _timeElapsed += Time.deltaTime;
-            if (_timeElapsed > animationInterval)
+            if (_timeElapsed > _animationInterval)
             {
                 int nextAnimation = getNextAnimation(_previousAnimation);
-                playerModelAnimator.SetInteger("currentAnimation", nextAnimation);
+                _playerModelAnimator.SetInteger("currentAnimation", nextAnimation);
                 _previousAnimation = nextAnimation;
                 _timeElapsed = 0f;
             }
-        } else if (currentAnimationOngoing())
+        }
+        else if (currentAnimationOngoing())
         {
             _timeElapsed = 0f;
-            playerModelAnimator.SetInteger("currentAnimation", 0);
+            _playerModelAnimator.SetInteger("currentAnimation", (int)PlayerAnimations.Idle);
         }
     }
 
     private int getNextAnimation(int _previousAnimation) {
-        if (_previousAnimation < 3)
+        if (_previousAnimation < _animationsAmount - 1)    // Hasn't cycled through all animations yet
             return _previousAnimation + 1;
         return 1;
     }
 
     private bool isOnIdleAnimation() {
-        return playerModelAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        return _playerModelAnimator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
     }
 
     private bool currentAnimationOngoing() {
-        return playerModelAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
+        return _playerModelAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
 }

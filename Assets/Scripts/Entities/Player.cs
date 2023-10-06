@@ -86,13 +86,13 @@ public class Player : Actor
         if (Input.GetKey(_jumpKey) && IsGrounded()) _movementController.Jump();
         else if (!IsGrounded()) _movementController.UpdateYSpeed();
 
-        if (Input.GetKey(_shootKey) && !animator.GetBool("Shoot"))
+        if (Input.GetKeyDown(_shootKey) && !animator.GetBool("Shoot"))
         {
+            EventQueueManager.instance.AddCommand(_cmdShoot);
             animator.SetBool("Shoot", true);
         }
         else if (animator.GetBool("Shoot") && Input.GetKeyUp(_shootKey))
         {
-            EventQueueManager.instance.AddCommand(_cmdShoot);
             animator.SetBool("Shoot", false);
         }
 
