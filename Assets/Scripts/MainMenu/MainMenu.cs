@@ -12,6 +12,8 @@ public class MainMenu : MonoBehaviour
     private int _previousAnimation;
     private int _animationsAmount;
 
+    [SerializeField] private LoadingScreen loadingScreen;
+
     private enum PlayerAnimations
     {
         Idle = 0,
@@ -32,7 +34,7 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            GameLevelsManager.instance.LoadCurrentLevel();
+            loadingScreen.LoadScene((int)Levels.Level1);
         }
 
         if (isOnIdleAnimation())

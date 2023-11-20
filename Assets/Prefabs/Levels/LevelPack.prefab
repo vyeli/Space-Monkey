@@ -652,10 +652,12 @@ MonoBehaviour:
   _backgroundMusic: {fileID: 8300000, guid: dd96751be51d4d24c95894df208b5c3e, type: 3}
   _victory: {fileID: 8300000, guid: 0b6d5d06ff59f1a4da1a398145e8d574, type: 3}
   _defeat: {fileID: 8300000, guid: 46b543460921df0489c0e6ef43c51658, type: 3}
+  _playerDamage: {fileID: 8300000, guid: ba084131e5756fa45a94522b5ca71e7d, type: 3}
   _musicVolumeSlider: {fileID: 0}
   _sfxVolumeSlider: {fileID: 0}
   _musicAudioSource: {fileID: 7444840065048414607}
   _sfxAudioSource: {fileID: 380127213154382721}
+  _soundInfo: {fileID: 11400000, guid: 78318a8576d0d7249ab83af5a8346bfa, type: 2}
 --- !u!114 &7524642421808555830
 MonoBehaviour:
   m_ObjectHideFlags: 0
