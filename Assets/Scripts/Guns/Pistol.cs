@@ -10,6 +10,11 @@ public class Pistol : Gun
     [SerializeField] private Transform muzzlePoint;
     [SerializeField] private Transform playerModel;
 
+    [SerializeField] private ParticleSystem _muzzleParticles;
+    [SerializeField] private ParticleSystem _hitParticles;
+
+
+
     // Now pistol will fire a raycast instead of instantiating a bullet
     [SerializeField] private LineRenderer _beam;
 
@@ -28,7 +33,8 @@ public class Pistol : Gun
         _beam.SetPosition(0, muzzlePoint.position);
         _beam.SetPosition(1, hitPoint);
 
-        // Make this beal visible 2 seconds
+        _hitParticles.transform.position = hitPoint;
+
         StartCoroutine(ShowBeam());
 
 
@@ -47,8 +53,12 @@ public class Pistol : Gun
 
     IEnumerator ShowBeam()
     {
+        _muzzleParticles.Play();
+        _hitParticles.Play();
         _beam.enabled = true;
         yield return new WaitForSeconds(_duration);
         _beam.enabled = false;
+        _hitParticles.Stop();
+        _muzzleParticles.Stop();
     }
 }
