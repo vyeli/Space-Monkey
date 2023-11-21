@@ -25,7 +25,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 117963212452630766}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.011371338, y: -0.05757109, z: 0.00065579533, w: 0.9982764}
+  m_LocalRotation: {x: 0.011371338, y: -0.057571117, z: 0.00065580197, w: 0.9982764}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755771914141252425}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15246168, y: 0.000000029453911, z: -0.0000000045437116, w: 0.9883094}
+  m_LocalRotation: {x: 0.15246168, y: -0.000000012381142, z: 0.0000000019099784, w: 0.9883094}
   m_LocalPosition: {x: 0, y: 3.893, z: -4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1136,7 +1136,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -5626,7 +5626,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c8ca3fe544a8fa741819556380367e11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -6380,7 +6380,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2452026186711125637}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.039958354, y: -0.05752865, z: 0.0023044099, w: 0.99754125}
+  m_LocalRotation: {x: 0.039958354, y: -0.05752872, z: 0.0023044285, w: 0.99754125}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6543,7 +6543,7 @@ MonoBehaviour:
   _bulletPrefab: {fileID: 5603007381800499724, guid: b7cb9ef375eee0c4ba1ca3ff0e243364, type: 3}
   _bulletRotation: {fileID: 1838052427048709818}
   _bulletContainer: {fileID: 7342616169252065107}
-  _currentBulletCount: 100
+  _currentBulletCount: 3
   _maxLength: 10
   _duration: 1
   muzzlePoint: {fileID: 606563919580404487}
@@ -8637,7 +8637,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8787738959334803335}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.06870237, y: -0.057438307, z: 0.0039620954, w: 0.9959744}
+  m_LocalRotation: {x: 0.06870237, y: -0.057438347, z: 0.0039621075, w: 0.9959744}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -8985,7 +8985,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.15
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -13475,7 +13475,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10308, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: c8ca3fe544a8fa741819556380367e11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
