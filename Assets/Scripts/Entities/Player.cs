@@ -35,12 +35,9 @@ public class Player : Actor
     private CmdMovement _cmdMove;
     private CmdMovement _cmdJump;
 
-    private CmdShoot _cmdShoot;
-
     private void InitCommands()
     {
         _cmdJump = new CmdMovement(_movementController, Vector3.up);
-        _cmdShoot = new CmdShoot(_gun);
     }
     #endregion
 
@@ -88,13 +85,12 @@ public class Player : Actor
 
         if (Input.GetKeyDown(_shootKey) && !animator.GetBool("Shoot"))
         {
-            EventQueueManager.instance.AddCommand(_cmdShoot);
             animator.SetBool("Shoot", true);
         }
-        else if (animator.GetBool("Shoot") && Input.GetKeyUp(_shootKey))
-        {
-            animator.SetBool("Shoot", false);
-        }
+        //else if (animator.GetBool("Shoot") && Input.GetKeyUp(_shootKey))
+        //{
+        //    animator.SetBool("Shoot", false);
+        //}
 
         animator.SetFloat("Speed", Mathf.Abs(moveDirection.x) + Mathf.Abs(moveDirection.z));
         animator.SetBool("Grounded", IsGrounded());
