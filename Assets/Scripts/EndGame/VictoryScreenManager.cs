@@ -26,7 +26,7 @@ public class VictoryScreenManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _killsScoreText;
     [SerializeField] private TextMeshProUGUI _scoreLetterText;
     [SerializeField] private float _digitsChangeDelay = 1f;
-    [SerializeField] private float _digitsChangeSpeed = 0.025f;
+    [SerializeField] private float _digitsChangeSpeed = 0.02f;
 
     void Awake()
     {

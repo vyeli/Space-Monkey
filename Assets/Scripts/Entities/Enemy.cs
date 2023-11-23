@@ -12,7 +12,7 @@ public class Enemy : Actor
     public float CurrentActionTime => _currentActionTime;
 
     [SerializeField] private Transform[] _patrolPoints;
-    [SerializeField] private EnemyStats _enemyStats;
+    [SerializeField] protected EnemyStats _enemyStats;
     [SerializeField] private Animator _animator;
 
     private NavMeshAgent _agent;
@@ -55,7 +55,7 @@ public class Enemy : Actor
 
             if (_distanceToPlayer > _enemyStats.AttackRange && _distanceToPlayer < _enemyStats.ChaseRange)
             {
-                StartChasing();
+                StartChase();
             }
         }
 
@@ -81,11 +81,11 @@ public class Enemy : Actor
 
     #endregion
 
-    private void StartChasing()
+    private void StartIdle()
     {
-        _animator.SetBool("IsMoving", true);
-        _currentState = AIState.Chase;
+        _currentState = AIState.Idle;
         _agent.isStopped = false;
+        _agent.SetDestination(transform.position);
     }
 
     private void UpdateIdle()
@@ -93,11 +93,11 @@ public class Enemy : Actor
         _currentActionTime += Time.deltaTime;
         if (_currentActionTime > _enemyStats.IdleWaitTime)
         {
-            StartPatrolling();
+            StartPatrol();
         }
     }
 
-    private void StartPatrolling()
+    private void StartPatrol()
     {
         _animator.SetBool("IsMoving", true);
         _currentState = AIState.Patrol;
@@ -116,11 +116,11 @@ public class Enemy : Actor
         }
     }
 
-    private void StartIdle()
+    private void StartChase()
     {
-        _currentState = AIState.Idle;
+        _animator.SetBool("IsMoving", true);
+        _currentState = AIState.Chase;
         _agent.isStopped = false;
-        _agent.SetDestination(transform.position);
     }
 
     private void UpdateChase()
@@ -130,7 +130,7 @@ public class Enemy : Actor
         if (_distanceToPlayer < _enemyStats.AttackRange)
         {
             _animator.SetBool("IsMoving", false);
-            StartAttacking();
+            StartAttack();
             _agent.isStopped = true;
             _currentActionTime = _enemyStats.AttackCooldownTime;
         }
@@ -142,7 +142,7 @@ public class Enemy : Actor
         }
     }
 
-    private void StartAttacking()
+    private void StartAttack()
     {
         transform.LookAt(Player.instance.transform, Vector3.up);
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
@@ -157,7 +157,7 @@ public class Enemy : Actor
         {
             if (_distanceToPlayer < _enemyStats.AttackRange)
             {
-                _animator.SetTrigger("Attack");
+                AttackAction();
             }
             else
             {
@@ -166,6 +166,11 @@ public class Enemy : Actor
 
             _currentActionTime = 0;
         }
+    }
+
+    protected virtual void AttackAction()
+    {
+        _animator.SetTrigger("Attack");
     }
 
     public bool CanAttack()

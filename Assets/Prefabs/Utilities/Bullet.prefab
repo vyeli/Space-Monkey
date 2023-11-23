@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 980998710636219462}
   - component: {fileID: 8089295949066786242}
   - component: {fileID: 5277178301167235058}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51,7 +51,7 @@ MonoBehaviour:
   _lifeTime: 10
   _collider: {fileID: 8089295949066786242}
   _rigidbody: {fileID: 5277178301167235058}
-  _layerMasks: 0000000001000000020000000400000005000000
+  _layerMasks: 000000000100000002000000040000000500000006000000
 --- !u!135 &8089295949066786242
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 7714775336353854910}
   - component: {fileID: 7137576246867721434}
   - component: {fileID: 5130400767756019725}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}
