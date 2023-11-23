@@ -50,14 +50,14 @@ public class VictoryScreenManager : MonoBehaviour
         _scoreText.text = ScoreManager.instance.Score.ToString();
         _timeText.text = GameManager.instance.getTimerString();
         _killsText.text = "x" + GameManager.instance.EnemyKills.ToString();
-        _timeScoreText.text = ScoreManager.instance.TimedScore.ToString();
-        _killsScoreText.text = ScoreManager.instance.KillsScore.ToString();
+        _timeScoreText.text = "+" + ScoreManager.instance.TimedScore.ToString();
+        _killsScoreText.text = "+" + ScoreManager.instance.KillsScore.ToString();
         _scoreLetterText.text = ScoreManager.instance.GetScoreLetter();
 
         // Number Change effect
         StartCoroutine(digitsChangeEffect(_scoreText));
-        StartCoroutine(digitsChangeEffect(_timeScoreText));
-        StartCoroutine(digitsChangeEffect(_killsScoreText));
+        StartCoroutine(digitsChangeEffect(_timeScoreText, 1));
+        StartCoroutine(digitsChangeEffect(_killsScoreText, 1));
         StartCoroutine(letterScoreEffect(_scoreLetterText));
     }
 
@@ -72,11 +72,11 @@ public class VictoryScreenManager : MonoBehaviour
         if (Input.GetKeyDown(_goToMainMenu)) GoToMainMenu();
     }
 
-    private IEnumerator digitsChangeEffect(TextMeshProUGUI scoreText)
+    private IEnumerator digitsChangeEffect(TextMeshProUGUI scoreText, int initialCharacter = 0)
     {
         char[] digitosObjetivo = scoreText.text.ToCharArray();
 
-        for (int i = 0; i < digitosObjetivo.Length; i++)
+        for (int i = initialCharacter; i < digitosObjetivo.Length; i++)
         {
             int digitoActual = int.Parse(scoreText.text[i].ToString());
             float _timeElapsed = 0f;
