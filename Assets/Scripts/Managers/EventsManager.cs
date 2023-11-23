@@ -43,6 +43,13 @@ public class EventsManager : MonoBehaviour
         if (OnPlayerDamaged != null) OnPlayerDamaged();
     }
 
+    public event Action<int> OnPlayerKill;
+
+    public void PlayerKill(int addedScore)
+    {
+        if (OnPlayerKill != null) OnPlayerKill(addedScore);
+    }
+
     public event Action<int> OnBulletCountChange;
 
     public void BulletCountChange(int bulletCount)

@@ -180,6 +180,7 @@ public class Enemy : Actor
 
     public override void DieEffect()
     {
+        EventsManager.instance.PlayerKill(_enemyStats.Score);
         _animator.SetBool("IsDead", true);
         _currentState = AIState.Dead;
         _agent.isStopped = true;

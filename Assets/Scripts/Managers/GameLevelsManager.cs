@@ -19,7 +19,9 @@ public class GameLevelsManager : MonoBehaviour
 
     public void LoadMainMenu() => SceneManager.LoadScene((int)Levels.MainMenu);
 
-    public void LoadEndGame() => SceneManager.LoadScene((int)Levels.EndGame);
+    public void LoadDefeatScreen() => SceneManager.LoadScene((int)Levels.DefeatScreen);
+
+    public void LoadVictoryScreen() => SceneManager.LoadScene((int)Levels.VictoryScreen);
 
     public void ExitGame() => Application.Quit();
 }

@@ -22,6 +22,12 @@ public class GameManager : MonoBehaviour
 
     public GameObject deathEffect;
 
+    public float LevelTime => _levelTime;
+    private float _levelTime = 0f;
+
+    public int EnemyKills => _enemyKills;
+    private int _enemyKills = 0;
+
     private void Awake()
     {
         if (instance != null) Destroy(this);
@@ -35,6 +41,7 @@ public class GameManager : MonoBehaviour
         EventsManager.instance.OnGameOver += OnGameOver;
         EventsManager.instance.OnGameTogglePauseState += PauseGame;
         EventsManager.instance.OnBackToMainMenuFromGame += OnBackToMainMenuFromGame;
+        EventsManager.instance.OnPlayerKill += OnPlayerKill;
 
         respawnPosition = Player.instance.transform.position;
     }
@@ -46,6 +53,22 @@ public class GameManager : MonoBehaviour
             _isPaused = !_isPaused;
             EventsManager.instance.GameTogglePauseState(_isPaused);
         }
+    }
+
+    void FixedUpdate()
+    {
+        if (!_isGameOver)
+        {
+            _levelTime += Time.fixedDeltaTime;
+            UiManager.instance.UpdateTimer(getTimerString());
+        }
+    }
+
+    public string getTimerString()
+    {
+        int minutes = Mathf.FloorToInt(_levelTime / 60F);
+        int seconds = Mathf.FloorToInt(_levelTime % 60);
+        return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
     public void RespawnPlayer()
@@ -87,10 +110,22 @@ public class GameManager : MonoBehaviour
         StartCoroutine(LoadCreditsScreenCo());
     }
 
+    private void OnPlayerKill(int addedScore)
+    {
+        _enemyKills++;
+    }
+
     IEnumerator LoadCreditsScreenCo()
     {
         yield return new WaitForSeconds(_waitAfterGameOver);
-        GameLevelsManager.instance.LoadEndGame();
+        if (_isVictory)
+        {
+            GameLevelsManager.instance.LoadVictoryScreen();
+        }
+        else
+        {
+            GameLevelsManager.instance.LoadDefeatScreen();
+        }    
     }
 
     private void OnBackToMainMenuFromGame()

@@ -8,7 +8,18 @@ public class Enums : MonoBehaviour
     {
         MainMenu,
         Level1,
-        EndGame,
+        DefeatScreen,
+        VictoryScreen,
+    }
+
+    public enum ScoreLetter
+    {
+        SS,
+        S,
+        A,
+        B,
+        C,
+        D
     }
 
     public enum AIState

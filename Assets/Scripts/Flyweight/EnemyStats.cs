@@ -15,6 +15,7 @@ public class EnemyStats : EntityStats
     public float AttackCooldownTime => _enemyStats.AttackCooldownTime;
     public float DespawnCooldownTime => _enemyStats.DespawnCooldownTime;
     public int Damage => _enemyStats.Damage;
+    public int Score => _enemyStats.Score;
 }
 
 [System.Serializable]
@@ -28,4 +29,5 @@ public struct EnemyStatsValues
     public float AttackCooldownTime;
     public float DespawnCooldownTime;
     public int Damage;
+    public int Score;
 }

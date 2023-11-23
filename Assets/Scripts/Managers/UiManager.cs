@@ -51,6 +51,20 @@ public class UiManager : MonoBehaviour
         }
     }
 
+    [SerializeField] private TextMeshProUGUI _scoreText;
+
+    public void UpdateScore(int score)
+    {
+        _scoreText.text = score.ToString();
+    }
+
+    [SerializeField] private TextMeshProUGUI _timerText;
+
+    public void UpdateTimer(string time)
+    {
+        _timerText.text = time;
+    }
+
     #region HEALTH_UI_LOGIC
     [SerializeField] private TextMeshProUGUI _characterLifeText;
     private void OnCharacterLifeChange(int life)

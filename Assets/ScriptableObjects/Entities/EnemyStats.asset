@@ -23,3 +23,4 @@ MonoBehaviour:
     AttackCooldownTime: 2
     DespawnCooldownTime: 2
     Damage: 1
+    Score: 200
