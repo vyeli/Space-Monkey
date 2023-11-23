@@ -19,6 +19,7 @@ public class UiManager : MonoBehaviour
         EventsManager.instance.OnCharacterLifeChange += OnCharacterLifeChange;
         EventsManager.instance.OnBulletCountChange += OnBulletCountChange;
         EventsManager.instance.OnGameTogglePauseState += OnTogglePauseState;
+        _killsText.text = "0";
     }
 
     public Image blackScreen;
@@ -51,11 +52,11 @@ public class UiManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private TextMeshProUGUI _scoreText;
+    [SerializeField] private TextMeshProUGUI _killsText;
 
-    public void UpdateScore(int score)
+    public void UpdateKillsCount(int kills)
     {
-        _scoreText.text = score.ToString();
+        _killsText.text = kills.ToString();
     }
 
     [SerializeField] private TextMeshProUGUI _timerText;

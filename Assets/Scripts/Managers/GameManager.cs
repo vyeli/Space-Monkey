@@ -112,7 +112,7 @@ public class GameManager : MonoBehaviour
 
     private void OnPlayerKill(int addedScore)
     {
-        _enemyKills++;
+        UiManager.instance.UpdateKillsCount(++_enemyKills);
     }
 
     IEnumerator LoadCreditsScreenCo()

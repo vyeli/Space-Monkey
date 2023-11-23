@@ -31,11 +31,7 @@ public class ScoreManager : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!GameManager.instance.GameEnded && _timedScore > _minScore)
-        {
-            _timedScore--;
-            UiManager.instance.UpdateScore(Score);
-        }
+        if (!GameManager.instance.GameEnded && _timedScore > _minScore) _timedScore--;
     }
 
     public void OnPlayerKill(int addedScore)
