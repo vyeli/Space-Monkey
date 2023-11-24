@@ -682,6 +682,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2809731065554413133, guid: a38309b6e9127f04da8e498018f9f5c1, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9098296670097630857, guid: a38309b6e9127f04da8e498018f9f5c1, type: 3}
       propertyPath: m_Name
       value: FlyingRobot

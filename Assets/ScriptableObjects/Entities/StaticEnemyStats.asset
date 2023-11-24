@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77b01ab97c8aa2a4f9169dd04bebb2a9, type: 3}
-  m_Name: FlyingEnemyStats
+  m_Name: StaticEnemyStats
   m_EditorClassIdentifier: 
   _entityStats:
     MaxLife: 1
   _enemyStats:
-    Speed: 7
+    Speed: 0
     IdleWaitTime: 2
     PatrolPointStoppingDistance: 0.2
-    ChaseRange: 12
-    AttackRange: 8
-    AttackCooldownTime: 2
+    ChaseRange: 10
+    AttackRange: 10
+    AttackCooldownTime: 1
     DespawnCooldownTime: 2
     Damage: 1
-    Score: 400
+    Score: 100

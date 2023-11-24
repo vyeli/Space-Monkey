@@ -16,9 +16,9 @@ public class Enemy : Actor
     [SerializeField] private Animator _animator;
 
     private NavMeshAgent _agent;
-    private AIState _currentState;
+    protected AIState _currentState;
     private float _currentActionTime;
-    private float _distanceToPlayer;
+    protected float _distanceToPlayer;
     private int _currentPatrolPoint;
     
 
@@ -47,7 +47,7 @@ public class Enemy : Actor
         }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (_currentState != AIState.Dead)
         {
@@ -142,7 +142,7 @@ public class Enemy : Actor
         }
     }
 
-    private void StartAttack()
+    protected void StartAttack()
     {
         transform.LookAt(Player.instance.transform, Vector3.up);
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
