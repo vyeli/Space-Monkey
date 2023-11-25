@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: StaticEnemyStats
   m_EditorClassIdentifier: 
   _entityStats:
-    MaxLife: 0
+    MaxLife: 1
   _staticEnemyStats:
-    IdleWaitTime: 0
-    AttackRange: 0
-    AttackCooldownTime: 0
-    DespawnCooldownTime: 0
-    Damage: 0
-    Score: 0
+    IdleWaitTime: 2
+    AttackRange: 3.5
+    AttackCooldownTime: 2
+    DespawnCooldownTime: 2
+    Damage: 1
+    Score: 100

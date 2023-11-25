@@ -107,13 +107,13 @@ public class Enemy : StaticEnemy
     private void UpdateChase()
     {
         _agent.SetDestination(Player.instance.transform.position);
-
+        
         if (_distanceToPlayer < _enemyStats.AttackRange)
         {
             _animator.SetBool("IsMoving", false);
             base.StartAttack();
             _agent.isStopped = true;
-            _agent.velocity = Vector3.zero;
+            _agent.SetDestination(transform.position);
             _currentActionTime = _enemyStats.AttackCooldownTime;
         }
 

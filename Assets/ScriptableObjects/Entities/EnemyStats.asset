@@ -14,13 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _entityStats:
     MaxLife: 1
-  _enemyStats:
-    Speed: 7
+  _staticEnemyStats:
     IdleWaitTime: 2
-    PatrolPointStoppingDistance: 0.2
-    ChaseRange: 10
-    AttackRange: 3.5
+    AttackRange: 2.5
     AttackCooldownTime: 2
     DespawnCooldownTime: 2
     Damage: 1
     Score: 200
+  _enemyStats:
+    Speed: 7
+    PatrolPointStoppingDistance: 0.2
+    ChaseRange: 10

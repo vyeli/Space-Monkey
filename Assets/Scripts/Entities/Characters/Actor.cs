@@ -13,7 +13,7 @@ public abstract class Actor : MonoBehaviour, IDamageable
     #region PRIVATE_PROPERTIES
     public abstract EntityStats EntityStats { get; }
 
-    [SerializeField] protected int _life;
+    protected int _life;
     #endregion
 
     #region UNITY_EVENTS

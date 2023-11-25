@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public class HurtPlayer : MonoBehaviour
 {
-    [SerializeField] private Enemy _enemy;
+    [SerializeField] private StaticEnemy _enemy;
 
     private void OnTriggerEnter(Collider other)
     {
