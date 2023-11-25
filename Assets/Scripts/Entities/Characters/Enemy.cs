@@ -35,6 +35,11 @@ public class Enemy : StaticEnemy
     {
         base.UpdateAlertState();
 
+        if (_currentState != AIState.Dead && _animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        {
+            _agent.velocity = Vector3.zero;
+        }
+
         switch (_currentState)
         {
             case AIState.Idle:
