@@ -9,18 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77b01ab97c8aa2a4f9169dd04bebb2a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 00d4e5125a829894e9247a596ddc044a, type: 3}
   m_Name: StaticEnemyStats
   m_EditorClassIdentifier: 
   _entityStats:
-    MaxLife: 1
-  _enemyStats:
-    Speed: 0
-    IdleWaitTime: 2
-    PatrolPointStoppingDistance: 0.2
-    ChaseRange: 10
-    AttackRange: 10
-    AttackCooldownTime: 1
-    DespawnCooldownTime: 2
-    Damage: 1
-    Score: 100
+    MaxLife: 0
+  _staticEnemyStats:
+    IdleWaitTime: 0
+    AttackRange: 0
+    AttackCooldownTime: 0
+    DespawnCooldownTime: 0
+    Damage: 0
+    Score: 0

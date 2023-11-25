@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ShootingEnemy : Enemy, IGun
 {
-
     [SerializeField] private GameObject _bulletPrefab;
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private float _bulletSpeed;
@@ -12,7 +11,6 @@ public class ShootingEnemy : Enemy, IGun
     {
         base.AttackAction();
         Shoot();
-        // bullet.GetComponent<Rigidbody>().AddForce(_bulletSpawn.forward * _bulletSpeed, ForceMode.Impulse);
     }
 
     public GameObject BulletPrefab => _bulletPrefab;
