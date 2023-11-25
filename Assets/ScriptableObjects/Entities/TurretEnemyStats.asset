@@ -9,19 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77b01ab97c8aa2a4f9169dd04bebb2a9, type: 3}
-  m_Name: EnemyStats
+  m_Script: {fileID: 11500000, guid: 00d4e5125a829894e9247a596ddc044a, type: 3}
+  m_Name: TurretEnemyStats
   m_EditorClassIdentifier: 
   _entityStats:
     MaxLife: 1
   _staticEnemyStats:
-    IdleWaitTime: 2
-    AttackRange: 2.5
-    AttackCooldownTime: 1.5
+    IdleWaitTime: 0.01
+    AttackRange: 8
+    AttackCooldownTime: 12
     DespawnCooldownTime: 2
     Damage: 1
-    Score: 200
-  _enemyStats:
-    Speed: 8
-    PatrolPointStoppingDistance: 0.2
-    ChaseRange: 10
+    Score: 100

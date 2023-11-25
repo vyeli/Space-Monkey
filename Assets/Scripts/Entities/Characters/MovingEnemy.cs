@@ -5,7 +5,7 @@ using UnityEngine.AI;
 using static Enums;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public class Enemy : StaticEnemy
+public class MovingEnemy : StaticEnemy
 {
     public override EntityStats EntityStats => _enemyStats;
     public override StaticEnemyStats StaticEnemyStats => _enemyStats;

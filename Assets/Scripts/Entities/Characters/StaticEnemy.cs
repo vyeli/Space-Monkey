@@ -98,7 +98,7 @@ public class StaticEnemy : Actor
         _currentState = AIState.Attack;
     }
 
-    protected void UpdateAttack()
+    protected virtual void UpdateAttack()
     {
         _currentActionTime += Time.deltaTime;
 

@@ -9,14 +9,12 @@ public abstract class Gun : MonoBehaviour, IGun
     #region IGUN_PROPERTIES
     public GameObject BulletPrefab => _bulletPrefab;
     public Transform BulletContainer => _bulletContainer;
-    public Quaternion Rotation => _bulletRotation.rotation;
     public int CurrentBulletCount { get => _currentBulletCount; set => _currentBulletCount = value; }
     public int Damage => _gunStats.Damage;
     #endregion
 
     #region PRIVATE_PROPERTIES
     [SerializeField] protected GameObject _bulletPrefab;
-    [SerializeField] protected Transform _bulletRotation;
     [SerializeField] protected Transform _bulletContainer;
     [SerializeField] protected int _currentBulletCount;
     #endregion
