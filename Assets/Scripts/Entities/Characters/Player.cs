@@ -105,9 +105,9 @@ public class Player : Actor
         {
             rayHit = hit.point;
             if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Killzone"))
-            {
                 GameManager.instance.RespawnPlayer();
-            }
+            else if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Victoryzone"))
+                EventsManager.instance.EventGameOver(true);
             return true;
         }
         return false;
