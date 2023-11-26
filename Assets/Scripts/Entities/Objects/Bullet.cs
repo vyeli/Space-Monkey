@@ -2,22 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider), typeof(Rigidbody))]
+[RequireComponent(typeof(Collider))]
 public class Bullet : MonoBehaviour, IBullet
 {
     #region I_BULLET_PROPERTIES
     public float Speed => _speed;
     public float LifeTime => _lifeTime;
     new public Collider collider => _collider;
-    public Rigidbody rb => _rigidbody;
     public IGun Owner => _owner;
     #endregion
 
     #region PRIVATE_PROPERTIES
     [SerializeField] private float _speed = 10f;
     [SerializeField] private float _lifeTime = 2f;
-    [SerializeField] private Collider _collider;
-    [SerializeField] private Rigidbody _rigidbody;
+    private Collider _collider;
     [SerializeField] private IGun _owner;
     [SerializeField] private List<int> _layerMasks;
     #endregion
@@ -26,7 +24,6 @@ public class Bullet : MonoBehaviour, IBullet
     void Start()
     {
         _collider = GetComponent<Collider>();
-        _rigidbody = GetComponent<Rigidbody>();
 
         Init();
     }
@@ -66,8 +63,8 @@ public class Bullet : MonoBehaviour, IBullet
     public void Init()
     {
         _collider.isTrigger = true;
-        _rigidbody.isKinematic = true;
-        _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        // _rigidbody.isKinematic = true;
+        // _rigidbody.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
     }
 
     public void Travel() => transform.position += transform.forward * _speed * Time.deltaTime;

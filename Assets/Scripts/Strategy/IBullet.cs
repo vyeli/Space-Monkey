@@ -8,7 +8,7 @@ public interface IBullet
     float Speed { get; }
     float LifeTime { get; }
     Collider collider { get; }
-    Rigidbody rb { get; }
+    // Rigidbody rb { get; }
     void Init();
     void Travel();
     void Die();

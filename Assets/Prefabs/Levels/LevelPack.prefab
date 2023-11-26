@@ -151,7 +151,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 755771914141252425}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.15246168, y: -0.000000012381142, z: 0.0000000019099784, w: 0.9883094}
+  m_LocalRotation: {x: 0.15246168, y: 0.000000012244521, z: -0.0000000018889024, w: 0.9883094}
   m_LocalPosition: {x: 0, y: 3.893, z: -4.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -5822,6 +5822,7 @@ GameObject:
   - component: {fileID: 8893897162517830353}
   - component: {fileID: 7203418931021506401}
   - component: {fileID: 380127213154382721}
+  - component: {fileID: 5735307016097324555}
   m_Layer: 0
   m_Name: Systems Manager
   m_TagString: Untagged
@@ -6019,6 +6020,8 @@ MonoBehaviour:
   fadeSpeed: 1
   fadeToBlack: 0
   fadeFromBlack: 0
+  _killsText: {fileID: 0}
+  _timerText: {fileID: 0}
   _characterLifeText: {fileID: 0}
   _bulletCountText: {fileID: 0}
   _pauseMenu: {fileID: 0}
@@ -6131,6 +6134,18 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5735307016097324555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2217356909534783687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fc305d17d756014ba69872615c31d5a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2305889664296072406
 GameObject:
   m_ObjectHideFlags: 0
@@ -6380,7 +6395,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2452026186711125637}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.039958354, y: -0.05752872, z: 0.0023044285, w: 0.99754125}
+  m_LocalRotation: {x: 0.039958354, y: -0.057528693, z: 0.002304422, w: 0.99754125}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -6541,7 +6556,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gunStats: {fileID: 11400000, guid: eb8388123d833c547b900df61aa4cd69, type: 2}
   _bulletPrefab: {fileID: 5603007381800499724, guid: b7cb9ef375eee0c4ba1ca3ff0e243364, type: 3}
-  _bulletRotation: {fileID: 1838052427048709818}
   _bulletContainer: {fileID: 7342616169252065107}
   _currentBulletCount: 3
   _maxLength: 10
@@ -8270,7 +8284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9bc997d8dbb354fb7bd074c750311b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _life: 0
   _knockBackPower: {x: 1, y: 0.5}
   _knockBackLength: 0.5
   _distanceToGround: 0.11
