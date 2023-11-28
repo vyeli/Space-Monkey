@@ -10,25 +10,23 @@ using System.Threading.Tasks;
 
 public class DatabaseManager : MonoBehaviour
 {
-    // Register variables
-    [Header("Register")]
-    [SerializeField] private TMP_InputField usernameRegisterField;
-    [SerializeField] private TMP_InputField emailRegisterField;
-    [SerializeField] private TMP_InputField passwordRegisterField;
-    [SerializeField] private TMP_InputField passwordRegisterVerifyField;
-    [SerializeField] private TMP_Text warningRegisterText;
+    // Create variable instance
+    public static DatabaseManager instance;
 
-    [Header("Login")]
-    [SerializeField] private TMP_InputField emailLoginField;
-    [SerializeField] private TMP_InputField passwordLoginField;
-    [SerializeField] private TMP_Text warningLoginText;
+    // Awake is called before Start
+    void Awake()
+    {
+        // Check if instance already exists
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
 
-    // TODO: Move to an UI Controller
-    [Header("UserData")]
-    [SerializeField] private TMP_Text usernameText;
-    [SerializeField] private TMP_Text clickToLoginText;
-    [SerializeField] private GameObject loginMenu;
+        // Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
+    }
 
+    public LoggedUser CurrentUser { get; private set; }
     private DatabaseReference _dbReference;
     private FirebaseAuth _auth;
 
@@ -54,22 +52,16 @@ public class DatabaseManager : MonoBehaviour
         _auth = FirebaseAuth.DefaultInstance;
     }
 
-    public void Register() => StartCoroutine(CreateUser(emailRegisterField.text, usernameRegisterField.text, passwordRegisterField.text, passwordRegisterVerifyField.text));
-
-    public void LogIn() => StartCoroutine(LoginUser(emailLoginField.text, passwordLoginField.text));
-
-    public void LogOut() => StartCoroutine(LogOutUser());
-
-    private IEnumerator CreateUser(string email, string username, string password, string passwordRepeat)
+    public IEnumerator CreateUser(string email, string username, string password, string passwordRepeat)
     {
         if (username == "")
         {
-            warningRegisterText.text = "Ingrese un nombre de usuario";
+            MainMenuUIManager.instance.SetWarningText("Ingrese un nombre de usuario");
             yield return null;
         }
         else if (password != passwordRepeat)
         {
-            warningRegisterText.text = "Las contraseñas no coindicen";
+            MainMenuUIManager.instance.SetWarningText("Las contraseñas no coindicen");
             yield return null;
         }
 
@@ -141,7 +133,7 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LoginUser(string email, string password)
+    public IEnumerator LoginUser(string email, string password)
     {
         //Call the Firebase auth signin function passing the email and password
         Task<AuthResult> LoginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
@@ -175,37 +167,26 @@ public class DatabaseManager : MonoBehaviour
                     break;
             }
             Debug.Log(message);
-            warningLoginText.text = message;
-            warningLoginText.color = Color.red;
-            warningLoginText.gameObject.SetActive(true);
+
+            MainMenuUIManager.instance.SetWarningText(message);
+
+
         }
         else
         {
             //User is now logged in
             //Now get the result
             var user = LoginTask.Result.User;
+            CurrentUser = new LoggedUser(user.Email, user.DisplayName);
 
-            warningLoginText.text = "¡Bienvenido " + user.DisplayName + "!";
-            warningLoginText.color = Color.green;
-            warningLoginText.gameObject.SetActive(true);
+            StartCoroutine(MainMenuUIManager.instance.LogInEffect(user.DisplayName));
 
-            yield return new WaitForSeconds(1.5f);
-            warningLoginText.text = "";
-            warningLoginText.color = Color.red;
-            warningLoginText.gameObject.SetActive(false);
-
-            loginMenu.SetActive(false);
-            clickToLoginText.gameObject.SetActive(false);
-            usernameText.text = user.DisplayName;
-            // Center horizontally usernameText
-            usernameText.verticalAlignment = VerticalAlignmentOptions.Middle;
             Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
             // warningLoginText.text = "";
             // confirmLoginText.text = "Logged In";
             // StartCoroutine(LoadUserData());
 
             // Log out
-            StartCoroutine(LogOutUser());
 
             // usernameField.text = User.DisplayName;
             // UIManager.instance.UserDataScreen(); // Change to user data UI
@@ -215,10 +196,12 @@ public class DatabaseManager : MonoBehaviour
         }
     }
 
-    private IEnumerator LogOutUser()
+    public IEnumerator LogOutUser()
     {
         //Call the Firebase auth sign out function
         _auth.SignOut();
+
+        CurrentUser = null;
 
         //Wait until the task completes
         yield return new WaitUntil(predicate: () => _auth.CurrentUser == null);
@@ -226,22 +209,34 @@ public class DatabaseManager : MonoBehaviour
         //Now return to login screen
         Debug.Log("Logged Out");
 
+        MainMenuUIManager.instance.LogOutEffect();
+
         // UIManager.instance.LoginScreen();
     }
 }
 
-public class User {
-    public string email;
-    public string username;
+public class User : LoggedUser {
     public string password;
 
     public User() {
     }
 
-    public User(string email, string username, string password) {
+    public User(string email, string username, string password): base(email, username) {
+        this.password = password;
+    }
+}
+
+public class LoggedUser
+{
+    public string email;
+    public string username;
+
+    public LoggedUser() {
+    }
+
+    public LoggedUser(string email, string username) {
         this.email = email;
         this.username = username;
-        this.password = password;
     }
 }
 
