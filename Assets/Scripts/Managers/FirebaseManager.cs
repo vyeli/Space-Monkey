@@ -57,12 +57,12 @@ public class DatabaseManager : MonoBehaviour
         if (username == "")
         {
             MainMenuUIManager.instance.SetRegisterWarningText("Ingrese un nombre de usuario");
-            yield return null;
+            yield break;
         }
         else if (password != passwordRepeat)
         {
             MainMenuUIManager.instance.SetRegisterWarningText("Las contraseñas no coindicen");
-            yield return null;
+            yield break;
         }
 
         User newUser = new User(email, username, password);
@@ -98,41 +98,36 @@ public class DatabaseManager : MonoBehaviour
             }
             Debug.Log(message);
             MainMenuUIManager.instance.SetRegisterWarningText(message);
-            // Autologin
+            yield break;
+        }
+
+        //User has now been created
+        //Now get the result
+        var user = RegisterTask.Result.User;
+
+        //Create a user profile and set the username
+        UserProfile profile = new UserProfile{DisplayName = newUser.username};
+
+        //Call the Firebase auth update user profile function passing the profile with the username
+        Task ProfileTask = user.UpdateUserProfileAsync(profile);
+        //Wait until the task completes
+        yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+
+        if (ProfileTask.Exception != null)
+        {
+            //If there are errors handle them
+            Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
+            MainMenuUIManager.instance.SetRegisterWarningText("Error al crear el usuario");
+            yield break;
+            // warningRegisterText.text = "Username Set Failed!";
         }
         else
         {
-            //User has now been created
-            //Now get the result
-            var user = RegisterTask.Result.User;
-
-            if (user != null)
-            {
-                //Create a user profile and set the username
-                UserProfile profile = new UserProfile{DisplayName = newUser.username};
-
-                //Call the Firebase auth update user profile function passing the profile with the username
-                Task ProfileTask = user.UpdateUserProfileAsync(profile);
-                //Wait until the task completes
-                yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
-
-                if (ProfileTask.Exception != null)
-                {
-                    //If there are errors handle them
-                    Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
-                    // warningRegisterText.text = "Username Set Failed!";
-                }
-                else
-                {
-                    CurrentUser = new LoggedUser(user.Email, user.DisplayName);
-                    StartCoroutine(MainMenuUIManager.instance.AutoLogInEffect(newUser.username));
-                    MainMenuUIManager.instance.AutoLogInEffect(newUser.username);
-                }
-            }
+            yield return StartCoroutine(LoginUser(newUser.email, newUser.password, true));
         }
     }
 
-    public IEnumerator LoginUser(string email, string password)
+    public IEnumerator LoginUser(string email, string password, bool isAutoLogin = false)
     {
         //Call the Firebase auth signin function passing the email and password
         Task<AuthResult> LoginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
@@ -169,31 +164,32 @@ public class DatabaseManager : MonoBehaviour
                     break;
             }
             Debug.Log(message);
-
             MainMenuUIManager.instance.SetLoginWarningText(message);
+            yield break;
         }
-        else
-        {
-            //User is now logged in
-            //Now get the result
-            var user = LoginTask.Result.User;
-            CurrentUser = new LoggedUser(user.Email, user.DisplayName);
 
+        //User is now logged in
+        //Now get the result
+        var user = LoginTask.Result.User;
+        CurrentUser = new LoggedUser(user.Email, user.DisplayName);
+
+        if (!isAutoLogin)
             StartCoroutine(MainMenuUIManager.instance.LogInEffect(user.DisplayName));
+        else
+            StartCoroutine(MainMenuUIManager.instance.AutoLogInEffect(user.DisplayName));
 
-            Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
-            // warningLoginText.text = "";
-            // confirmLoginText.text = "Logged In";
-            // StartCoroutine(LoadUserData());
+        Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
+        // warningLoginText.text = "";
+        // confirmLoginText.text = "Logged In";
+        // StartCoroutine(LoadUserData());
 
-            // Log out
+        // Log out
 
-            // usernameField.text = User.DisplayName;
-            // UIManager.instance.UserDataScreen(); // Change to user data UI
-            // confirmLoginText.text = "";
-            // ClearLoginFeilds();
-            // ClearRegisterFeilds();
-        }
+        // usernameField.text = User.DisplayName;
+        // UIManager.instance.UserDataScreen(); // Change to user data UI
+        // confirmLoginText.text = "";
+        // ClearLoginFeilds();
+        // ClearRegisterFeilds();
     }
 
     public IEnumerator LogOutUser()
