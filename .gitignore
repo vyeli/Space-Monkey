@@ -77,3 +77,17 @@ crashlytics-build.properties
 
 # Build folder
 Build/*
+
+# Firebase
+/[Aa]ssets/[Ff]irebase
+/[Aa]ssets/[Ff]irebase.meta
+/[Aa]ssets/[Pp]lugins
+/[Aa]ssets/[Pp]lugins.meta
+/[Aa]ssets/[Ee]ditor Default Resources
+/[Aa]ssets/[Ee]ditor Default Resources.meta
+/[Aa]ssets/[Ee]xternalDependencyManager
+/[Aa]ssets/[Ee]xternalDependencyManager.meta
+
+# Firebase credentials
+/[Aa]ssets/[Ss]treamingAssets
+/[Aa]ssets/[Ss]treamingAssets.meta

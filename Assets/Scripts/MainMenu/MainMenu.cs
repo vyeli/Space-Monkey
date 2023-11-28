@@ -13,6 +13,7 @@ public class MainMenu : MonoBehaviour
     private int _animationsAmount;
 
     [SerializeField] private LoadingScreen loadingScreen;
+    [SerializeField] private GameObject loginMenu;
 
     private enum PlayerAnimations
     {
@@ -32,11 +33,6 @@ public class MainMenu : MonoBehaviour
     // Rotates between animations for the player model
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            loadingScreen.LoadScene((int)Levels.Level1);
-        }
-
         if (isOnIdleAnimation())
         {
             _timeElapsed += Time.deltaTime;
@@ -68,4 +64,11 @@ public class MainMenu : MonoBehaviour
     private bool currentAnimationOngoing() {
         return _playerModelAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
+
+    public void OpenLoginMenu() => loginMenu.SetActive(true);
+
+    public void CloseLoginMenu() => loginMenu.SetActive(false);
+
+    public void LoadGame() => loadingScreen.LoadScene((int)Levels.Level1);
+
 }
