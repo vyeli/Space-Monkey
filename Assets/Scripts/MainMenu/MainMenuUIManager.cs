@@ -33,7 +33,6 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private TMP_InputField usernameRegisterField;
     [SerializeField] private TMP_InputField emailRegisterField;
     [SerializeField] private TMP_InputField passwordRegisterField;
-    [SerializeField] private TMP_InputField passwordRegisterVerifyField;
     [SerializeField] private TMP_Text warningRegisterText;
 
     [Header("LoggedIn Menu")]
@@ -91,13 +90,36 @@ public class MainMenuUIManager : MonoBehaviour
         SetActiveUserState(true);
     }
 
+    public IEnumerator AutoLogInEffect(string username)
+    {
+        warningRegisterText.text = "¡Bienvenido " + username + "!";
+        warningRegisterText.color = Color.green;
+        warningRegisterText.gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        HideWarningText();
+
+        registerMenu.SetActive(false);
+        loggedInMenuTitle.text = "¡Hola " + username + "!";
+
+        SetActiveUserState(true);
+    }
+
     public void LogOutEffect()
     {
         SetActiveUserState(false);
         loggedInMenu.SetActive(false);
     }
 
-    public void SetWarningText(string text)
+    public void SetRegisterWarningText(string text)
+    {
+        warningRegisterText.text = text;
+        warningRegisterText.color = Color.red;
+        warningRegisterText.gameObject.SetActive(true);
+    }
+
+    public void SetLoginWarningText(string text)
     {
         warningLoginText.text = text;
         warningLoginText.color = Color.red;
@@ -115,7 +137,19 @@ public class MainMenuUIManager : MonoBehaviour
 
     public void CloseUserMenu() => ToggleUserMenu(false);
 
-    public void Register() => StartCoroutine(DatabaseManager.instance.CreateUser(emailRegisterField.text, usernameRegisterField.text, passwordRegisterField.text, passwordRegisterVerifyField.text));
+    public void OpenRegisterMenu()
+    {
+        registerMenu.SetActive(true);
+        loginMenu.SetActive(false);
+    }
+
+    public void CloseRegisterMenu()
+    {
+        loginMenu.SetActive(true);
+        registerMenu.SetActive(false);
+    }
+
+    public void Register() => StartCoroutine(DatabaseManager.instance.CreateUser(emailRegisterField.text, usernameRegisterField.text, passwordRegisterField.text, passwordRegisterField.text));
 
     public void LogIn() => StartCoroutine(DatabaseManager.instance.LoginUser(emailLoginField.text, passwordLoginField.text));
 

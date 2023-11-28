@@ -56,12 +56,12 @@ public class DatabaseManager : MonoBehaviour
     {
         if (username == "")
         {
-            MainMenuUIManager.instance.SetWarningText("Ingrese un nombre de usuario");
+            MainMenuUIManager.instance.SetRegisterWarningText("Ingrese un nombre de usuario");
             yield return null;
         }
         else if (password != passwordRepeat)
         {
-            MainMenuUIManager.instance.SetWarningText("Las contraseñas no coindicen");
+            MainMenuUIManager.instance.SetRegisterWarningText("Las contraseñas no coindicen");
             yield return null;
         }
 
@@ -97,8 +97,8 @@ public class DatabaseManager : MonoBehaviour
                     break;
             }
             Debug.Log(message);
+            MainMenuUIManager.instance.SetRegisterWarningText(message);
             // Autologin
-            StartCoroutine(LoginUser(newUser.email, newUser.password));
         }
         else
         {
@@ -124,10 +124,9 @@ public class DatabaseManager : MonoBehaviour
                 }
                 else
                 {
-                    //Username is now set
-                    //Now return to login screen
-                    // UIManager.instance.LoginScreen();                        
-                    // warningRegisterText.text = "";
+                    CurrentUser = new LoggedUser(user.Email, user.DisplayName);
+                    StartCoroutine(MainMenuUIManager.instance.AutoLogInEffect(newUser.username));
+                    MainMenuUIManager.instance.AutoLogInEffect(newUser.username);
                 }
             }
         }
@@ -165,12 +164,13 @@ public class DatabaseManager : MonoBehaviour
                 case AuthError.UserNotFound:
                     message = "El usuario no existe";
                     break;
+                case AuthError.UserDisabled:
+                    message = "El usuario fue baneado";
+                    break;
             }
             Debug.Log(message);
 
-            MainMenuUIManager.instance.SetWarningText(message);
-
-
+            MainMenuUIManager.instance.SetLoginWarningText(message);
         }
         else
         {
