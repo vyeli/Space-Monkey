@@ -7,6 +7,7 @@ using Firebase.Extensions;
 using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
+using System;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -52,17 +53,19 @@ public class DatabaseManager : MonoBehaviour
         _auth = FirebaseAuth.DefaultInstance;
     }
 
-    public IEnumerator CreateUser(string email, string username, string password, string passwordRepeat)
+    public async Task CreateUser(string email, string username, string password, string passwordRepeat)
     {
         if (username == "")
         {
-            MainMenuUIManager.instance.SetRegisterWarningText("Ingrese un nombre de usuario");
-            yield break;
+            throw new Exception("Ingrese un nombre de usuario");
+            // MainMenuUIManager.instance.SetRegisterWarningText("Ingrese un nombre de usuario");
+            // yield break;
         }
         else if (password != passwordRepeat)
         {
-            MainMenuUIManager.instance.SetRegisterWarningText("Las contraseñas no coindicen");
-            yield break;
+            throw new Exception("Las contraseñas no coindicen");
+            // MainMenuUIManager.instance.SetRegisterWarningText("Las contraseñas no coindicen");
+            // yield break;
         }
 
         User newUser = new User(email, username, password);
@@ -70,8 +73,9 @@ public class DatabaseManager : MonoBehaviour
         // Call the Firebase auth signin function passing the email and password
         Task<AuthResult> RegisterTask = _auth.CreateUserWithEmailAndPasswordAsync(newUser.email, newUser.password);
 
+        await RegisterTask;
         // Wait until the task completes
-        yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
+        // yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
         if (RegisterTask.Exception != null)
         {
@@ -97,8 +101,9 @@ public class DatabaseManager : MonoBehaviour
                     break;
             }
             Debug.Log(message);
-            MainMenuUIManager.instance.SetRegisterWarningText(message);
-            yield break;
+            throw new Exception(message);
+            // MainMenuUIManager.instance.SetRegisterWarningText(message);
+            // yield break;
         }
 
         //User has now been created
@@ -111,34 +116,34 @@ public class DatabaseManager : MonoBehaviour
         //Call the Firebase auth update user profile function passing the profile with the username
         Task ProfileTask = user.UpdateUserProfileAsync(profile);
         //Wait until the task completes
-        yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
+        await ProfileTask;
+        // yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
 
         if (ProfileTask.Exception != null)
         {
             //If there are errors handle them
             Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
-            MainMenuUIManager.instance.SetRegisterWarningText("Error al crear el usuario");
-            yield break;
-            // warningRegisterText.text = "Username Set Failed!";
+            throw new Exception("Error al crear el usuario");
+            // MainMenuUIManager.instance.SetRegisterWarningText("Error al crear el usuario");
+            // yield break;
         }
-        else
-        {
-            yield return StartCoroutine(LoginUser(newUser.email, newUser.password, true));
-        }
+        // else
+        // {
+        //     yield return StartCoroutine(LoginUser(newUser.email, newUser.password, true));
+        // }
     }
 
-    public IEnumerator LoginUser(string email, string password, bool isAutoLogin = false)
+    public async Task LoginUser(string email, string password, bool isAutoLogin = false)
     {
         //Call the Firebase auth signin function passing the email and password
         Task<AuthResult> LoginTask = _auth.SignInWithEmailAndPasswordAsync(email, password);
         //Wait until the task completes
-        yield return new WaitUntil(predicate: () => LoginTask.IsCompleted);
-
-        if (LoginTask.Exception != null)
-        {
+        try {
+            await LoginTask;
+        } catch (Exception e) {
             //If there are errors handle them
-            Debug.LogWarning(message: $"Failed to register task with {LoginTask.Exception}");
-            FirebaseException firebaseEx = LoginTask.Exception.GetBaseException() as FirebaseException;
+            Debug.LogWarning(message: $"Failed to register task with {e}");
+            FirebaseException firebaseEx = e.GetBaseException() as FirebaseException;
             AuthError errorCode = (AuthError)firebaseEx.ErrorCode;
 
             string message = "Error de inicio de sesión";
@@ -164,8 +169,9 @@ public class DatabaseManager : MonoBehaviour
                     break;
             }
             Debug.Log(message);
-            MainMenuUIManager.instance.SetLoginWarningText(message);
-            yield break;
+            throw new Exception(message);
+            // MainMenuUIManager.instance.SetLoginWarningText(message);
+            // yield break;
         }
 
         //User is now logged in
@@ -173,10 +179,10 @@ public class DatabaseManager : MonoBehaviour
         var user = LoginTask.Result.User;
         CurrentUser = new LoggedUser(user.Email, user.DisplayName);
 
-        if (!isAutoLogin)
-            StartCoroutine(MainMenuUIManager.instance.LogInEffect(user.DisplayName));
-        else
-            StartCoroutine(MainMenuUIManager.instance.AutoLogInEffect(user.DisplayName));
+        // if (!isAutoLogin)
+        //     StartCoroutine(MainMenuUIManager.instance.LogInEffect(user.DisplayName));
+        // else
+        //     StartCoroutine(MainMenuUIManager.instance.AutoLogInEffect(user.DisplayName));
 
         Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
         // warningLoginText.text = "";
@@ -192,7 +198,7 @@ public class DatabaseManager : MonoBehaviour
         // ClearRegisterFeilds();
     }
 
-    public IEnumerator LogOutUser()
+    public void LogOutUser()
     {
         //Call the Firebase auth sign out function
         _auth.SignOut();
@@ -200,12 +206,12 @@ public class DatabaseManager : MonoBehaviour
         CurrentUser = null;
 
         //Wait until the task completes
-        yield return new WaitUntil(predicate: () => _auth.CurrentUser == null);
+        // yield return new WaitUntil(predicate: () => _auth.CurrentUser == null);
 
         //Now return to login screen
         Debug.Log("Logged Out");
 
-        MainMenuUIManager.instance.LogOutEffect();
+        // MainMenuUIManager.instance.LogOutEffect();
 
         // UIManager.instance.LoginScreen();
     }
