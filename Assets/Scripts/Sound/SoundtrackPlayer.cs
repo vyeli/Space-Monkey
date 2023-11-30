@@ -15,6 +15,8 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     #region SOUNDTRACK_PROPERTIES
     [SerializeField] private TextMeshProUGUI songNameDisplayed;
     [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Button skipButton;
+    [SerializeField] private Button pauseButton;
     [SerializeField] private AudioClip[] _soundtrackClips;
     [SerializeField] private Image _pauseImage;
     [SerializeField] private Sprite _pauseSprite;
@@ -58,6 +60,9 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
 
         volumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = volumeSlider.value; _optionsVolumeSlider.value = volumeSlider.value; });
         _optionsVolumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = _optionsVolumeSlider.value; volumeSlider.value = _optionsVolumeSlider.value; });
+
+        skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); });
+        pauseButton.onClick.AddListener(delegate { TogglePauseState(); });
     }
 
     void Update()
