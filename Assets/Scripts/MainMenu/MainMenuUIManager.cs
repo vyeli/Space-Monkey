@@ -33,6 +33,9 @@ public class MainMenuUIManager : MonoBehaviour
     [Header("Options Menu")]
     [SerializeField] private GameObject optionsMenu;
 
+    [Header("Game Title")]
+    [SerializeField] private GameObject gameTitle;
+
     void Start()
     {
         if (DatabaseManager.instance.CurrentUser == null)
@@ -49,6 +52,7 @@ public class MainMenuUIManager : MonoBehaviour
         else
             menu = loggedInMenu;
         menu.SetActive(isActive);
+        gameTitle.SetActive(!isActive);
     }
 
     private void SetActiveUserState(bool state)
@@ -78,9 +82,10 @@ public class MainMenuUIManager : MonoBehaviour
 
         Debug.Log(warningLoginText.text);
 
-        HideWarningText();
+        HideLoginWarningText();
 
         loginMenu.SetActive(false);
+        gameTitle.SetActive(true);
 
         SetActiveUserState(true);
     }
@@ -93,9 +98,10 @@ public class MainMenuUIManager : MonoBehaviour
 
         await Task.Delay(1500);
 
-        HideWarningText();
+        HideRegisterWarningText();
 
         registerMenu.SetActive(false);
+        gameTitle.SetActive(true);
         loggedInMenuTitle.text = "¡Hola " + username + "!";
 
         SetActiveUserState(true);
@@ -105,6 +111,7 @@ public class MainMenuUIManager : MonoBehaviour
     {
         SetActiveUserState(false);
         loggedInMenu.SetActive(false);
+        gameTitle.SetActive(true);
     }
 
     public void SetRegisterWarningText(string text)
@@ -121,20 +128,35 @@ public class MainMenuUIManager : MonoBehaviour
         warningLoginText.gameObject.SetActive(true);
     }
 
-    public void HideWarningText()
+    public void HideLoginWarningText()
     {
         warningLoginText.text = "";
         warningLoginText.color = Color.red;
         warningLoginText.gameObject.SetActive(false);
     }
 
+    public void HideRegisterWarningText()
+    {
+        warningRegisterText.text = "";
+        warningRegisterText.color = Color.red;
+        warningRegisterText.gameObject.SetActive(false);
+    }
+
     public void OpenUserMenu() => ToggleUserMenu(true);
 
     public void CloseUserMenu() => ToggleUserMenu(false);
 
-    public void OpenOptionsMenu() => optionsMenu.SetActive(true);
+    public void OpenOptionsMenu()
+    {
+        gameTitle.SetActive(false);
+        optionsMenu.SetActive(true);
+    }
 
-    public void CloseOptionsMenu() => optionsMenu.SetActive(false);
+    public void CloseOptionsMenu()
+    {
+        optionsMenu.SetActive(false);
+        gameTitle.SetActive(true);
+    }
 
     public void SwitchLoginWithRegisterMenu()
     {
@@ -151,6 +173,7 @@ public class MainMenuUIManager : MonoBehaviour
     public void CloseRegisterMenu()
     {
         registerMenu.SetActive(false);
+        gameTitle.SetActive(true);
     }
 
     public async void Register()
