@@ -21,6 +21,7 @@ public class DefeatGameManager : MonoBehaviour
     [SerializeField] private KeyCode _muteAudio = KeyCode.M;
     [SerializeField] private KeyCode _restartGame = KeyCode.R;
     [SerializeField] private KeyCode _goToMainMenu = KeyCode.Escape;
+    [SerializeField] private SoundInfo _soundInfo;
 
     void Awake()
     {
@@ -36,6 +37,7 @@ public class DefeatGameManager : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = _soundInfo.MusicVolume;
         _audioSource.PlayOneShot(_defeat);
         _restartButton.onClick.AddListener(RestartGame);
         _mainMenuButton.onClick.AddListener(GoToMainMenu);
@@ -53,6 +55,20 @@ public class DefeatGameManager : MonoBehaviour
     }
 
     private void ToggleMuteAudio() => _audioSource.mute = !_audioSource.mute;
-    private void RestartGame() => GameLevelsManager.instance.LoadCurrentLevel();
-    private void GoToMainMenu() => GameLevelsManager.instance.LoadMainMenu();
+    private void RestartGame()
+    {
+        GameLevelsManager.instance.LoadCurrentLevel();
+        SaveVolumes();
+    }
+
+    private void GoToMainMenu()
+    {
+        GameLevelsManager.instance.LoadMainMenu();
+        SaveVolumes();
+    }
+
+    private void SaveVolumes()
+    {
+        _soundInfo.MusicVolume = _audioSource.volume;
+    }
 }

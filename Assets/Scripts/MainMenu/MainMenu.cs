@@ -14,6 +14,7 @@ public class MainMenu : MonoBehaviour
     private int _animationsAmount;
 
     [SerializeField] private LoadingScreen loadingScreen;
+    [SerializeField] private SoundtrackPlayer soundtrackPlayer;
 
     private enum PlayerAnimations
     {
@@ -65,6 +66,10 @@ public class MainMenu : MonoBehaviour
         return _playerModelAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f;
     }
 
-    public void LoadGame() => loadingScreen.LoadScene((int)Levels.Level1);
+    public void LoadGame()
+    {
+        soundtrackPlayer.SaveVolumes();
+        loadingScreen.LoadScene((int)Levels.Level1);
+    }
 
 }

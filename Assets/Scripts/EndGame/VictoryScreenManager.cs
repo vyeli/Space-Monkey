@@ -28,6 +28,7 @@ public class VictoryScreenManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _scoreLetterText;
     [SerializeField] private float _digitsChangeDelay = 1f;
     [SerializeField] private float _digitsChangeSpeed = 0.02f;
+    [SerializeField] private SoundInfo _soundInfo;
 
     void Awake()
     {
@@ -43,6 +44,7 @@ public class VictoryScreenManager : MonoBehaviour
     async void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        _audioSource.volume = _soundInfo.MusicVolume;
         _audioSource.PlayOneShot(_victory);
         _restartButton.onClick.AddListener(RestartGame);
         _mainMenuButton.onClick.AddListener(GoToMainMenu);
@@ -156,6 +158,20 @@ public class VictoryScreenManager : MonoBehaviour
     }
 
     private void ToggleMuteAudio() => _audioSource.mute = !_audioSource.mute;
-    private void RestartGame() => GameLevelsManager.instance.LoadCurrentLevel();
-    private void GoToMainMenu() => GameLevelsManager.instance.LoadMainMenu();
+    private void RestartGame()
+    {
+        SaveVolumes();
+        GameLevelsManager.instance.LoadCurrentLevel();
+    }
+
+    private void GoToMainMenu()
+    {
+        SaveVolumes();
+        GameLevelsManager.instance.LoadMainMenu();
+    }
+
+    private void SaveVolumes()
+    {
+        _soundInfo.MusicVolume = _audioSource.volume;
+    }
 }

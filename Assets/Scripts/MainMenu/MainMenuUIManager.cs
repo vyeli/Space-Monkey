@@ -30,18 +30,15 @@ public class MainMenuUIManager : MonoBehaviour
     [Header("LoggedIn Menu")]
     [SerializeField] private TMP_Text loggedInMenuTitle;
 
+    [Header("Options Menu")]
+    [SerializeField] private GameObject optionsMenu;
+
     void Start()
     {
         if (DatabaseManager.instance.CurrentUser == null)
             SetActiveUserState(false);
         else
             SetActiveUserState(true);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     private void ToggleUserMenu(bool isActive)
@@ -79,10 +76,7 @@ public class MainMenuUIManager : MonoBehaviour
 
         await Task.Delay(1500);
 
-
         Debug.Log(warningLoginText.text);
-
-        // yield return new WaitForSeconds(1.5f);
 
         HideWarningText();
 
@@ -98,8 +92,6 @@ public class MainMenuUIManager : MonoBehaviour
         warningRegisterText.gameObject.SetActive(true);
 
         await Task.Delay(1500);
-
-        // yield return new WaitForSeconds(1.5f);
 
         HideWarningText();
 
@@ -139,6 +131,10 @@ public class MainMenuUIManager : MonoBehaviour
     public void OpenUserMenu() => ToggleUserMenu(true);
 
     public void CloseUserMenu() => ToggleUserMenu(false);
+
+    public void OpenOptionsMenu() => optionsMenu.SetActive(true);
+
+    public void CloseOptionsMenu() => optionsMenu.SetActive(false);
 
     public void SwitchLoginWithRegisterMenu()
     {

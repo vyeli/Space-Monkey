@@ -21,6 +21,9 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     [SerializeField] private Image _pauseImage;
     [SerializeField] private Sprite _pauseSprite;
     [SerializeField] private Sprite _playSprite;
+    [SerializeField] private Slider _optionsVolumeSlider;
+    [SerializeField] private Slider _optionsSFXSlider;
+    [SerializeField] private SoundInfo _soundInfo;
     private List<AudioClip> _clipsToPlay = new List<AudioClip>();
     #endregion
 
@@ -48,9 +51,16 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     void Start()
     {
         InitAudioSource();
+
         songNameDisplayed.text = AudioSource.clip.name;
-        volumeSlider.value = AudioSource.volume;
-        volumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = volumeSlider.value; });
+
+        volumeSlider.value = _soundInfo.MusicVolume;
+        _optionsVolumeSlider.value = _soundInfo.MusicVolume;
+        _optionsSFXSlider.value = _soundInfo.SFXVolume;
+
+        volumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = volumeSlider.value; _optionsVolumeSlider.value = volumeSlider.value; });
+        _optionsVolumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = _optionsVolumeSlider.value; volumeSlider.value = _optionsVolumeSlider.value; });
+
         skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); });
         pauseButton.onClick.AddListener(delegate { TogglePauseState(); });
     }
@@ -115,6 +125,12 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
             AudioSource.UnPause();
             _pauseImage.sprite = _pauseSprite;
         }
+    }
+
+    public void SaveVolumes()
+    {
+        _soundInfo.MusicVolume = AudioSource.volume;
+        _soundInfo.SFXVolume = _optionsSFXSlider.value;
     }
     #endregion
 }
