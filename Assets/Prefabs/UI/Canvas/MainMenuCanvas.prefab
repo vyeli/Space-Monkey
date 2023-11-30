@@ -3071,7 +3071,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7363382475233058040, guid: 73334f58c682b46459e7a61219a4b1b4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8123716632593210476, guid: 73334f58c682b46459e7a61219a4b1b4, type: 3}
       propertyPath: m_SizeDelta.x
@@ -3368,6 +3368,14 @@ PrefabInstance:
     - target: {fileID: 5603251882995797229, guid: a14831cd307634e46869eca5c6835454, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7203645025503938280, guid: a14831cd307634e46869eca5c6835454, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadRankingScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7203645025503938280, guid: a14831cd307634e46869eca5c6835454, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: GameLevelsManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 8610225660123945185, guid: a14831cd307634e46869eca5c6835454, type: 3}
       propertyPath: m_Name

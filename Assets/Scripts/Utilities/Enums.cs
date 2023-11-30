@@ -10,6 +10,7 @@ public class Enums : MonoBehaviour
         Level1,
         DefeatScreen,
         VictoryScreen,
+        Ranking,
     }
 
     public enum ScoreLetter

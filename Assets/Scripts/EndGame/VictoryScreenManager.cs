@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Threading.Tasks;
 
 [RequireComponent(typeof(AudioSource))]
 public class VictoryScreenManager : MonoBehaviour
@@ -39,7 +40,7 @@ public class VictoryScreenManager : MonoBehaviour
         }
     }
 
-    void Start()
+    async void Start()
     {
         _audioSource = GetComponent<AudioSource>();
         _audioSource.PlayOneShot(_victory);
@@ -59,6 +60,8 @@ public class VictoryScreenManager : MonoBehaviour
         StartCoroutine(digitsChangeEffect(_timeScoreText, 1));
         StartCoroutine(digitsChangeEffect(_killsScoreText, 1));
         StartCoroutine(letterScoreEffect(_scoreLetterText));
+
+        await UpdateScore();
     }
 
     void Update()
@@ -70,6 +73,33 @@ public class VictoryScreenManager : MonoBehaviour
         if (Input.GetKeyDown(_muteAudio)) ToggleMuteAudio();
         if (Input.GetKeyDown(_restartGame)) RestartGame();
         if (Input.GetKeyDown(_goToMainMenu)) GoToMainMenu();
+    }
+
+    private async Task UpdateScore()
+    {
+        if (DatabaseManager.instance.CurrentUser != null)
+        {
+            Task<RankingEntry> task = DatabaseManager.instance.GetRankingEntry("Level1");
+            
+            try
+            {
+                await task;
+            }
+            catch (System.Exception)
+            {
+                Debug.Log("Error al obtener la entrada de ranking: " + task.Exception);
+                return;
+            }
+            
+            RankingEntry entry = task.Result;
+            if (entry == null || ScoreManager.instance.Score > entry.score)
+            {
+                Task createTask = DatabaseManager.instance.SetRankingEntry("Level1", ScoreManager.instance.Score, GameManager.instance.EnemyKills,
+                ScoreManager.instance.KillsScore, GameManager.instance.getTimer(), ScoreManager.instance.TimedScore);
+
+                await createTask;
+            }
+        }
     }
 
     private IEnumerator digitsChangeEffect(TextMeshProUGUI scoreText, int initialCharacter = 0)

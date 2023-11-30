@@ -73,7 +73,6 @@ public class MainMenuUIManager : MonoBehaviour
 
     public async Task LogInEffect(string username)
     {
-        Debug.Log("ENTRO 1");
         warningLoginText.text = "¡Bienvenido " + username + "!";
         warningLoginText.color = Color.green;
         warningLoginText.gameObject.SetActive(true);

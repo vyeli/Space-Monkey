@@ -71,6 +71,11 @@ public class GameManager : MonoBehaviour
         return string.Format("{0:00}:{1:00}", minutes, seconds);
     }
 
+    public long getTimer()
+    {
+        return (long)_levelTime;
+    }
+
     public void RespawnPlayer()
     {
         StartCoroutine(RespawnCo());

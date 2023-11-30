@@ -8,6 +8,7 @@ using TMPro;
 using System.Linq;
 using System.Threading.Tasks;
 using System;
+using System.Collections.Generic;
 
 public class DatabaseManager : MonoBehaviour
 {
@@ -58,24 +59,17 @@ public class DatabaseManager : MonoBehaviour
         if (username == "")
         {
             throw new Exception("Ingrese un nombre de usuario");
-            // MainMenuUIManager.instance.SetRegisterWarningText("Ingrese un nombre de usuario");
-            // yield break;
         }
         else if (password != passwordRepeat)
         {
             throw new Exception("Las contraseñas no coindicen");
-            // MainMenuUIManager.instance.SetRegisterWarningText("Las contraseñas no coindicen");
-            // yield break;
         }
 
         User newUser = new User(email, username, password);
 
         // Call the Firebase auth signin function passing the email and password
         Task<AuthResult> RegisterTask = _auth.CreateUserWithEmailAndPasswordAsync(newUser.email, newUser.password);
-
         await RegisterTask;
-        // Wait until the task completes
-        // yield return new WaitUntil(predicate: () => RegisterTask.IsCompleted);
 
         if (RegisterTask.Exception != null)
         {
@@ -102,35 +96,25 @@ public class DatabaseManager : MonoBehaviour
             }
             Debug.Log(message);
             throw new Exception(message);
-            // MainMenuUIManager.instance.SetRegisterWarningText(message);
-            // yield break;
         }
 
-        //User has now been created
-        //Now get the result
+        // User has now been created
+        // Now get the result
         var user = RegisterTask.Result.User;
 
-        //Create a user profile and set the username
+        // Create a user profile and set the username
         UserProfile profile = new UserProfile{DisplayName = newUser.username};
 
-        //Call the Firebase auth update user profile function passing the profile with the username
+        // Call the Firebase auth update user profile function passing the profile with the username
         Task ProfileTask = user.UpdateUserProfileAsync(profile);
-        //Wait until the task completes
         await ProfileTask;
-        // yield return new WaitUntil(predicate: () => ProfileTask.IsCompleted);
 
         if (ProfileTask.Exception != null)
         {
-            //If there are errors handle them
+            // If there are errors handle them
             Debug.LogWarning(message: $"Failed to register task with {ProfileTask.Exception}");
             throw new Exception("Error al crear el usuario");
-            // MainMenuUIManager.instance.SetRegisterWarningText("Error al crear el usuario");
-            // yield break;
         }
-        // else
-        // {
-        //     yield return StartCoroutine(LoginUser(newUser.email, newUser.password, true));
-        // }
     }
 
     public async Task LoginUser(string email, string password, bool isAutoLogin = false)
@@ -170,76 +154,167 @@ public class DatabaseManager : MonoBehaviour
             }
             Debug.Log(message);
             throw new Exception(message);
-            // MainMenuUIManager.instance.SetLoginWarningText(message);
-            // yield break;
         }
 
-        //User is now logged in
-        //Now get the result
+        // User is now logged in
+        // Now get the result
         var user = LoginTask.Result.User;
-        CurrentUser = new LoggedUser(user.Email, user.DisplayName);
+        CurrentUser = new LoggedUser(user.UserId, user.Email, user.DisplayName);
 
-        // if (!isAutoLogin)
-        //     StartCoroutine(MainMenuUIManager.instance.LogInEffect(user.DisplayName));
-        // else
-        //     StartCoroutine(MainMenuUIManager.instance.AutoLogInEffect(user.DisplayName));
-
-        Debug.LogFormat("User signed in successfully: {0} ({1})", user.DisplayName, user.Email);
-        // warningLoginText.text = "";
-        // confirmLoginText.text = "Logged In";
-        // StartCoroutine(LoadUserData());
-
-        // Log out
-
-        // usernameField.text = User.DisplayName;
-        // UIManager.instance.UserDataScreen(); // Change to user data UI
-        // confirmLoginText.text = "";
-        // ClearLoginFeilds();
-        // ClearRegisterFeilds();
+        Debug.LogFormat("User signed in successfully: {0} ({1})", user.UserId, user.DisplayName);
     }
 
     public void LogOutUser()
     {
-        //Call the Firebase auth sign out function
+        // Call the Firebase auth sign out function
         _auth.SignOut();
 
         CurrentUser = null;
 
-        //Wait until the task completes
-        // yield return new WaitUntil(predicate: () => _auth.CurrentUser == null);
-
-        //Now return to login screen
+        // Now return to login screen
         Debug.Log("Logged Out");
+    }
 
-        // MainMenuUIManager.instance.LogOutEffect();
+    public async Task SetRankingEntry(string level, int score, int kills, int killsScore, long time, int timeScore)
+    {
+        if (CurrentUser == null)
+        {
+            throw new Exception("No hay un usuario logueado");
+        }
 
-        // UIManager.instance.LoginScreen();
+        RankingEntry newEntry = new RankingEntry(CurrentUser.username, score, kills, killsScore, time, timeScore);
+        string json = JsonUtility.ToJson(newEntry);
+
+        Task DBTask = _dbReference.Child("ranking").Child(level).Child(CurrentUser.id).SetRawJsonValueAsync(json);
+
+        try
+        {
+            await DBTask;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Error al guardar el puntaje: " + e.Message);
+        }
+    }
+
+    public async Task<RankingEntry> GetRankingEntry(string level)
+    {
+        if (CurrentUser == null)
+        {
+            throw new Exception("No hay un usuario logueado");
+        }
+
+        Task<DataSnapshot> DBTask = _dbReference.Child("ranking").Child(level).Child(CurrentUser.id).GetValueAsync();
+
+        try
+        {
+            await DBTask;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Error al cargar el puntaje: " + e.Message);
+        }
+
+        // Data has been retrieved
+        DataSnapshot snapshot = DBTask.Result;
+        RankingEntry entry = null;
+
+        if (snapshot.Exists)
+        {
+            entry = new RankingEntry(
+                snapshot.Child("username").Value.ToString(),
+                int.Parse(snapshot.Child("score").Value.ToString()),
+                int.Parse(snapshot.Child("kills").Value.ToString()),
+                int.Parse(snapshot.Child("killsScore").Value.ToString()),
+                long.Parse(snapshot.Child("time").Value.ToString()),
+                int.Parse(snapshot.Child("timeScore").Value.ToString())
+            );
+        }
+
+        return entry;
+    }
+
+    public async Task<List<RankingEntry>> GetRanking(string level, int page)
+    {
+        //Get all the users data ordered by kills amount
+        Task<DataSnapshot> DBTask = _dbReference.Child("ranking").Child(level).OrderByChild("score").LimitToFirst(page).GetValueAsync();
+
+        try
+        {
+            await DBTask;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Error al cargar el ranking: " + e.Message);
+        }
+
+        // Data has been retrieved
+        DataSnapshot snapshot = DBTask.Result;
+        List<RankingEntry> scoreboardEntries = new List<RankingEntry>();
+
+        // Loop through every users UID
+        foreach (DataSnapshot childSnapshot in snapshot.Children.Reverse<DataSnapshot>())
+        {
+            RankingEntry newEntry = new RankingEntry(
+                childSnapshot.Child("username").Value.ToString(),
+                int.Parse(childSnapshot.Child("score").Value.ToString()),
+                int.Parse(childSnapshot.Child("kills").Value.ToString()),
+                int.Parse(childSnapshot.Child("killsScore").Value.ToString()),
+                long.Parse(childSnapshot.Child("time").Value.ToString()),
+                int.Parse(childSnapshot.Child("timeScore").Value.ToString())
+            );
+
+            scoreboardEntries.Add(newEntry);
+        }
+
+        return scoreboardEntries;
     }
 }
 
-public class User : LoggedUser {
+public class RankingEntry
+{
+    public string username;
+    public int score;
+    public int kills;
+    public int killsScore;
+    public long time;
+    public int timeScore;
+
+    public RankingEntry(string username, int score, int kills, int killsScore, long time, int timeScore)
+    {
+        this.username = username;
+        this.score = score;
+        this.kills = kills;
+        this.killsScore = killsScore;
+        this.time = time;
+        this.timeScore = timeScore;
+    }
+}
+
+public class User {
+    public string email;
+    public string username;
     public string password;
 
-    public User() {
-    }
-
-    public User(string email, string username, string password): base(email, username) {
+    public User(string email, string username, string password) {
+        this.email = email;
+        this.username = username;
         this.password = password;
     }
 }
 
 public class LoggedUser
 {
+    public string id;
     public string email;
     public string username;
 
     public LoggedUser() {
     }
 
-    public LoggedUser(string email, string username) {
+    public LoggedUser(string id, string email, string username) {
+        this.id = id;
         this.email = email;
         this.username = username;
     }
 }
-
-

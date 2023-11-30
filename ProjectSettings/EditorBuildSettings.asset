@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/VictorySceen.unity
     guid: d09a675914599be429b1ba69e0bd3104
+  - enabled: 1
+    path: Assets/Scenes/Ranking.unity
+    guid: 38b37e2fc966a084abebd982c29b72d6
   m_configObjects: {}
