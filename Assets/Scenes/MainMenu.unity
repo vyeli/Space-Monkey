@@ -415,7 +415,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1304324445}
-  - component: {fileID: 1304324444}
   - component: {fileID: 1304324443}
   m_Layer: 0
   m_Name: SystemsManager
@@ -434,18 +433,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 329031d088fb65844b7870f300f51d05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1304324444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1304324442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41f46351607f50a4da7658df2423f77b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1304324445
@@ -759,6 +746,7 @@ GameObject:
   - component: {fileID: 1984210897}
   - component: {fileID: 1984210898}
   - component: {fileID: 1984210900}
+  - component: {fileID: 1984210901}
   m_Layer: 0
   m_Name: MainMenuControllers
   m_TagString: Untagged
@@ -824,6 +812,18 @@ MonoBehaviour:
   loggedInMenuTitle: {fileID: 1690261807}
   optionsMenu: {fileID: 1598273642017802462}
   gameTitle: {fileID: 741955536}
+--- !u!114 &1984210901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984210895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41f46351607f50a4da7658df2423f77b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2046418377 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 983530106233548706, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
@@ -1023,9 +1023,13 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1984210900}
-    - target: {fileID: 1536661584165290960, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
+    - target: {fileID: 2085474739833553193, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1984210901}
+    - target: {fileID: 2085474739833553193, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ExitGame
       objectReference: {fileID: 0}
     - target: {fileID: 2195486144207740217, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
       propertyPath: m_Name
@@ -1046,7 +1050,11 @@ PrefabInstance:
     - target: {fileID: 4301383672043183909, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1304324444}
+      objectReference: {fileID: 1984210901}
+    - target: {fileID: 4301383672043183909, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: LoadRankingScreen
+      objectReference: {fileID: 0}
     - target: {fileID: 5811342893753329207, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1151,10 +1159,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1984210900}
-    - target: {fileID: 9022838263120093233, guid: 825aad9d65d6ddd42b7a437ea3287936, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
