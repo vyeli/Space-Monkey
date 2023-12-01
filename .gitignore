@@ -91,3 +91,6 @@ Build/*
 # Firebase credentials
 /[Aa]ssets/[Ss]treamingAssets
 /[Aa]ssets/[Ss]treamingAssets.meta
+
+/StarSkybox04/
+StarSkybox04.mat

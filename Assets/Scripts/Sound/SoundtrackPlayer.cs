@@ -4,13 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-[RequireComponent(typeof(AudioSource))]
 public class SoundtrackPlayer : MonoBehaviour, IListenable
 {
-    #region ILISTENABLE_PROPERTIES
-    public AudioSource AudioSource => _audioSource;
-    private AudioSource _audioSource;
-    #endregion
 
     #region SOUNDTRACK_PROPERTIES
     [SerializeField] private TextMeshProUGUI songNameDisplayed;
@@ -24,27 +19,33 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     [SerializeField] private Slider _optionsVolumeSlider;
     [SerializeField] private Slider _optionsSFXSlider;
     [SerializeField] private SoundInfo _soundInfo;
+
+    [SerializeField] private AudioSource musicSource;
+    [SerializeField] private AudioSource sfxSource;
+
     private List<AudioClip> _clipsToPlay = new List<AudioClip>();
     #endregion
 
     #region ILISTENABLE_METHODS
     public void InitAudioSource()
     {
-        _audioSource = GetComponent<AudioSource>();
+
         _clipsToPlay = GetShuffledClips(_soundtrackClips);
-        AudioSource.clip = _clipsToPlay[0];
+        musicSource.clip = _clipsToPlay[0];
         Play();
     }
 
     public void PlayOneShot() => throw new System.NotImplementedException();
 
-    public void Play() => AudioSource.Play();
+    public void Play() => musicSource.Play();
 
-    public bool IsPlaying() => AudioSource.isPlaying;
+    public void PlaySFX(AudioClip clip) => sfxSource.PlayOneShot(clip);
+
+    public bool IsPlaying() => musicSource.isPlaying;
     
-    public bool IsPaused() => !IsPlaying() && AudioSource.time > 0;
+    public bool IsPaused() => !IsPlaying() && musicSource.time > 0;
 
-    public void Stop() => AudioSource.Stop();
+    public void Stop() => musicSource.Stop();
     #endregion
 
     #region UNITY_EVENTS
@@ -52,14 +53,16 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     {
         InitAudioSource();
 
-        songNameDisplayed.text = AudioSource.clip.name;
+        songNameDisplayed.text = musicSource.clip.name;
 
         volumeSlider.value = _soundInfo.MusicVolume;
         _optionsVolumeSlider.value = _soundInfo.MusicVolume;
         _optionsSFXSlider.value = _soundInfo.SFXVolume;
 
-        volumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = volumeSlider.value; _optionsVolumeSlider.value = volumeSlider.value; });
-        _optionsVolumeSlider.onValueChanged.AddListener(delegate { AudioSource.volume = _optionsVolumeSlider.value; volumeSlider.value = _optionsVolumeSlider.value; });
+        volumeSlider.onValueChanged.AddListener(delegate { musicSource.volume = volumeSlider.value; _optionsVolumeSlider.value = volumeSlider.value; });
+        _optionsVolumeSlider.onValueChanged.AddListener(delegate { musicSource.volume = _optionsVolumeSlider.value; volumeSlider.value = _optionsVolumeSlider.value; });
+
+        _optionsSFXSlider.onValueChanged.AddListener(delegate { sfxSource.volume = _optionsSFXSlider.value; });
 
         skipButton.onClick.AddListener(delegate { ShuffleNextSong(); Play(); });
         pauseButton.onClick.AddListener(delegate { TogglePauseState(); });
@@ -83,8 +86,8 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
         {
             _clipsToPlay = GetShuffledClips(_soundtrackClips);
         }
-        AudioSource.clip = _clipsToPlay[0];
-        songNameDisplayed.text = AudioSource.clip.name;
+        musicSource.clip = _clipsToPlay[0];
+        songNameDisplayed.text = musicSource.clip.name;
     }
 
     private List<AudioClip> GetShuffledClips(AudioClip[] audioClips) {
@@ -109,20 +112,20 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     {
         if (!IsPaused())
         {
-            AudioSource.Pause();
+            musicSource.Pause();
             _pauseImage.sprite = _playSprite;
         }
         else
         {
-            AudioSource.UnPause();
+            musicSource.UnPause();
             _pauseImage.sprite = _pauseSprite;
         }
     }
 
     public void SaveVolumes()
     {
-        _soundInfo.MusicVolume = AudioSource.volume;
-        _soundInfo.SFXVolume = _optionsSFXSlider.value;
+        _soundInfo.MusicVolume = musicSource.volume;
+        _soundInfo.SFXVolume = sfxSource.volume;
     }
     #endregion
 }
