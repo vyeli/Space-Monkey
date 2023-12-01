@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _staticEnemyStats: {fileID: 11400000, guid: 3445688fc6172e84198127338d2b56aa, type: 2}
+  _deathSound: {fileID: 0}
   _animator: {fileID: 0}
   turret: {fileID: 4810210106568310215}
   _turretHead: {fileID: 2790775453720356758}
@@ -298,11 +299,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gunStats: {fileID: 11400000, guid: eb8388123d833c547b900df61aa4cd69, type: 2}
-  _bulletPrefab: {fileID: 5603007381800499724, guid: b7cb9ef375eee0c4ba1ca3ff0e243364, type: 3}
+  _bulletPrefab: {fileID: 1122964723992546, guid: 28e0d4bff38ba1e47994707f5b987d72, type: 3}
   _bulletContainer: {fileID: 0}
   _currentBulletCount: 0
   _bulletSpawn: {fileID: 6603558629815794197}
   _bulletSpeed: 2
+  _shootSound: {fileID: 8300000, guid: 325c86dbb5ddeb44588c6704b6e01b0e, type: 3}
 --- !u!1 &7215886792099879711
 GameObject:
   m_ObjectHideFlags: 0
