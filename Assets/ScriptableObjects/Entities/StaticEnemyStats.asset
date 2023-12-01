@@ -15,9 +15,9 @@ MonoBehaviour:
   _entityStats:
     MaxLife: 1
   _staticEnemyStats:
-    IdleWaitTime: 2
+    IdleWaitTime: 0.01
     AttackRange: 3.5
-    AttackCooldownTime: 1.5
+    AttackCooldownTime: 0.5
     DespawnCooldownTime: 2
     Damage: 1
     Score: 100

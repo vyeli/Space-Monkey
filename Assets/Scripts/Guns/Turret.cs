@@ -6,6 +6,7 @@ public class Turret : Gun
 {
     [SerializeField] private Transform _bulletSpawn;
     [SerializeField] private float _bulletSpeed;
+    [SerializeField] private AudioClip _shootSound;
 
     public new int CurrentBulletCount { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
 
@@ -13,5 +14,6 @@ public class Turret : Gun
     {
         GameObject bullet = Instantiate(BulletPrefab, _bulletSpawn.position, _bulletSpawn.rotation);
         bullet.GetComponent<Bullet>().SetOwner(this);
+        SoundManager.instance.PlaySFX(_shootSound);
     }
 }

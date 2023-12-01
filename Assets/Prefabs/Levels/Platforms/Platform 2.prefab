@@ -777,6 +777,7 @@ MonoBehaviour:
   _currentBulletCount: 0
   _bulletSpawn: {fileID: 5809895789994725319}
   _bulletSpeed: 2
+  _shootSound: {fileID: 8300000, guid: 325c86dbb5ddeb44588c6704b6e01b0e, type: 3}
 --- !u!4 &3968330697255899228 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1123662491035308629, guid: a38309b6e9127f04da8e498018f9f5c1, type: 3}
