@@ -20,7 +20,7 @@ public class ScoreManager : MonoBehaviour
     }
 
     public int Score => _timedScore + _killsScore;
-    private int maxScore = 10000;
+    private int maxScore = 20000;
     private int _minScore = 1000;
 
     public int TimedScore => _timedScore;
