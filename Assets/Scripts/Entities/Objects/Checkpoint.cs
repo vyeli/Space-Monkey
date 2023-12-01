@@ -8,16 +8,6 @@ public class Checkpoint : MonoBehaviour
     public GameObject cpON, cpOFF;
 
 
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         if ((other.tag == "Player") && (GameManager.instance.respawnPosition != transform.position))
