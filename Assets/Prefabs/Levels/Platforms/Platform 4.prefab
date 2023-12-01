@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _staticEnemyStats: {fileID: 0}
+  _deathSound: {fileID: 8300000, guid: 07412c015f057f542ba0986d7ae70b94, type: 3}
   _animator: {fileID: 3693756950115928217}
   _enemyStats: {fileID: 11400000, guid: 89501d3fa0e461a468c7d173cdb31988, type: 2}
   _patrolPoints:

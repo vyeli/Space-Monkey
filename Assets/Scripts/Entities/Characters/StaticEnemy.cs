@@ -10,6 +10,7 @@ public class StaticEnemy : Actor
     protected AIState CurrentState => _currentState;
     protected float CurrentActionTime => _currentActionTime;
     [SerializeField] private StaticEnemyStats _staticEnemyStats;
+    [SerializeField] private AudioClip _deathSound;
     [SerializeField] protected Animator _animator;
     protected AIState _currentState;
     protected float _currentActionTime;
@@ -134,6 +135,7 @@ public class StaticEnemy : Actor
 
     public override void DieEffect()
     {
+        SoundManager.instance.PlaySFX(_deathSound);
         EventsManager.instance.PlayerKill(StaticEnemyStats.Score);
         _animator.SetBool("IsDead", true);
         _currentState = AIState.Dead;
