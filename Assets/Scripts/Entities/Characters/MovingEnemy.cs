@@ -11,8 +11,8 @@ public class MovingEnemy : StaticEnemy
     public override StaticEnemyStats StaticEnemyStats => _enemyStats;
     [SerializeField] protected EnemyStats _enemyStats;
     [SerializeField] private Transform[] _patrolPoints;
-    public NavMeshAgent _agent;
-    public int _currentPatrolPoint;
+    private NavMeshAgent _agent;
+    private int _currentPatrolPoint;
     
 
     #region UNITY_EVENTS

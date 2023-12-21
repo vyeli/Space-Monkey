@@ -13,8 +13,8 @@ public class StaticEnemy : Actor
     [SerializeField] private AudioClip _deathSound;
     [SerializeField] protected Animator _animator;
     
-    public AIState _previousState;
-    public AIState _currentState;
+    protected AIState _previousState;
+    protected AIState _currentState;
     protected float _currentActionTime = 0;
     protected float _distanceToPlayer;
 
