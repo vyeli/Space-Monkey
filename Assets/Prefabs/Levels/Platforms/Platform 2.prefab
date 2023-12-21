@@ -278,8 +278,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
-  _moveDirection: {x: 1, y: 0, z: 0}
-  _moveDistance: 15
+  _moveDirection: {x: -1, y: 0, z: 0}
+  _moveDistance: 50
 --- !u!1 &6551321002878388408
 GameObject:
   m_ObjectHideFlags: 0
@@ -399,8 +399,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
-  _moveDirection: {x: -1, y: 0, z: 0}
-  _moveDistance: 15
+  _moveDirection: {x: 1, y: 0, z: 0}
+  _moveDistance: 50
 --- !u!1 &8366811910584451198
 GameObject:
   m_ObjectHideFlags: 0
@@ -521,7 +521,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
   _moveDirection: {x: 1, y: 0, z: 0}
-  _moveDistance: 15
+  _moveDistance: 50
 --- !u!1001 &1721985227544440811
 PrefabInstance:
   m_ObjectHideFlags: 0

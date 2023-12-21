@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04a6bca22ef246f469fead54f378028d, type: 3}
-  m_Name: MovingTrapStats
+  m_Name: MovingObjectStats
   m_EditorClassIdentifier: 
   _trapStats:
-    Damage: 1
+    Damage: 0
   _movingTrapStats:
-    MovingSpeed: 0.5
-    RotationSpeed: 1000
+    MovingSpeed: 0.2
+    RotationSpeed: 0

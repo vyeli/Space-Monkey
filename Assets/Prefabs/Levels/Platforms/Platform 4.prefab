@@ -187,7 +187,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
   _moveDirection: {x: 1, y: 0, z: 0}
-  _moveDistance: 10
+  _moveDistance: 50
 --- !u!1 &1286445034128792603
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
   _moveDirection: {x: 1, y: 0, z: 0}
-  _moveDistance: 10
+  _moveDistance: 50
 --- !u!1 &3413807923724985063
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,7 +1134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
   _moveDirection: {x: -1, y: 0, z: 0}
-  _moveDistance: 10
+  _moveDistance: 50
 --- !u!1 &8703465415384266109
 GameObject:
   m_ObjectHideFlags: 0

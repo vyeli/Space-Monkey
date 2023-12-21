@@ -12,8 +12,10 @@ public class StaticEnemy : Actor
     [SerializeField] private StaticEnemyStats _staticEnemyStats;
     [SerializeField] private AudioClip _deathSound;
     [SerializeField] protected Animator _animator;
-    protected AIState _currentState;
-    protected float _currentActionTime;
+    
+    public AIState _previousState;
+    public AIState _currentState;
+    protected float _currentActionTime = 0;
     protected float _distanceToPlayer;
 
     #region UNITY_EVENTS
@@ -22,6 +24,7 @@ public class StaticEnemy : Actor
     {
         base.Start();
         _currentState = AIState.Idle;
+        _previousState = _currentState;
     }
 
     private void HurtBox_OnTriggerEnterEvent(Collider other)
@@ -57,6 +60,12 @@ public class StaticEnemy : Actor
             _distanceToPlayer = Vector3.Distance(transform.position, Player.instance.transform.position);
 
             if (HasActiveAlert()) AlertAction();
+        }
+        
+        if (_previousState != _currentState)
+        {
+            _previousState = _currentState;
+            _currentActionTime = 0;
         }
     }
 

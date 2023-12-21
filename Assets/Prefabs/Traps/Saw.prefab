@@ -107,4 +107,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _trapStats: {fileID: 11400000, guid: 905251794f995f049a2fd0903e41673b, type: 2}
   _moveDirection: {x: 1, y: 0, z: 0}
-  _moveDistance: 20
+  _moveDistance: 40

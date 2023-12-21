@@ -11,8 +11,8 @@ public class MovingEnemy : StaticEnemy
     public override StaticEnemyStats StaticEnemyStats => _enemyStats;
     [SerializeField] protected EnemyStats _enemyStats;
     [SerializeField] private Transform[] _patrolPoints;
-    private NavMeshAgent _agent;
-    private int _currentPatrolPoint;
+    public NavMeshAgent _agent;
+    public int _currentPatrolPoint;
     
 
     #region UNITY_EVENTS
@@ -78,23 +78,22 @@ public class MovingEnemy : StaticEnemy
 
     protected override void StartIdle()
     {
+        base.StartIdle();
         _agent.isStopped = false;
         _agent.SetDestination(transform.position);
-        base.StartIdle();
     }
 
     private void StartPatrol()
     {
         _animator.SetBool("IsMoving", true);
         _currentState = AIState.Patrol;
-        _currentActionTime = 0;
+        _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
+        // _currentActionTime = 0;
     }
 
     private void UpdatePatrol()
     {
-        _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
-
-        if (_agent.remainingDistance != 0 && _agent.remainingDistance < _agent.stoppingDistance)
+        if (!_agent.pathPending && _agent.remainingDistance < _agent.stoppingDistance)
         {
             _animator.SetBool("IsMoving", false);
             base.StartIdle();
