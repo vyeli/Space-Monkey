@@ -50,9 +50,9 @@ public class EventsManager : MonoBehaviour
         if (OnPlayerKill != null) OnPlayerKill(addedScore);
     }
 
-    public event Action<int> OnBulletCountChange;
+    public event Action<string> OnBulletCountChange;
 
-    public void BulletCountChange(int bulletCount)
+    public void BulletCountChange(string bulletCount)
     {
         if (OnBulletCountChange != null) OnBulletCountChange(bulletCount);
     }
@@ -62,6 +62,13 @@ public class EventsManager : MonoBehaviour
     public void GameTogglePauseState(bool pause)
     {
         if (OnGameTogglePauseState != null) OnGameTogglePauseState(pause);
+    }
+
+    public event Action OnPlayerFellToKillzone;
+
+    public void PlayerFellToKillzone()
+    {
+        OnPlayerFellToKillzone();
     }
     #endregion
 

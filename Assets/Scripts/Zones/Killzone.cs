@@ -9,6 +9,7 @@ public class Killzone : MonoBehaviour
         Debug.Log("Killzone");
         if (other.gameObject.tag.Equals("Player"))
         {
+            EventsManager.instance.PlayerFellToKillzone();
             // EventsManager.instance.EventGameOver(false);
             GameManager.instance.RespawnPlayer();
         }

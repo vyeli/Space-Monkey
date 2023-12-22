@@ -23,7 +23,7 @@ public abstract class Gun : MonoBehaviour, IGun
     private void Start()
     {
         // EventsManager.instance.BulletCountChange(_currentBulletCount);
-        UiManager.instance.UpdateBulletCount(_currentBulletCount);
+        UiManager.instance.UpdateBulletCount(_currentBulletCount.ToString());
     }
     #endregion
 
@@ -33,8 +33,32 @@ public abstract class Gun : MonoBehaviour, IGun
 
     protected void UpdateBulletCount()
     {
-        _currentBulletCount--;
-        EventsManager.instance.BulletCountChange(_currentBulletCount);
+        if (!InfiniteMode)
+        {
+            _currentBulletCount--;
+            EventsManager.instance.BulletCountChange(_currentBulletCount.ToString());
+        }
+    }
+
+    private bool _infiniteMode;
+
+    public bool InfiniteMode
+    {
+        get { return _infiniteMode; }
+        set { UpdateInfiniteMode(value); }
+    }
+
+    private void UpdateInfiniteMode(bool value)
+    {
+        if (value)
+        {
+            UiManager.instance.UpdateBulletCount("\u221E");
+        }
+        else
+        {
+            UiManager.instance.UpdateBulletCount(_currentBulletCount.ToString());
+        }
+        _infiniteMode = value;
     }
 
 }

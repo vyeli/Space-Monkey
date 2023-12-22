@@ -8,7 +8,8 @@ public class BulletPickup : Pickup
     {
         Gun gun = player.GetComponentInChildren<Gun>();
         gun.CurrentBulletCount += _pickupStats.PickupAmount;
-        EventsManager.instance.BulletCountChange(gun.CurrentBulletCount);
+        if (!gun.InfiniteMode)
+            EventsManager.instance.BulletCountChange(gun.CurrentBulletCount.ToString());
     }
 
     public override void PickupEffect()

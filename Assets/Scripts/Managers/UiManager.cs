@@ -81,14 +81,14 @@ public class UiManager : MonoBehaviour
     #region BULLETS_UI_LOGIC
     [SerializeField] private TextMeshProUGUI _bulletCountText;
 
-    private void OnBulletCountChange(int bulletCount)
+    private void OnBulletCountChange(string bulletCount)
     {
         UpdateBulletCount(bulletCount);
     }
 
-    public void UpdateBulletCount(int bulletCount)
+    public void UpdateBulletCount(string bulletCount)
     {
-        _bulletCountText.text = bulletCount.ToString();
+        _bulletCountText.text = bulletCount;
     }
     #endregion
 

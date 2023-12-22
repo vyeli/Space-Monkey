@@ -23,6 +23,8 @@ public class ActivateDangerzone : MonoBehaviour
                 enemiesCount = GameManager.instance.EnemyKills;
                 dangerzone.SetActive(true);
                 obstacle.SetActive(true);
+                Player.instance._gun.InfiniteMode = true;
+
                 UiManager.instance.ActivateZoneObjective();
                 UiManager.instance.UpdateZoneObjectiveText("Elimina a todos los enemigos");
                 UiManager.instance.UpdateZoneObjectiveCounterText("0/3");
@@ -35,13 +37,19 @@ public class ActivateDangerzone : MonoBehaviour
     {
         if (exitDangerzone) return;
 
-        if (dangerzone.activeSelf && GameManager.instance.EnemyKills == enemiesCount + 3)
+        if (dangerzone.activeSelf)
         {
-            dangerzone.SetActive(false);
-            obstacle.SetActive(false);
-            UiManager.instance.DeactivateZoneObjective();
-            UiManager.instance.ShowNotification("Ruta despejada", 2f);
-            exitDangerzone = true;
+            UiManager.instance.UpdateZoneObjectiveCounterText((GameManager.instance.EnemyKills - enemiesCount) + "/3");
+            if (GameManager.instance.EnemyKills == enemiesCount + 3)
+            {
+                dangerzone.SetActive(false);
+                obstacle.SetActive(false);
+                Player.instance._gun.InfiniteMode = false;
+
+                UiManager.instance.DeactivateZoneObjective();
+                UiManager.instance.ShowNotification("Ruta despejada", 2f);
+                exitDangerzone = true;
+            }
         }
     }
 }

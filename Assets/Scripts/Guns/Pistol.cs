@@ -19,7 +19,7 @@ public class Pistol : Gun
     [SerializeField] private LineRenderer _beam;
 
     public Transform MuzzlePoint => muzzlePoint;
-
+    
     public override void Shoot()
     {
         if (_currentBulletCount == 0)
@@ -47,8 +47,7 @@ public class Pistol : Gun
             }
         }
 
-            
-        UpdateBulletCount();
+        base.UpdateBulletCount();
     }
 
     IEnumerator ShowBeam()
