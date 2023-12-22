@@ -20,7 +20,7 @@ MonoBehaviour:
     AttackCooldownTime: 1.5
     DespawnCooldownTime: 2
     Damage: 1
-    Score: 200
+    Score: 400
   _enemyStats:
     Speed: 8
     PatrolPointStoppingDistance: 0.2
