@@ -108,4 +108,34 @@ public class UiManager : MonoBehaviour
     public void OpenOptionsMenu() => ToggleOptionsMenu(true);
     public void CloseOptionsMenu() => ToggleOptionsMenu(false);
     #endregion
+
+    #region NOTIFICATIONS_UI_LOGIC
+    [SerializeField] private GameObject _notificationPanel;
+    [SerializeField] private TextMeshProUGUI _notificationText;
+
+    public void setNotification(string notification)
+    {
+        _notificationText.text = notification;
+        _notificationPanel.SetActive(true);
+    }
+
+    public void HideNotification()
+    {
+        _notificationPanel.SetActive(false);
+    }
+
+    public void ShowNotification(string notification, float duration)
+    {
+        StartCoroutine(ShowNotificationCoroutine(notification, duration));
+    }
+
+    private IEnumerator ShowNotificationCoroutine(string notification, float duration)
+    {   
+        yield return new WaitForSeconds(0.5f);
+        setNotification(notification);
+        yield return new WaitForSeconds(duration);
+        HideNotification();
+    }
+
+    #endregion
 }
