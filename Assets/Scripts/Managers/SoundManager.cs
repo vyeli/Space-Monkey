@@ -26,6 +26,9 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource _musicAudioSource;
     [SerializeField] private AudioSource _sfxAudioSource;
     [SerializeField] private SoundInfo _soundInfo;
+    [SerializeField] private AudioClip _pickup;
+
+    public AudioClip Pickup => _pickup;
 
     #region UNITY_EVENTS
     private void Start()

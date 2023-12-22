@@ -26,6 +26,7 @@ public abstract class Pickup : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Debug.Log("Player picked up " + gameObject.name);
+            SoundManager.instance.PlaySFX(SoundManager.instance.Pickup);
             OnPickup(other);
             PickupEffect();
             Destroy(gameObject);
