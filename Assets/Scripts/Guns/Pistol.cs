@@ -22,7 +22,7 @@ public class Pistol : Gun
     
     public override void Shoot()
     {
-        if (_currentBulletCount == 0)
+        if (_currentBulletCount == 0 && !InfiniteMode)
             return;
 
         Ray ray = new Ray(muzzlePoint.position, playerModel.forward);

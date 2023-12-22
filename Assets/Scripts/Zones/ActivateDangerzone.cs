@@ -6,9 +6,38 @@ public class ActivateDangerzone : MonoBehaviour
 {
     [SerializeField] private GameObject dangerzone;
     [SerializeField] private GameObject obstacle;
-
-    private int enemiesCount;
+    [SerializeField] private GameObject entryPath;
+    [SerializeField] private int initialEnemyCount;
+    
+    private int remainingEnemies;
     private bool exitDangerzone = false;
+
+    private void Start()
+    {
+        remainingEnemies = initialEnemyCount;
+        EventsManager.instance.OnPlayerFellToKillzone += OnPlayerFellToKillzone;
+        EventsManager.instance.OnPlayerKill += OnPlayerKill;
+    }
+
+    private void OnPlayerKill(int addedScore)
+    {
+        if (dangerzone.activeSelf)
+        {
+            remainingEnemies--;
+            UiManager.instance.UpdateZoneObjectiveCounterText((initialEnemyCount - remainingEnemies) + "/" + initialEnemyCount);
+        }
+    }
+
+    private void OnPlayerFellToKillzone()
+    {
+        if (!dangerzone.activeSelf) return; // Exit if the dangerzone is already active
+
+        dangerzone.SetActive(false);
+        obstacle.SetActive(false);
+        entryPath.SetActive(true);
+        Player.instance._gun.InfiniteMode = false;
+        UiManager.instance.DeactivateZoneObjective();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -20,14 +49,14 @@ public class ActivateDangerzone : MonoBehaviour
             if (other.gameObject.CompareTag("Player"))
             {
                 Debug.Log("Dangerzone");
-                enemiesCount = GameManager.instance.EnemyKills;
                 dangerzone.SetActive(true);
                 obstacle.SetActive(true);
+                entryPath.SetActive(false);
                 Player.instance._gun.InfiniteMode = true;
 
                 UiManager.instance.ActivateZoneObjective();
                 UiManager.instance.UpdateZoneObjectiveText("Elimina a todos los enemigos");
-                UiManager.instance.UpdateZoneObjectiveCounterText("0/3");
+                UiManager.instance.UpdateZoneObjectiveCounterText((initialEnemyCount - remainingEnemies) + "/" + initialEnemyCount);
                 // UiManager.instance.ShowNotification("Eliminar todos los enemigos", 3f);
             }
         }
@@ -37,19 +66,16 @@ public class ActivateDangerzone : MonoBehaviour
     {
         if (exitDangerzone) return;
 
-        if (dangerzone.activeSelf)
+        if (dangerzone.activeSelf && remainingEnemies == 0)
         {
-            UiManager.instance.UpdateZoneObjectiveCounterText((GameManager.instance.EnemyKills - enemiesCount) + "/3");
-            if (GameManager.instance.EnemyKills == enemiesCount + 3)
-            {
-                dangerzone.SetActive(false);
-                obstacle.SetActive(false);
-                Player.instance._gun.InfiniteMode = false;
+            dangerzone.SetActive(false);
+            obstacle.SetActive(false);
+            Player.instance._gun.InfiniteMode = false;
 
-                UiManager.instance.DeactivateZoneObjective();
-                UiManager.instance.ShowNotification("Ruta despejada", 2f);
-                exitDangerzone = true;
-            }
+            UiManager.instance.DeactivateZoneObjective();
+            UiManager.instance.ShowNotification("Ruta despejada", 2f);
+            entryPath.SetActive(true);
+            exitDangerzone = true;
         }
     }
 }

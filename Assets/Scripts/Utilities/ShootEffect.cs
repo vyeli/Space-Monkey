@@ -13,7 +13,7 @@ public class ShootEffect : MonoBehaviour
     {
 
         Debug.Log("CurrentBulletCount: " + Player.instance._gun.CurrentBulletCount);
-        if (Player.instance._gun.CurrentBulletCount > 0)
+        if (Player.instance._gun.CurrentBulletCount > 0 || Player.instance._gun.InfiniteMode)
             SoundManager.instance.PlaySFX(shootSound);
         else
             SoundManager.instance.PlaySFX(emptyMagacine);
