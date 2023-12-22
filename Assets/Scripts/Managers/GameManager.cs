@@ -91,8 +91,11 @@ public class GameManager : MonoBehaviour
 
         Instantiate(deathEffect, Player.instance.transform.position + new Vector3(0f, 1f, 0f), Player.instance.transform.rotation);
 
+        
+
         yield return new WaitForSeconds(2f);
 
+        SoundManager.instance.PlaySFX(SoundManager.instance.ActivateCheckpoint);
         UiManager.instance.fadeFromBlack = true;
 
         

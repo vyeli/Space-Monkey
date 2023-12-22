@@ -12,6 +12,9 @@ public class Checkpoint : MonoBehaviour
     {
         if ((other.tag == "Player") && (GameManager.instance.respawnPosition != transform.position))
         {
+            SoundManager.instance.PlaySFX(SoundManager.instance.Pickup);
+            UiManager.instance.ShowNotification("Punto de control", 2f);
+            
             GameManager.instance.SetSpawnPoint(transform.position);
 
             Checkpoint[] checkpoints = FindObjectsOfType<Checkpoint>();

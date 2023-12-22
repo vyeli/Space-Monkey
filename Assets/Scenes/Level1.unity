@@ -786,6 +786,10 @@ PrefabInstance:
       propertyPath: _musicVolumeSlider
       value: 
       objectReference: {fileID: 39267892}
+    - target: {fileID: 5296288859223873282, guid: 33428ed9da9ccfa4e9e9f9508bd279f4, type: 3}
+      propertyPath: _activateCheckpoint
+      value: 
+      objectReference: {fileID: 8300000, guid: 53021ede2d509414fb93f18fc304ccf4, type: 3}
     - target: {fileID: 5517243546698977646, guid: 33428ed9da9ccfa4e9e9f9508bd279f4, type: 3}
       propertyPath: m_LocalRotation.y
       value: -0.05752872
@@ -1190,15 +1194,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4648934362954035230, guid: f557760b501aadc4a9a07790e2751c03, type: 3}
       propertyPath: m_fontColor.b
-      value: 0.08116765
+      value: 0.7609469
       objectReference: {fileID: 0}
     - target: {fileID: 4648934362954035230, guid: f557760b501aadc4a9a07790e2751c03, type: 3}
       propertyPath: m_fontColor.g
-      value: 0.08116765
+      value: 0.7609469
       objectReference: {fileID: 0}
     - target: {fileID: 4648934362954035230, guid: f557760b501aadc4a9a07790e2751c03, type: 3}
       propertyPath: m_fontColor.r
-      value: 0.9056604
+      value: 0.9433962
       objectReference: {fileID: 0}
     - target: {fileID: 4995563257233719216, guid: f557760b501aadc4a9a07790e2751c03, type: 3}
       propertyPath: m_Camera
