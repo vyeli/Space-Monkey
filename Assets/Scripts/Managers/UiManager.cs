@@ -112,6 +112,23 @@ public class UiManager : MonoBehaviour
     #region NOTIFICATIONS_UI_LOGIC
     [SerializeField] private GameObject _notificationPanel;
     [SerializeField] private TextMeshProUGUI _notificationText;
+    [SerializeField] private GameObject _zoneObjectivePanel;
+    [SerializeField] private TextMeshProUGUI _zoneObjectiveText;
+    [SerializeField] private TextMeshProUGUI _zoneObjectiveCounterText;
+
+    public void ActivateZoneObjective() => _zoneObjectivePanel.SetActive(true);
+
+    public void DeactivateZoneObjective() => _zoneObjectivePanel.SetActive(false);
+
+    public void UpdateZoneObjectiveText(string objective)
+    {
+        _zoneObjectiveText.text = objective;
+    }
+
+    public void UpdateZoneObjectiveCounterText(string counterText)
+    {
+        _zoneObjectiveCounterText.text = counterText;
+    }
 
     public void setNotification(string notification)
     {
@@ -131,7 +148,7 @@ public class UiManager : MonoBehaviour
 
     private IEnumerator ShowNotificationCoroutine(string notification, float duration)
     {   
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.25f);
         setNotification(notification);
         yield return new WaitForSeconds(duration);
         HideNotification();

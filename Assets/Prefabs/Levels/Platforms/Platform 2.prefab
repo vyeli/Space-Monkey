@@ -868,6 +868,10 @@ PrefabInstance:
       propertyPath: _deathSound
       value: 
       objectReference: {fileID: 8300000, guid: 07412c015f057f542ba0986d7ae70b94, type: 3}
+    - target: {fileID: 8445174955480272482, guid: a38309b6e9127f04da8e498018f9f5c1, type: 3}
+      propertyPath: _staticEnemyStats
+      value: 
+      objectReference: {fileID: 11400000, guid: 48ef1b38dd348104db744f03e7df2d36, type: 2}
     - target: {fileID: 9098296670097630857, guid: a38309b6e9127f04da8e498018f9f5c1, type: 3}
       propertyPath: m_Name
       value: FlyingRobot

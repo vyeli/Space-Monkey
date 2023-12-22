@@ -88,7 +88,7 @@ public class MovingEnemy : StaticEnemy
         _animator.SetBool("IsMoving", true);
         _currentState = AIState.Patrol;
         _agent.SetDestination(_patrolPoints[_currentPatrolPoint].position);
-        // _currentActionTime = 0;
+        _currentActionTime = 0;
     }
 
     private void UpdatePatrol()
@@ -110,7 +110,8 @@ public class MovingEnemy : StaticEnemy
 
     private void UpdateChase()
     {
-        _agent.SetDestination(Player.instance.transform.position);
+        if (_distanceToPlayer > _enemyStats.AttackRange && _distanceToPlayer < _enemyStats.ChaseRange)
+            _agent.SetDestination(Player.instance.transform.position);
         
         if (_distanceToPlayer < _enemyStats.AttackRange)
         {

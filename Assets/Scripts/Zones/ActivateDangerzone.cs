@@ -23,7 +23,10 @@ public class ActivateDangerzone : MonoBehaviour
                 enemiesCount = GameManager.instance.EnemyKills;
                 dangerzone.SetActive(true);
                 obstacle.SetActive(true);
-                UiManager.instance.ShowNotification("Eliminar todos los enemigos", 3f);
+                UiManager.instance.ActivateZoneObjective();
+                UiManager.instance.UpdateZoneObjectiveText("Elimina a todos los enemigos");
+                UiManager.instance.UpdateZoneObjectiveCounterText("0/3");
+                // UiManager.instance.ShowNotification("Eliminar todos los enemigos", 3f);
             }
         }
     }
@@ -36,6 +39,7 @@ public class ActivateDangerzone : MonoBehaviour
         {
             dangerzone.SetActive(false);
             obstacle.SetActive(false);
+            UiManager.instance.DeactivateZoneObjective();
             UiManager.instance.ShowNotification("Ruta despejada", 2f);
             exitDangerzone = true;
         }

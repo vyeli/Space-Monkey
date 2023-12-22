@@ -13,8 +13,8 @@ public class StaticEnemy : Actor
     [SerializeField] private AudioClip _deathSound;
     [SerializeField] protected Animator _animator;
     
-    protected AIState _previousState;
-    protected AIState _currentState;
+    public AIState _previousState;
+    public AIState _currentState;
     protected float _currentActionTime = 0;
     protected float _distanceToPlayer;
 
@@ -24,7 +24,7 @@ public class StaticEnemy : Actor
     {
         base.Start();
         _currentState = AIState.Idle;
-        _previousState = _currentState;
+        // _previousState = _currentState;
     }
 
     private void HurtBox_OnTriggerEnterEvent(Collider other)
@@ -62,11 +62,11 @@ public class StaticEnemy : Actor
             if (HasActiveAlert()) AlertAction();
         }
         
-        if (_previousState != _currentState)
-        {
-            _previousState = _currentState;
-            _currentActionTime = 0;
-        }
+        // if (_previousState != _currentState)
+        // {
+        //     _previousState = _currentState;
+        //     _currentActionTime = 0;
+        // }
     }
 
     protected virtual void AlertAction()
@@ -106,6 +106,7 @@ public class StaticEnemy : Actor
         transform.LookAt(Player.instance.transform, Vector3.up);
         transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
         _currentState = AIState.Attack;
+        // _currentActionTime = StaticEnemyStats.AttackCooldownTime;
     }
 
     protected virtual void UpdateAttack()

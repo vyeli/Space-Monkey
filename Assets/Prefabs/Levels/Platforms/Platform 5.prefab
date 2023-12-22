@@ -2483,6 +2483,8 @@ MonoBehaviour:
   _staticEnemyStats: {fileID: 0}
   _deathSound: {fileID: 8300000, guid: 07412c015f057f542ba0986d7ae70b94, type: 3}
   _animator: {fileID: 4688365649333930419}
+  _previousState: 0
+  _currentState: 0
   _enemyStats: {fileID: 11400000, guid: 89501d3fa0e461a468c7d173cdb31988, type: 2}
   _patrolPoints:
   - {fileID: 6934714648976654290}
@@ -2624,6 +2626,8 @@ MonoBehaviour:
   _staticEnemyStats: {fileID: 11400000, guid: 48ef1b38dd348104db744f03e7df2d36, type: 2}
   _deathSound: {fileID: 8300000, guid: 07412c015f057f542ba0986d7ae70b94, type: 3}
   _animator: {fileID: 8901033285781840696}
+  _previousState: 0
+  _currentState: 0
   _enemyStats: {fileID: 11400000, guid: 89501d3fa0e461a468c7d173cdb31988, type: 2}
   _patrolPoints:
   - {fileID: 7896245738272987251}
@@ -3307,7 +3311,7 @@ Transform:
   m_GameObject: {fileID: 8342236331412259029}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.9999474, w: 0.010255118}
-  m_LocalPosition: {x: -14.5, y: 0.17, z: 101.520004}
+  m_LocalPosition: {x: -12.48, y: 0.13, z: 101.520004}
   m_LocalScale: {x: 5.3691635, y: 10.123576, z: 48.410236}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -28,7 +28,8 @@ public class FinalZoneKills : MonoBehaviour
         int enemiesKilled = GameManager.instance.EnemyKills;
         if (enemiesKilled > enemiesCount && !miniPlatform.activeSelf)
         {
-            UiManager.instance.ShowNotification(enemiesKilled - enemiesCount + "/4", 2000f);
+            UiManager.instance.UpdateZoneObjectiveCounterText((enemiesKilled - enemiesCount) + "/4");
+            // UiManager.instance.ShowNotification(enemiesKilled - enemiesCount + "/4", 2000f);
         }
         if (enemiesKilled == enemiesCount + 4 && !miniPlatform.activeSelf)
         {

@@ -5992,6 +5992,8 @@ MonoBehaviour:
   _musicAudioSource: {fileID: 7444840065048414607}
   _sfxAudioSource: {fileID: 380127213154382721}
   _soundInfo: {fileID: 11400000, guid: 78318a8576d0d7249ab83af5a8346bfa, type: 2}
+  _pickup: {fileID: 8300000, guid: 75f41e4983efa3d44a73a8d914c791bf, type: 3}
+  _activateCheckpoint: {fileID: 8300000, guid: 53021ede2d509414fb93f18fc304ccf4, type: 3}
 --- !u!114 &7524642421808555830
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6026,6 +6028,11 @@ MonoBehaviour:
   _bulletCountText: {fileID: 0}
   _pauseMenu: {fileID: 0}
   _optionsMenu: {fileID: 0}
+  _notificationPanel: {fileID: 0}
+  _notificationText: {fileID: 0}
+  _zoneObjectivePanel: {fileID: 0}
+  _zoneObjectiveText: {fileID: 0}
+  _zoneObjectiveCounterText: {fileID: 0}
 --- !u!114 &7203418931021506401
 MonoBehaviour:
   m_ObjectHideFlags: 0
