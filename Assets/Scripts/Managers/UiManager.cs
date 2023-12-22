@@ -137,5 +137,10 @@ public class UiManager : MonoBehaviour
         HideNotification();
     }
 
+    public void updateNotification(string notification)
+    {
+        _notificationText.text = notification;
+    }
+
     #endregion
 }
