@@ -25,6 +25,7 @@ public class Player : Actor
     [SerializeField] private PlayerStats _playerStats;
     private MovementController _movementController;
     private bool _isKnocking;
+    private bool _isInvincible;
 
     #region ACTION_KEYS
     [SerializeField] private KeyCode _jumpKey = KeyCode.Space;
@@ -120,10 +121,14 @@ public class Player : Actor
             if (GameManager.instance.PlayerWon()) EnterKnockBack();
             return;
         }
-        base.TakeDamage(damage);
-        EnterKnockBack();
-        EventsManager.instance.PlayerDamaged();
-        EventsManager.instance.CharacterLifeChange(_life);
+        if (!_isInvincible)
+        {
+            _isInvincible = true;
+            base.TakeDamage(damage);
+            EnterKnockBack();
+            EventsManager.instance.PlayerDamaged();
+            EventsManager.instance.CharacterLifeChange(_life);
+        }
     }
 
     private void EnterKnockBack()
@@ -138,6 +143,7 @@ public class Player : Actor
     {
         yield return new WaitForSeconds(_knockBackLength);
         _isKnocking = false;
+        _isInvincible = false;
     }
 
     public override void DieEffect()
