@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.004177555, g: 0.00390011, b: 0.003931446, a: 1}
+  m_IndirectSpecularColor: {r: 0.007207426, g: 0.007152698, b: 0.007155026, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -545,62 +545,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 16792696084493538, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotateZ
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 16792696084493538, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: maxDelay
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 16792696084493538, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: minDelay
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 16792696084493538, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotate.x
-      value: -40
-      objectReference: {fileID: 0}
-    - target: {fileID: 16792696084493538, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotate.y
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 16792696084493538, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotate.z
-      value: 70
-      objectReference: {fileID: 0}
-    - target: {fileID: 3949674465507252870, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotateZ
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3949674465507252870, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: maxDelay
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 3949674465507252870, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: minDelay
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 3949674465507252870, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotate.x
-      value: -150
-      objectReference: {fileID: 0}
-    - target: {fileID: 3949674465507252870, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: rotate.z
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942443777397128041, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942443777397128041, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -350
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942443777397128041, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 850
-      objectReference: {fileID: 0}
     - target: {fileID: 8063875141794419595, guid: 2f963ed8cba98bc4795261cfe1820dfe, type: 3}
       propertyPath: m_LocalPosition.x
       value: 462.79745
@@ -906,14 +850,6 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 513065156}
-    - target: {fileID: 2160015783755391969, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_Color.g
-      value: 0.83137256
-      objectReference: {fileID: 0}
-    - target: {fileID: 2160015783755391969, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_Color.r
-      value: 0.5254902
-      objectReference: {fileID: 0}
     - target: {fileID: 4727905771790691442, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -993,26 +929,6 @@ PrefabInstance:
     - target: {fileID: 4727905771790691442, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085428045893690687, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_Color.g
-      value: 0.83137256
-      objectReference: {fileID: 0}
-    - target: {fileID: 5085428045893690687, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_Color.r
-      value: 0.5254902
-      objectReference: {fileID: 0}
-    - target: {fileID: 8167001100569487412, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_text
-      value: "\xA1Perdiste!"
-      objectReference: {fileID: 0}
-    - target: {fileID: 8297151588244629809, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_Color.g
-      value: 0.83137256
-      objectReference: {fileID: 0}
-    - target: {fileID: 8297151588244629809, guid: e28d3790df192384eb581f12d9bf0c82, type: 3}
-      propertyPath: m_Color.r
-      value: 0.5254902
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

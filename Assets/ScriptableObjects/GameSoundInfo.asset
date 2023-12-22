@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _soundInfo:
     MusicVolume: 0.1
-    SFXVolume: 1
+    SFXVolume: 0.1

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "875942635147",
+    "firebase_url": "https://space-animals-a32ef-default-rtdb.firebaseio.com",
+    "project_id": "space-animals-a32ef",
+    "storage_bucket": "space-animals-a32ef.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875942635147:android:b3393eb578e6622eb9568e",
+        "android_client_info": {
+          "package_name": "com.MonosDeLaNasa.Space_Animals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCRjgLPz5Yj7F56gZNw3D2BjVC-pxt8Ytk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

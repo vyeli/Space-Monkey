@@ -29,7 +29,6 @@ public class SoundtrackPlayer : MonoBehaviour, IListenable
     #region ILISTENABLE_METHODS
     public void InitAudioSource()
     {
-
         _clipsToPlay = GetShuffledClips(_soundtrackClips);
         musicSource.clip = _clipsToPlay[0];
         Play();
